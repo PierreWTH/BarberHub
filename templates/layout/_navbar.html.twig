@@ -1,0 +1,21 @@
+<nav>
+    <a href="{{path ('app_home')}}"> ACCUEIL </a>
+    <a href=""> BARBIERS </a>
+    <a href=""> CARTE </a>
+    <a href=""> BLOG </a>
+
+    {% if app.user %}
+    
+    {% if is_granted('ROLE_ADMIN') %}
+    <a href=""> Administration </a>
+    {% endif %}
+    <a href=""> Mon espace </a>
+    <a href="{{path ('app_logout')}}"> Se deconnecter </a>
+
+    
+
+    {% else %}
+    <a href="{{path ('app_login')}}"> Se connecter </a>
+    <a href="{{path ('app_login')}}"> Inscription </a>
+    {% endif %}
+</nav>
