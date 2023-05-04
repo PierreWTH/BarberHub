@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Barbershop;
 use App\Form\BarbershopType;
+use App\Service\PictureService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,13 +22,23 @@ class BarbershopController extends AbstractController
     }
 
     #[Route('/barbershop/add', name: 'add_barbershop')]
-    public function add(ManagerRegistry $doctrine, Barbershop $barbershop = null, Request $request) : Response
+    public function add(ManagerRegistry $doctrine, Barbershop $barbershop = null, Request $request, PictureService $pictureService) : Response
     {
         $form = $this->createForm(BarbershopType::class, $barbershop);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
         {
+            // On récupere  les images 
+
+            $image = $form->get('images')->getData();
+
+            // On définit le dossier de destination
+            $folder = 'barbershopPics';
+            // On appelle le service d'ajout 
+            $fichier = $pictureService->add($image, $folder, 300, 300);
+
+
                 $barbershop = $form->getData();
                 $entityManager = $doctrine->getManager();
                 $entityManager->persist($barbershop);
