@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Barbershop;
 use App\Form\BarbershopType;
+use App\Entity\BarbershopPics;
 use App\Service\PictureService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,6 +30,8 @@ class BarbershopController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
+            $barbershop = $form->getData();
+            
             // On récupere  les images 
 
             $image = $form->get('images')->getData();
@@ -38,8 +41,11 @@ class BarbershopController extends AbstractController
             // On appelle le service d'ajout 
             $fichier = $pictureService->add($image, $folder, 300, 300);
 
+            $img = new BarbershopPics();
+            $img->setNom($fichier);
+            $barbershop->addBarbershopPic($img);
 
-                $barbershop = $form->getData();
+                
                 $entityManager = $doctrine->getManager();
                 $entityManager->persist($barbershop);
                 $entityManager->flush();

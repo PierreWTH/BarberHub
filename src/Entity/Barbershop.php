@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BarbershopRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -52,6 +54,14 @@ class Barbershop
 
     #[ORM\Column]
     private ?bool $isValidate = null;
+
+    #[ORM\OneToMany(mappedBy: 'barbershop', targetEntity: BarbershopPics::class, orphanRemoval: true, cascade:['persist'])]
+    private Collection $barbershopPics;
+
+    public function __construct()
+    {
+        $this->barbershopPics = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -210,6 +220,36 @@ class Barbershop
     public function setIsValidate(bool $isValidate): self
     {
         $this->isValidate = $isValidate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, BarbershopPics>
+     */
+    public function getBarbershopPics(): Collection
+    {
+        return $this->barbershopPics;
+    }
+
+    public function addBarbershopPic(BarbershopPics $barbershopPic): self
+    {
+        if (!$this->barbershopPics->contains($barbershopPic)) {
+            $this->barbershopPics->add($barbershopPic);
+            $barbershopPic->setBarbershop($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBarbershopPic(BarbershopPics $barbershopPic): self
+    {
+        if ($this->barbershopPics->removeElement($barbershopPic)) {
+            // set the owning side to null (unless already changed)
+            if ($barbershopPic->getBarbershop() === $this) {
+                $barbershopPic->setBarbershop(null);
+            }
+        }
 
         return $this;
     }
