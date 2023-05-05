@@ -55,7 +55,7 @@ class Barbershop
     #[ORM\Column (type: 'boolean', nullable: true, options: ['default' => false])]
     private ?bool $isValidate = null;
 
-    #[ORM\OneToMany(mappedBy: 'barbershop', targetEntity: BarbershopPics::class, orphanRemoval: true, cascade:['persist'])]
+    #[ORM\OneToMany(mappedBy: 'barbershop', targetEntity: BarbershopPics::class, orphanRemoval: true, cascade:['persist', 'remove'])]
     private Collection $barbershopPics;
 
     public function __construct()

@@ -17,7 +17,7 @@ class BarbershopPics
     private ?string $nom = null;
 
     #[ORM\ManyToOne(inversedBy: 'barbershopPics')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete:'cascade')]
     private ?Barbershop $barbershop = null;
 
     public function getId(): ?int

@@ -44,7 +44,7 @@ class BarbershopController extends AbstractController
             // On passe les données a nominatim
             $coordinates = $nominatim->getCoordinates($adresse,$ville,$cp);
 
-            // On set la latitude et la longitude pour le bar
+            // On set la latitude et la longitude du bar
             $barbershop->setLatitude($coordinates[0]['lat']);
             $barbershop->setLongitude($coordinates[0]['lon']);
 
