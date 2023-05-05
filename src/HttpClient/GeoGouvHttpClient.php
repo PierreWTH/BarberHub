@@ -31,7 +31,7 @@ class GeoGouvHttpClient extends AbstractController
         $this->httpClient = $geogouv;
     }
 
-    // Récuperer l'autocomplète de l'adresse 
+    // Récuperer les propositions d'adresse a partir de la saisie 
     public function getAdresses()
     {   
         // Retourne les adresses qui correspondent a l'adresse tapée 

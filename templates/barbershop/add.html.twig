@@ -6,6 +6,21 @@
 
 <h1> Ajouter un Barbershop </h1>
 
-{{ form(formAddBarbershop) }}
+{{ form_start(formAddBarbershop) }}
+{{ form_row(formAddBarbershop.nom) }}
+{{ form_row(formAddBarbershop.description) }}
+{{ form_row(formAddBarbershop.adresse) }}
+{{ form_row(formAddBarbershop.cp) }}
+{{ form_row(formAddBarbershop.ville) }}
+{{ form_row(formAddBarbershop.horaires) }}
+{{ form_row(formAddBarbershop.telephone) }}
+{{ form_row(formAddBarbershop.images) }}
+{{ form_row(formAddBarbershop.email) }}
+{{ form_row(formAddBarbershop.instagram) }}
+{{ form_row(formAddBarbershop.facebook) }}
+{{ form_row(formAddBarbershop.submit) }}
+
+{{ form_end(formAddBarbershop) }}
+
 
 {% endblock %}

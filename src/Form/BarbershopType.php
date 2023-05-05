@@ -19,9 +19,19 @@ class BarbershopType extends AbstractType
         $builder
             ->add('nom', TextType::class)
             ->add('description', TextareaType::class)
-            ->add('adresse', TextType::class)
-            ->add('cp', NumberType::class)
-            ->add('ville', TextType::class)
+              
+            ->add('adresse', TextType::class, [
+                'attr' => ['class' => 'adresse-js']
+            ])
+
+            ->add('cp', NumberType::class, [
+                'attr' => ['class' => 'codepostal-js']
+            ])
+
+            ->add('ville', TextType::class, [
+                'attr' => ['class' => 'ville-js']
+            ])
+            
             ->add('horaires', TextareaType::class)
             ->add('telephone', TextType::class)
             ->add('email', TextType::class)
