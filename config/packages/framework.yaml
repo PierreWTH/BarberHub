@@ -22,6 +22,8 @@ framework:
         scoped_clients:
             nominatim:
                 base_uri: https://nominatim.openstreetmap.org
+            geogouv:
+                base_uri: https://api-adresse.data.gouv.fr
 
 when@test:
     framework:
