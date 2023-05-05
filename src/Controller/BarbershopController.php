@@ -6,6 +6,7 @@ use App\Entity\Barbershop;
 use App\Form\BarbershopType;
 use App\Entity\BarbershopPics;
 use App\Service\PictureService;
+use App\HttpClient\NominatimHttpClient;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +24,7 @@ class BarbershopController extends AbstractController
     }
 
     #[Route('/barbershop/add', name: 'add_barbershop')]
-    public function add(ManagerRegistry $doctrine, Barbershop $barbershop = null, Request $request, PictureService $pictureService) : Response
+    public function add(ManagerRegistry $doctrine, Barbershop $barbershop = null, Request $request, PictureService $pictureService, NominatimHttpClient $nominatim) : Response
     {
         $form = $this->createForm(BarbershopType::class, $barbershop);
         $form->handleRequest($request);
@@ -31,9 +32,22 @@ class BarbershopController extends AbstractController
         if($form->isSubmitted() && $form->isValid())
         {
             $barbershop = $form->getData();
-            
-            // On récupere  les images 
 
+            // RECUPERER LA LONGITUDE ET LA LATITUDE
+
+            // On récupere les données du formulaire
+            // Urlencode pour que l'adresse soit formatée pour être valide dans une URL (car elle vas passer dans l'API)
+            $adresse = urlencode($form->get('adresse')->getData());
+            $ville = urlencode($form->get('ville')->getData());
+            $cp = $form->get('cp')->getData();
+
+            // On passe les données a nominatim
+            $coordinates = $nominatim->getCoordinates($adresse,$ville,$cp);
+
+            // 
+            dd($coordinates);
+
+            // RECUPERER LES IMAGES
             $image = $form->get('images')->getData();
 
             // On définit le dossier de destination
@@ -45,12 +59,12 @@ class BarbershopController extends AbstractController
             $img->setNom($fichier);
             $barbershop->addBarbershopPic($img);
 
-                
-                $entityManager = $doctrine->getManager();
-                $entityManager->persist($barbershop);
-                $entityManager->flush();
+            // ON ENVOIE LES DONNEES DANS LA BDD
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($barbershop);
+            $entityManager->flush();
 
-                return $this->redirectToRout('app_barbershop');
+            return $this->redirectToRout('app_barbershop');
         }
 
         return $this->render('barbershop/add.html.twig', [
