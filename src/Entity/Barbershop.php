@@ -52,7 +52,7 @@ class Barbershop
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $facebook = null;
 
-    #[ORM\Column]
+    #[ORM\Column (type: 'boolean', nullable: true, options: ['default' => false])]
     private ?bool $isValidate = null;
 
     #[ORM\OneToMany(mappedBy: 'barbershop', targetEntity: BarbershopPics::class, orphanRemoval: true, cascade:['persist'])]

@@ -44,8 +44,9 @@ class BarbershopController extends AbstractController
             // On passe les données a nominatim
             $coordinates = $nominatim->getCoordinates($adresse,$ville,$cp);
 
-            // 
-            dd($coordinates);
+            // On set la latitude et la longitude pour le bar
+            $barbershop->setLatitude($coordinates[0]['lat']);
+            $barbershop->setLongitude($coordinates[0]['lon']);
 
             // RECUPERER LES IMAGES
             $image = $form->get('images')->getData();
@@ -64,7 +65,7 @@ class BarbershopController extends AbstractController
             $entityManager->persist($barbershop);
             $entityManager->flush();
 
-            return $this->redirectToRout('app_barbershop');
+            return $this->redirectToRoute('app_barbershop');
         }
 
         return $this->render('barbershop/add.html.twig', [
