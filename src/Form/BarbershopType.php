@@ -21,7 +21,7 @@ class BarbershopType extends AbstractType
             ->add('description', TextareaType::class)
               
             ->add('adresse', TextType::class, [
-                'attr' => ['class' => 'adresse-js']
+                'attr' => ['id' => 'adresse-input']
             ])
 
             ->add('cp', NumberType::class, [
@@ -31,7 +31,7 @@ class BarbershopType extends AbstractType
             ->add('ville', TextType::class, [
                 'attr' => ['class' => 'ville-js']
             ])
-            
+
             ->add('horaires', TextareaType::class)
             ->add('telephone', TextType::class)
             ->add('email', TextType::class)
