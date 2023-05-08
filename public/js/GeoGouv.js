@@ -4,6 +4,11 @@
 $(document).ready(function() {
     // Selection du champ adresse et initialisation de Select2
     $('#barbershop_adresse').select2({
+        multiple: true,
+        maximumSelectionSize: 1,
+        placeholder: {
+            text: 'Adresse du salon...'
+        },
         // Traduction en français
         language: {
             searching: function() {
@@ -23,6 +28,7 @@ $(document).ready(function() {
         // Recherche se déclenche après minimum 4 caractères rentrés (L'API a besoin de 3 caractères minimum)
         minimumInputLength: 4,
         minimumResultsForSearch: Infinity,
+        
         // Appel a l'api
         ajax: {
             url: 'https://api-adresse.data.gouv.fr/search/',
