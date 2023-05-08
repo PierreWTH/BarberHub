@@ -4,6 +4,7 @@
 $(document).ready(function() {
     // Selection du champ adresse et initialisation de Select2
     $('#barbershop_adresse').select2({
+        //Multiple pour pouvoir ecrire directement dans le champ
         multiple: true,
         maximumSelectionSize: 1,
         placeholder: {
