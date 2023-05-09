@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -35,7 +36,18 @@ class BarbershopType extends AbstractType
             ])
 
             ->add('horaires',CollectionType::class, [
-     
+                // Type de la collection de sous formulaire
+                'entry_type' =>TimeType::class,
+                'entry_options' => [
+                    'input' => 'string',
+                    'widget' => 'single_text',
+                ],
+                'by_reference'=> false, 
+                // On peut en ajouter
+                'allow_add' => true, 
+                // On peut en supprimer
+                'allow_delete' => true,
+                'prototype' => true, 
             ])
             
             ->add('telephone', TextType::class)
@@ -51,7 +63,7 @@ class BarbershopType extends AbstractType
 
             ->add('instagram', TextType::class)
             ->add('facebook', TextType::class)
-            //->add('isValidate')
+            
             ->add('submit', SubmitType::class)
         ;
     }

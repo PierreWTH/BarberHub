@@ -12,6 +12,7 @@
 {{ form_row(formAddBarbershop.adresse) }}
 {{ form_row(formAddBarbershop.cp) }}
 {{ form_row(formAddBarbershop.ville) }}
+<button type='button' id='add-opening'> Ajouter des horaires </button>
 {{ form_row(formAddBarbershop.horaires) }}
 {{ form_row(formAddBarbershop.telephone) }}
 {{ form_row(formAddBarbershop.images) }}
@@ -26,6 +27,7 @@
     
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="{{ asset('js/GeoGouv.js')}}"></script>
+<script src="{{ asset('js/addHoraires.js')}}"></script>
 
 {% endblock %}
 
