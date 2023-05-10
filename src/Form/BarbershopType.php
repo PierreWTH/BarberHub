@@ -42,11 +42,11 @@ class BarbershopType extends AbstractType
                     'input' => 'string',
                     'widget' => 'single_text',
                 ],
-                'by_reference'=> false, 
                 // On peut en ajouter
                 'allow_add' => true, 
                 // On peut en supprimer
                 'allow_delete' => true,
+                'by_reference'=> false, 
                 'prototype' => true, 
             ])
             

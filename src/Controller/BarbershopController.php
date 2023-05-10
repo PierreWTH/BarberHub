@@ -60,6 +60,11 @@ class BarbershopController extends AbstractController
             $img->setNom($fichier);
             $barbershop->addBarbershopPic($img);
 
+            // RECUPERE LES HORAIRES
+
+            //$horaires = $request->request->all(['barbershop']['horaires']['0']);
+            //dd($horaires);
+
             // ON ENVOIE LES DONNEES DANS LA BDD
             $entityManager = $doctrine->getManager();
             $entityManager->persist($barbershop);
