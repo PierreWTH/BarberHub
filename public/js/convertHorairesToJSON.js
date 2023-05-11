@@ -15,7 +15,6 @@ document.getElementById('addBarbershopForm').addEventListener('submit', function
         var jour = $(this).find('input[name="jourActuel"]').val()
         // Input qui récupère l'ouverture (^ sert a indiquer que le nom doit commencer par ça)
         var ouverture = $(this).find('input[name^="ouverture"]').val()
-        
         // Input qui récupère la fermeture
         var fermeture = $(this).find('input[name^="fermeture"]').val()
 
@@ -38,8 +37,9 @@ document.getElementById('addBarbershopForm').addEventListener('submit', function
         }
 
     })   
-    // Remplissage du champs caché Horaires avec le JSON des horaires
-    $('barbershop_horaires').val(JSON.stringify(horaires))
-    // On submit le formulaire
+    // Remplissage du champs caché Horaires avec le JSON des horaires (JSON.stringify pour convertir en JSON)
+    $('#barbershop_horaires').val(JSON.stringify(horaires))
+    //console.log($('#barbershop_horaires').val())
+    //On submit le formulaire
     this.submit()
 });
