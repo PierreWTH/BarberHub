@@ -4,7 +4,7 @@
 $(document).ready(function() {
     // Selection du champ adresse et initialisation de Select2
     $('#barbershop_adresse').select2({
-        //Multiple pour pouvoir ecrire directement dans le champ
+        // Multiple pour pouvoir ecrire directement dans le champ
         multiple: true,
         maximumSelectionSize: 1,
         placeholder: {
@@ -35,7 +35,7 @@ $(document).ready(function() {
             url: 'https://api-adresse.data.gouv.fr/search/',
             dataType: 'json',
             // Delai de 300ms entre chaque appel pour ne pas surcharger l'API
-            delay: 300,
+            delay: 250,
             data: function(params) {
                 return {
                     q: params.term
@@ -63,9 +63,11 @@ $(document).ready(function() {
     $('#barbershop_adresse').on('select2:select', function(e) {
         const selectedAdresse = e.params.data;
         
-        // Remplissage des champs cp et ville en fonction de l'adresse choisie puis desactivation des champs
-        $('#barbershop_cp').val(selectedAdresse.postcode).prop('disabled', true);
-        $('#barbershop_ville').val(selectedAdresse.city).prop('disabled', true);
+        // Remplissage des champs cp adresse ville en fonction de l'adresse choisie puis desactivation des champs cv et ville
+        $('#barbershop_adresse').val(selectedAdresse.adresse);
+        $('#barbershop_cp').val(selectedAdresse.postcode);
+        $('#barbershop_ville').val(selectedAdresse.city);
+        
 
         // Afficher l'élément selectionnée dans le champs adresse
         // Création d'un ouvel élément d'option : (texte affiché, valeur de l'option, defautSelected, Selected)

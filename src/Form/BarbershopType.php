@@ -6,10 +6,12 @@ use App\Entity\Barbershop;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -23,28 +25,51 @@ class BarbershopType extends AbstractType
             ->add('nom', TextType::class)
             ->add('description', TextareaType::class)
               
-            ->add('adresse', TextType::class, [
-                'attr' => ['id' => 'adresse-input']
-            ])
+            ->add('adresse', TextType::class)
 
-            ->add('cp', NumberType::class, [
-                'attr' => ['class' => 'codepostal-js']
-            ])
+            ->add('cp', TextType::class )
 
-            ->add('ville', TextType::class, [
-                'attr' => ['class' => 'ville-js']
-            ])
+            ->add('ville', TextType::class )
+            
+            ->add('horaires', HiddenType::class) 
 
-            ->add('horaires',CollectionType::class, [
+            ->add('jours',CollectionType::class, [
+                // Mapped false car pas relié a un champs de la BDD
+                'mapped' => false,
+                'label' => false,
                 // Type de la collection de sous formulaire
-                'entry_type' =>TimeType::class,
+                'entry_type' =>HiddenType::class,
+                // On peut en ajouter
+                'allow_add' => true, 
+                // On peut en supprimer
+                'allow_delete' => true,
+                'by_reference'=> false, 
+                'prototype' => true, 
+            ])
+
+            ->add('ouvertures', CollectionType::class, [
+                'mapped' => false,
+                'label' => false,
+                'entry_type' => TimeType::class,
                 'entry_options' => [
                     'input' => 'string',
                     'widget' => 'single_text',
                 ],
-                // On peut en ajouter
                 'allow_add' => true, 
-                // On peut en supprimer
+                'allow_delete' => true,
+                'by_reference'=> false, 
+                'prototype' => true, 
+            ])
+
+            ->add('fermetures', CollectionType::class, [
+                'label' => false,
+                'mapped' => false,
+                'entry_type' => TimeType::class,
+                'entry_options' => [
+                    'input' => 'string',
+                    'widget' => 'single_text',
+                ],
+                'allow_add' => true, 
                 'allow_delete' => true,
                 'by_reference'=> false, 
                 'prototype' => true, 
@@ -61,8 +86,8 @@ class BarbershopType extends AbstractType
             ])
 
 
-            ->add('instagram', TextType::class)
-            ->add('facebook', TextType::class)
+            ->add('instagram', UrlType::class)
+            ->add('facebook', UrlType::class)
             
             ->add('submit', SubmitType::class)
         ;
@@ -72,6 +97,8 @@ class BarbershopType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Barbershop::class,
+            'attr' => [
+                'id' => 'addBarbershopForm']
         ]);
     }
 }

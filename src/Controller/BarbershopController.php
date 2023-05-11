@@ -68,13 +68,14 @@ class BarbershopController extends AbstractController
             // ON ENVOIE LES DONNEES DANS LA BDD
             $entityManager = $doctrine->getManager();
             $entityManager->persist($barbershop);
+            
             $entityManager->flush();
 
             return $this->redirectToRoute('app_barbershop');
         }
 
         return $this->render('barbershop/add.html.twig', [
-            'formAddBarbershop' => $form->createView()
+            'formAddBarbershop' => $form->createView(),
         ]);
     }
 
