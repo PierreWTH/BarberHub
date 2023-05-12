@@ -32,48 +32,6 @@ class BarbershopType extends AbstractType
             ->add('ville', TextType::class )
             
             ->add('horaires', HiddenType::class) 
-
-            ->add('jours',CollectionType::class, [
-                // Mapped false car pas relié a un champs de la BDD
-                'mapped' => false,
-                'label' => false,
-                // Type de la collection de sous formulaire
-                'entry_type' =>HiddenType::class,
-                // On peut en ajouter
-                'allow_add' => true, 
-                // On peut en supprimer
-                'allow_delete' => true,
-                'by_reference'=> false, 
-                'prototype' => true, 
-            ])
-
-            ->add('ouvertures', CollectionType::class, [
-                'mapped' => false,
-                'label' => false,
-                'entry_type' => TimeType::class,
-                'entry_options' => [
-                    'input' => 'string',
-                    'widget' => 'single_text',
-                ],
-                'allow_add' => true, 
-                'allow_delete' => true,
-                'by_reference'=> false, 
-                'prototype' => true, 
-            ])
-
-            ->add('fermetures', CollectionType::class, [
-                'label' => false,
-                'mapped' => false,
-                'entry_type' => TimeType::class,
-                'entry_options' => [
-                    'input' => 'string',
-                    'widget' => 'single_text',
-                ],
-                'allow_add' => true, 
-                'allow_delete' => true,
-                'by_reference'=> false, 
-                'prototype' => true, 
-            ])
             
             ->add('telephone', TextType::class)
             ->add('email', TextType::class)
@@ -85,8 +43,8 @@ class BarbershopType extends AbstractType
                 'required' =>false,
             ])
 
-
             ->add('instagram', UrlType::class)
+
             ->add('facebook', UrlType::class)
             
             ->add('submit', SubmitType::class)

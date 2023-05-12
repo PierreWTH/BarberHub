@@ -62,7 +62,7 @@ class BarbershopController extends AbstractController
 
             // RECUPERER LES HORAIRES
             $horaires = $form->get('horaires')->getData();
-            dd($horaires);
+            $barbershop->setHoraires($horaires);
 
             // ON ENVOIE LES DONNEES DANS LA BDD
             $entityManager = $doctrine->getManager();

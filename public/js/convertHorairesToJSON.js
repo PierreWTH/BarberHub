@@ -39,7 +39,7 @@ document.getElementById('addBarbershopForm').addEventListener('submit', function
     })   
     // Remplissage du champs caché Horaires avec le JSON des horaires (JSON.stringify pour convertir en JSON)
     $('#barbershop_horaires').val(JSON.stringify(horaires))
-    //console.log($('#barbershop_horaires').val())
+    console.log($('#barbershop_horaires').val())
     //On submit le formulaire
     this.submit()
 });

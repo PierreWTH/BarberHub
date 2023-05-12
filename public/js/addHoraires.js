@@ -46,6 +46,7 @@ $(addOpeningButton).click(function() {
     }
     
 });
+
 // SUPPRIMER DES CHAMPS
 // Au click du remove bouton
 $(addHorairesTbody).on('click', '.remove-horaire-button', function() {
