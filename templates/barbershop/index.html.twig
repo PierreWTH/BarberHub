@@ -6,6 +6,8 @@
 
 <h1> Tous les barbiers </h1>
 
+{# Barre de recherche #}
+
 {% for barbershop in allBarbershops %}
 
 <a href="{{path ('show_barbershop', {id : barbershop.id })}}"> {{barbershop.nom}}</a>
