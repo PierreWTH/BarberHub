@@ -4,6 +4,31 @@
 
 {% block body %}
 
-<h1> Bienvenue </h1>
+<h1>  Trouvez le barbier qui vous corresponds </h1>
+
+<h2> Les barbiers de la semaine </h2>
+
+{% for barbershop in lastBarbershops %}
+
+ {{barbershop.nom}} 
+
+{% endfor %}
+
+<div>
+<p> Découvrez les barbiers de votre ville </p>
+<p> Lorem ipsum dolor sit amet, consectetur Maecenas et consectetur odio. Curabitur a purus id sem dictum laoreet. Phasellus non semper enim. Praesent vulputate interdum porta. Fusce nec scelerisque enim.</p>
+</div>
+
+<div>
+<p> Reservez un rendez vous </p>
+Lorem ipsum dolor sit amet, consectetur Maecenas et consectetur odio. Curabitur a purus id sem dictum laoreet. Phasellus non semper enim. Praesent vulputate interdum porta. Fusce nec scelerisque enim.Lorem ipsum dolor sit amet, consectetur Maecenas et consectetur odio. 
+</div>
+
+<div>
+<p> Achetez vos produits préférés</p>
+Lorem ipsum dolor sit amet, consectetur Maecenas et consectetur odio. Curabitur a purus id sem dictum laoreet. Phasellus non semper enim. Praesent vulputate interdum porta. Fusce nec scelerisque enim.
+</div>
+
+<h2> Nos derniers articles </h2>
 
 {% endblock %}

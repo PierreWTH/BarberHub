@@ -15,11 +15,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BarbershopController extends AbstractController
 {
-    #[Route('/barbershop', name: 'app_barbershop')]
-    public function index(): Response
+    #[Route('/barbershops', name: 'app_barbershop')]
+    public function index(ManagerRegistry $doctrine): Response
     {
+        // Récuperer tous les barbiers de la BDD
+        $allBarbershops = $doctrine->getRepository(Barbershop::Class)->findBy([], ["nom"=>"ASC"]);
+
         return $this->render('barbershop/index.html.twig', [
-            'controller_name' => 'BarbershopController',
+            'allBarbershops' => $allBarbershops,
         ]);
     }
 
@@ -62,7 +65,9 @@ class BarbershopController extends AbstractController
 
             // RECUPERER LES HORAIRES
             $horaires = $form->get('horaires')->getData();
-            $barbershop->setHoraires($horaires);
+            // Enregistre en tant que tableau PHP
+            $arrayHoraires = json_decode($horaires, true); // CHANGER LE TYPE DE HORAIRES EN ARRAY
+            $barbershop->setHoraires($arrayHoraires);
 
             // ON ENVOIE LES DONNEES DANS LA BDD
             $entityManager = $doctrine->getManager();
@@ -79,9 +84,19 @@ class BarbershopController extends AbstractController
     }
 
     #[Route('/barbershop/{id}', name: 'show_barbershop')]
-    public function show(Barbershop $barbershop) : Response
+    public function show(Barbershop $barbershop = null) : Response
     {
-        return $this->render('barbershop/show.html.twig', []);
+        if ($barbershop)
+        {
+            return $this->render('barbershop/show.html.twig', [
+                'barbershop' => $barbershop
+            ]);
+        }
+        else
+        {
+            return $this->redirectToRoute('app_barbershop');
+        }
+        
     }
 }
 

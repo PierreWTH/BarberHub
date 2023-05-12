@@ -1,7 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello BarbershopController!{% endblock %}
+{% block title %}Tous les barbiers{% endblock %}
 
 {% block body %}
+
+<h1> Tous les barbiers </h1>
+
+{% for barbershop in allBarbershops %}
+
+<a href="{{path ('show_barbershop', {id : barbershop.id })}}"> {{barbershop.nom}}</a>
+
+{% endfor %}
 
 {% endblock %}

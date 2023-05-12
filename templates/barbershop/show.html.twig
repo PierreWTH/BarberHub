@@ -1,7 +1,34 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Details {% endblock %}
+{% block title %} {{barbershop.nom}} {% endblock %}
 
 {% block body %}
+
+{# Photo du salon #}
+
+<h1> {{barbershop.nom}} </h1>
+
+<h2> Informations </h2>
+
+{{barbershop.description}}
+
+<h3> Horaires </h3>
+
+{{barbershop.horaires}}
+
+<h3> Réseaux sociaux </h3>
+
+<a href="{{barbershop.facebook}}"><i class="fa-brands fa-square-facebook"></i></a>
+<a href="{{barbershop.instagram}}"><i class="fa-brands fa-instagram"></i></a>
+
+{# Carte leaflet#}
+
+<h3> Prestations </h3>
+
+<h3> Boutique </h3>
+
+<h3> Réalisations </h3>
+
+
 
 {% endblock %}

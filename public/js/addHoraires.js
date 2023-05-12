@@ -6,7 +6,7 @@ var addOpeningButton = $('.add-horaire-button');
 var removeOpeningButton = $('.remove-horaire-button');
 
 // Tableau de jours de la semaine
-var joursSemaine = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
+var joursSemaine = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"]
 
 // Selection de la table d'ajout d'horaires
 var addHorairesTbody = $('.addHorairesTbody')
