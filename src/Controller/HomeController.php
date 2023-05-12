@@ -9,7 +9,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
-{
+{   
+    // Home
     #[Route('/', name: 'app_home')]
     public function index(ManagerRegistry $doctrine): Response
     {
@@ -19,5 +20,12 @@ class HomeController extends AbstractController
         return $this->render('home/index.html.twig', [
             'lastBarbershops' => $lastBarbershops
         ]);
+    }
+
+    // Profil
+    #[Route('/monespace', name: 'app_myspace')]
+    public function myspace(): Response
+    {
+        return $this->render('home/myspace.html.twig', []);
     }
 }
