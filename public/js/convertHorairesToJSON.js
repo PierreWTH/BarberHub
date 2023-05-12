@@ -12,28 +12,22 @@ document.getElementById('addBarbershopForm').addEventListener('submit', function
         // REMPLISSAGE DES VARIABLES
 
         // Input Hidden qui récupere le jour
-        var jour = $(this).find('input[name="jourActuel"]').val()
+        var jour = $(this).find('input[name="jourActuel"]').val() 
         // Input qui récupère l'ouverture (^ sert a indiquer que le nom doit commencer par ça)
-        var ouverture = $(this).find('input[name^="ouverture"]').val()
+        var ouverture = $(this).find('input[name^="ouverture"]').val() || 'ferme'
         // Input qui récupère la fermeture
-        var fermeture = $(this).find('input[name^="fermeture"]').val()
+        var fermeture = $(this).find('input[name^="fermeture"]').val() || 'ferme'
 
         // Si les variables sont valides
         if (jour && ouverture && fermeture){
     
-            // Vérification de la cohérence des heures
-            if (ouverture < fermeture) {
             // Ajout dans le tableau
-                horaires[jour] = {
-                    'jour' : jour,
-                    'ouverture' : ouverture,
-                    'fermeture' : fermeture    
-                }
+            horaires[jour] = {
+                'jour' : jour,
+                'ouverture' : ouverture,
+                'fermeture' : fermeture    
             }
-            else{
-                alert('La date de fermeture doit être supérieure a l\'heure d\'ouverture')
-            }
-
+           
         }
 
     })   
