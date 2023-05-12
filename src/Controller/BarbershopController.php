@@ -57,7 +57,7 @@ class BarbershopController extends AbstractController
             // On définit le dossier de destination
             $folder = 'barbershopPics';
             // On appelle le service d'ajout 
-            $fichier = $pictureService->add($image, $folder, 300, 300);
+            $fichier = $pictureService->add($image, $folder, 700, 300);
 
             $img = new BarbershopPics();
             $img->setNom($fichier);

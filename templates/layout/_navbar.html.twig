@@ -7,7 +7,7 @@
     {% if app.user %}
     
     {% if is_granted('ROLE_ADMIN') %}
-    <a href=""> Administration </a>
+    <a href="{{path ('control_pannel')}}"> Administration </a>
     {% endif %}
     <a href="{{path ('app_myspace')}}"> Mon espace </a>
     <a href="{{path ('app_logout')}}"> Se deconnecter </a>
