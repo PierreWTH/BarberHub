@@ -28,7 +28,7 @@ $(addOpeningButton).click(function() {
         // Affichage du jour de la semaine
         newChamps.append('<td>' + jourActuel + '</td>')
         // Champs caché qui récupère le jour actuel
-        newChamps.append('<input type="hidden" id="inputJourActuel" name="jourActuel" value=" '+ jourActuel +'" />')
+        newChamps.append('<input type="hidden" id="inputJourActuel" name="jourActuel" value="'+ jourActuel +'" />')
         // Ajout d'un nouveau champs pour les heures d'ouvertures
         newChamps.append('<td><input id="heureOuverture" type="time" name="ouverture['+ nbChamps +']"></td>');
         // Nouveau champs pour les heures de fermetures

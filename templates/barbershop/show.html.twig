@@ -13,9 +13,12 @@
 {{barbershop.description}}
 
 <h3> Horaires </h3>
-
+{% if (horaires[jourActuel]['ouverture'] == 'ferme' ) %}
+<i class="fa-solid fa-circle"></i> Fermé actuellement
+{% else %}
+<i class="fa-solid fa-circle"></i> Ouvert actuellement
+{% endif %}
 {# Iterer sur les horaires dans un tableau #}
-
 <table>
     <thead>
         <tr>
@@ -25,9 +28,14 @@
         </tr>
     </thead>
     <tbody>
-        <td></td>
-        <td></td>
-        <td></td>
+        
+        {% for jour in horaires %}
+        <tr>
+            <td>{{ jour['jour'] }}</td>
+            <td>{{ jour['ouverture'] }}</td>
+            <td>{{ jour['fermeture'] }}</td>
+        </tr>
+        {% endfor %}
     </tbody>
 </table>
 

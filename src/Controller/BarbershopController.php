@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use DateTime;
+use IntlDateFormatter;
 use App\Entity\Barbershop;
 use App\Form\BarbershopType;
 use App\Entity\BarbershopPics;
@@ -66,8 +68,7 @@ class BarbershopController extends AbstractController
             // RECUPERER LES HORAIRES
             $horaires = $form->get('horaires')->getData();
             // Enregistre en tant que tableau PHP
-            $arrayHoraires = json_decode($horaires, true); // CHANGER LE TYPE DE HORAIRES EN ARRAY
-            $barbershop->setHoraires($arrayHoraires);
+            $barbershop->setHoraires($horaires);
 
             // ON ENVOIE LES DONNEES DANS LA BDD
             $entityManager = $doctrine->getManager();
@@ -88,8 +89,18 @@ class BarbershopController extends AbstractController
     {
         if ($barbershop)
         {
+            $dateActuelle = new DateTime();
+            $locale = 'fr_FR';
+        
+            // Créer un objet IntlDateFormatter pour formater la date en français
+            $dateFormatter = new IntlDateFormatter($locale, IntlDateFormatter::NONE, IntlDateFormatter::NONE, null, null, 'EEEE');
+            // Formater la date actuelle en utilisant le formateur de date
+            $jourActuel = $dateFormatter->format($dateActuelle);
+
             return $this->render('barbershop/show.html.twig', [
-                'barbershop' => $barbershop
+                'barbershop' => $barbershop,
+                'horaires' => json_decode($barbershop->getHoraires(), True),
+                'jourActuel' => $jourActuel
             ]);
         }
         else
