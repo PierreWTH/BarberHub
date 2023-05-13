@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Articles {% endblock %}
+
+{% block body %}
+
+<h1> Tous les articles </h1>
+
+<a href="{{path ('add_article')}}"> Ajouter un article </a>
+
+{% for article in articles %}
+    
+{{ article.titre}}
+
+{% endfor %}
+
+{% endblock %}

@@ -6,6 +6,12 @@
 
 <h1> Tous les barbiers </h1>
 
+{% if is_granted('ROLE_ADMIN') %}
+
+<a href="{{path ('add_barbershop')}}"> Ajouter un barbier </a>
+
+{% endif %}
+
 {# Barre de recherche #}
 
 {% for barbershop in allBarbershops %}
