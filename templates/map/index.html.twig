@@ -2,8 +2,42 @@
 
 {% block title %} Carte {% endblock %}
 
+
 {% block body %}
+
+
 
 <h1> Carte des barbiers </h1>
 
+<div id="map"></div>
+
+
+{% block javascripts %}
+
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+
+{# Script d'ajout des markers a la carte#}
+
+<script>
+const coordinates = JSON.parse('{{ coordinates | json_encode | raw }}');
+
+// Définition du point sur lequel la vue de la map vas se mettre
+var map = L.map('map').setView([48.582, 7.7503], 13);
+
+// Ajout de la couche de carte 
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+
+// Boucle sur les markers
+for (var i = 0; i < coordinates.length; i++)
+{
+    var marker = L.marker([coordinates[i]['latitude'], coordinates[i]['longitude']]).addTo(map);
+}
+</script>
+
 {% endblock %}
+
+{% endblock %}
+
