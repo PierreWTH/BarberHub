@@ -4,7 +4,13 @@
     font-family: 'Poppins';
 }
 
-#map { 
+#map-all-barber { 
     height: 800px; 
     width: 90%;
+}
+
+#map-barber { 
+    height: 400px; 
+    width: 400px;
+    
 }

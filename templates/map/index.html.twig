@@ -9,52 +9,23 @@
 
 <h1> Carte des barbiers </h1>
 
-<div id="map"></div>
+<div id="map-all-barber"></div>
+
 
 
 {% block javascripts %}
 
-<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
-<script src="{{ asset('js/MarkerCluster.js')}}"></script>
-{# Script d'ajout des markers a la carte#}
-
+{# Récupération de coordinates en array JS #}
 <script>
-
-// Récupération de coordinates en tableau JS
-const coordinates = JSON.parse('{{ coordinates | json_encode | raw }}');
-
-// Définition du point sur lequel la vue de la map vas se mettre
-var map = L.map('map').setView([48.582, 7.7503], 13);
-
-// Ajout de la couche de carte 
-L.tileLayer('https://maps.geoapify.com/v1/tile/positron/{z}/{x}/{y}.png?apiKey=061b3e7522c44df3be4a6d16bd067b71', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-}).addTo(map);
-
-// Style de l'icon
-var barberIcon = L.icon({
-    iconUrl: 'https://cdn.icon-icons.com/icons2/1465/PNG/512/598barberpole_100227.png',
-    iconSize:     [50, 50], // size of the icon
-    iconAnchor:   [25, 50], // point of the icon which will correspond to marker's location
-    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-});
-
-// Regroupement des points en clusters
-var markers = new L.MarkerClusterGroup();
-
-// Boucle sur les markers
-for (var i = 0; i < coordinates.length; i++)
-{
-    markers.addLayer(L.marker([coordinates[i]['latitude'], coordinates[i]['longitude']], {icon: barberIcon}));
-    
-}
-
-map.addLayer(markers);
-
+    const coordinates = JSON.parse('{{ coordinates | json_encode | raw }}');
 </script>
+{# CDN Leaflet #}
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+{# Marker Cluster #}
+<script src="{{ asset('js/MarkerCluster.js')}}"></script>
+{# Script affichage leaflet + markercluster #}
+<script src="{{ asset('js/mapAllBarber.js')}}"></script>
 
 {% endblock %}
-
 {% endblock %}
 

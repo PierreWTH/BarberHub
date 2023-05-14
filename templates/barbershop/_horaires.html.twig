@@ -1,0 +1,25 @@
+{% if (horaires[jourActuel]['ouverture'] == 'ferme' ) %}
+<i class="fa-solid fa-circle"></i> Fermé actuellement
+{% else %}
+<i class="fa-solid fa-circle"></i> Ouvert actuellement
+{% endif %}
+{# Iterer sur les horaires dans un tableau #}
+<table>
+    <thead>
+        <tr>
+            <th> Jour </th>
+            <th> Ouverture </th>
+            <th> Fermeture </th>
+        </tr>
+    </thead>
+    <tbody>
+        
+        {% for jour in horaires %}
+        <tr>
+            <td>{{ jour['jour'] }}</td>
+            <td>{{ jour['ouverture'] }}</td>
+            <td>{{ jour['fermeture'] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
