@@ -12,6 +12,9 @@
     
 {{ article.titre}}
 
+<a href="{{path ('edit_article', {id : article.id })}}"> Editer </a>
+<a href="{{path ('delete_article', {id : article.id })}}"> Supprimer </a>
+
 {% endfor %}
 
 {% endblock %}

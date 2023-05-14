@@ -11,7 +11,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ArticleController extends AbstractController
-{
+{   
+    // Index des articles
     #[Route('/article', name: 'app_article')]
     public function index(ManagerRegistry $doctrine): Response
     {
@@ -22,8 +23,9 @@ class ArticleController extends AbstractController
         ]);
     }
 
+    // Ajouter ou éditer un article
     #[Route('/article/add', name: 'add_article')]
-    #[Route('article/{id}/edit', name: 'edit_article')]
+    #[Route('/article/{id}/edit', name: 'edit_article')]
     public function add(ManagerRegistry $doctrine, Article $article = null, Request $request) : Response
     {   
         if(!$article){
@@ -48,4 +50,19 @@ class ArticleController extends AbstractController
             'formAddArticle' => $form->createView(),
         ]);
     }
+
+
+    // Supprimer un article
+    #[Route('admin/article/{id}/delete', name: 'delete_article')]
+    public function delete(ManagerRegistry $doctrine, Article $article = null): Response
+    {   
+        if ($article){
+            $entityManager = $doctrine->getManager();
+            $entityManager->remove($article);
+            $entityManager->flush();
+        }
+        
+        return $this->redirectToRoute('app_article');
+    }
+
 }
