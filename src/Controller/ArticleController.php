@@ -51,6 +51,21 @@ class ArticleController extends AbstractController
         ]);
     }
 
+    // Afficher les details d'un article
+    #[Route('/article/{id}', name: 'show_article')]
+    public function detail(ManagerRegistry $doctrine, Article $article = null): Response
+    {   
+        if ($article)
+        {
+            return $this->render('article/show.html.twig', [
+                'article' => $article,
+            ]);
+        }
+        else
+        {
+            return $this->redirectToRoute('app_article');
+        }
+    }
 
     // Supprimer un article
     #[Route('admin/article/{id}/delete', name: 'delete_article')]
