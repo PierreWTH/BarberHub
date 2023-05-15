@@ -45,14 +45,4 @@ $(addOpeningButton).click(function() {
     
 });
 
-// SUPPRIMER DES CHAMPS
-// Au click du remove bouton
-$(addHorairesTbody).on('click', '.remove-horaire-button', function() {
-    // Utilisation la méthode closest() pour trouver le tr le plus proche
-    var trList = $(addHorairesTbody).find('tr');
-    // Suppression de tous les tr
-    trList.remove();
-    // Décrémentation du nombre de champs
-});
-
 

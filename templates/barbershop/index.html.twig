@@ -17,6 +17,7 @@
 {% for barbershop in allBarbershops %}
 
 <a href="{{path ('show_barbershop', {id : barbershop.id })}}"> {{barbershop.nom}}</a>
+<a href="{{path ('edit_barbershop', {id : barbershop.id })}}">Editer </a>
 
 {% endfor %}
 

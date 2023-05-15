@@ -1,11 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Details {% endblock %}
+{% block title %} Ajouter un barber {% endblock %}
 
 {% block body %}
 
-<h1> Ajouter un Barbershop </h1>
+{# Changement du titre si 'edit' existe #}
+{% if edit %}
+<h1> Editer un barbershop </h1>
 
+{% else %}
+<h1> Ajouter un barbershop </h1>
+{% endif %}
+{{horaires}}
 {{ form_start(formAddBarbershop) }}
 {{ form_row(formAddBarbershop.nom) }}
 {{ form_row(formAddBarbershop.description) }}
@@ -40,11 +46,20 @@
 
 {% block javascripts %}
     
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="{{ asset('js/GeoGouv.js')}}"></script>
 <script src="{{ asset('js/addHoraires.js')}}"></script>
 <script src="{{ asset('js/convertHorairesToJSON.js')}}"></script>
 
+{% if edit %}
+
+<script>
+    const horaires = JSON.parse('{{ horaires | raw }}');
+    console.log(horaires)
+</script>
+
+
+<script src="{{ asset('js/editBarbershop.js')}}"></script>
+{% endif %}
 {% endblock %}
 
 
