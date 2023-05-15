@@ -11,35 +11,35 @@ var joursSemaine = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi",
 // Selection de la table d'ajout d'horaires
 var addHorairesTbody = $('.addHorairesTbody')
 
-//Nombre de tr
-var nbTr = 0
+//Nombre de champs
+var nbChamps = 0
 
 // AJOUTER DES CHAMPS
 // Fonction qui se déclenche au clic du bouton
 $(addOpeningButton).click(function() {
     
-    if (nbTr < 7)
+    if (nbChamps < 7)
     {
         // Boucle pour générer les 7 champs
-        for (var nbChamps = 0; nbChamps<=6; nbChamps++)
+        for (var i = 0; i<=6; i++)
         {
             // Définition d'un nouveau tr
             var newChamps = $('<tr></tr>');
             // Jour actuel :
-            const jourActuel = joursSemaine[nbChamps]
+            const jourActuel = joursSemaine[i]
 
             // Affichage du jour de la semaine
             newChamps.append('<td>' + jourActuel + '</td>')
             // Champs caché qui récupère le jour actuel
             newChamps.append('<input type="hidden" id="inputJourActuel" name="jourActuel" value="'+ jourActuel +'" />')
             // Ajout d'un nouveau champs pour les heures d'ouvertures
-            newChamps.append('<td><input id="heureOuverture" type="time" name="ouverture['+ nbChamps +']"></td>');
+            newChamps.append('<td><input id="heureOuverture" type="time" name="ouverture['+ i +']"></td>');
             // Nouveau champs pour les heures de fermetures
-            newChamps.append('<td><input id="heureFermeture" type="time" name="fermeture['+ nbChamps +']"></td>');
+            newChamps.append('<td><input id="heureFermeture" type="time" name="fermeture['+ i +']"></td>');
             // Bouton pour supprimer le champs crée
             
             addHorairesTbody.append(newChamps);
-            nbTr++
+            nbChamps++
         }
     }
     

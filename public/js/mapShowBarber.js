@@ -5,7 +5,7 @@ var map = L.map('map-barber').setView([coordinates[0]['latitude'], coordinates[0
 // Ajout de la couche de carte 
 L.tileLayer('https://maps.geoapify.com/v1/tile/positron/{z}/{x}/{y}.png?apiKey=061b3e7522c44df3be4a6d16bd067b71', {
     maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    attribution: '&copy; OpenStreetMap'
 }).addTo(map);
 
 // Style de l'icon

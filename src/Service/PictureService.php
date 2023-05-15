@@ -14,7 +14,7 @@ class PictureService
         $this->params = $params;
     }
 
-    public function add(UploadedFile $picture, ?string $folder = '', ?int $width = 250, ?int $height = 250)
+    public function add(UploadedFile $picture, ?string $folder = '', ?int $width = 850, ?int $height = 310)
     {
         // On donne un nouveau nom a l'image
         $fichier = md5(uniqid(rand(), true)) . '.webp';
@@ -54,31 +54,32 @@ class PictureService
         $imageHeight = $pciture_infos[1];
 
         // On vérifie l'orientation de l'image
-        switch($imageWidth <=> $imageHeight) // Triple comparaison : inférieur, égal, supérieur
-        {
-            case -1: // portait
-                // On découpe l'image 
-                $squareSize = $imageWidth;
-                $src_x = 0;
-                $src_y = ($imageHeigt - $squareSize) / 2;
-            
-            case 0: // carré
-                // Pas besoin de découpe
-                $squareSize = $imageWidth;
-                $src_x = 0;
-                $src_y = 0;
-
-            case 1: // paysage
-                // On découpe l'image 
-                $squareSize = $imageWidth;
-                $src_x = ($imageWidth - $squareSize) / 2;
-                $src_y = 0;
-        } 
+        if ($imageWidth > $imageHeight) {
+            // Paysage
+            $resizedWidth = $width;
+            $resizedHeight = $imageHeight * ($width / $imageWidth);
+            $src_x = 0;
+            $src_y = 0;
+        } elseif ($imageWidth < $imageHeight) {
+            // Portrait
+            $resizedWidth = $width;
+            $resizedHeight = $height;
+            $src_x = 0;
+            $src_y = 0;
+            $imageHeight = $imageWidth;
+        } else {
+            // Carré
+            $resizedWidth = $width;
+            $resizedHeight = $height;
+            $src_x = 0;
+            $src_y = 0;
+        }
 
         // On crée une nouvelle image vierge
-        $resized_picture = imagecreatetruecolor($width, $height);
+        $resized_picture = imagecreatetruecolor($resizedWidth, $resizedHeight);
 
-        imagecopyresampled($resized_picture, $picture_source, 0, 0, $src_x, $src_y, $width, $height, $squareSize, $squareSize);
+        imagecopyresampled($resized_picture, $picture_source, 0, 0, $src_x, $src_y, $resizedWidth, $resizedHeight, $imageWidth, $imageHeight);
+
 
         $path = $this->params->get('images_directory') .$folder;
 
