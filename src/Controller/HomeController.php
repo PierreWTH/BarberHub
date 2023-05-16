@@ -15,7 +15,7 @@ class HomeController extends AbstractController
     public function index(ManagerRegistry $doctrine): Response
     {
         // Récuperer les 3 derniers barbershops de la BDD
-        $lastBarbershops = $doctrine->getRepository(Barbershop::Class)->findBy([], ["nom"=>"ASC"] , 3);
+        $lastBarbershops = $doctrine->getRepository(Barbershop::Class)->findBy([], ["creationDate"=>"DESC"] , 3);
         
         return $this->render('home/index.html.twig', [
             'lastBarbershops' => $lastBarbershops

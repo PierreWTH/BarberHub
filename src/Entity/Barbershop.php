@@ -58,6 +58,9 @@ class Barbershop
     #[ORM\OneToMany(mappedBy: 'barbershop', targetEntity: BarbershopPics::class, orphanRemoval: true, cascade:['persist', 'remove'])]
     private Collection $barbershopPics;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, options:["default"=> "CURRENT_TIMESTAMP"])]
+    private ?\DateTimeInterface $creationDate = null;
+
     public function __construct()
     {
         $this->barbershopPics = new ArrayCollection();
@@ -250,6 +253,18 @@ class Barbershop
                 $barbershopPic->setBarbershop(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreationDate(): ?\DateTimeInterface
+    {
+        return $this->creationDate;
+    }
+
+    public function setCreationDate(\DateTimeInterface $creationDate): self
+    {
+        $this->creationDate = $creationDate;
 
         return $this;
     }

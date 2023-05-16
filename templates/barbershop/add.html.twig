@@ -11,7 +11,7 @@
 {% else %}
 <h1> Ajouter un barbershop </h1>
 {% endif %}
-{{horaires}}
+
 {{ form_start(formAddBarbershop) }}
 {{ form_row(formAddBarbershop.nom) }}
 {{ form_row(formAddBarbershop.description) }}
@@ -53,13 +53,16 @@
 {% if edit %}
 
 <script>
-    const horaires = JSON.parse('{{ horaires | raw }}');
-    console.log(horaires)
+
+    const editHoraires = JSON.parse('{{ horaires | raw }}');
+    console.log(editHoraires)
+    
 </script>
 
-
 <script src="{{ asset('js/editBarbershop.js')}}"></script>
+
 {% endif %}
+
 {% endblock %}
 
 

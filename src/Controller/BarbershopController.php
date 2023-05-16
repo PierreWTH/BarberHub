@@ -37,7 +37,7 @@ class BarbershopController extends AbstractController
             $barbershop = $entityManager->getRepository(Barbershop::class)->find($id);
             // Vérifier si le Barbershop existe
             if (!$barbershop) {
-                throw $this->createNotFoundException('Barbershop introuvable');
+                throw $this->createNotFoundException('Barbershop introuvable.');
             }
         } else {
             // Créer un nouvel objet Barbershop pour le mode ajout
@@ -86,6 +86,13 @@ class BarbershopController extends AbstractController
             $horaires = $form->get('horaires')->getData();
             // Enregistre en tant que tableau PHP
             $barbershop->setHoraires($horaires);
+
+            // SET LA DATE DE CREATION
+            $date = new DateTime();
+            $barbershop->setCreationDate($date);
+
+            // SET IS_VALIDATE
+            $barbershop->setIsValidate(0);
 
             // ON ENVOIE LES DONNEES DANS LA BDD
             $entityManager = $doctrine->getManager();
@@ -138,6 +145,19 @@ class BarbershopController extends AbstractController
             return $this->redirectToRoute('app_barbershop');
         }
         
+    }
+
+    // Supprimer un Barbershop
+    #[Route('/barbershop/{id}/delete', name: 'delete_barbershop')]
+    public function delete(ManagerRegistry $doctrine, barbershop $barbershop = null): Response
+    {   
+        if ($barbershop){
+            $entityManager = $doctrine->getManager();
+            $entityManager->remove($barbershop);
+            $entityManager->flush();
+        }
+        
+        return $this->redirectToRoute('app_barbershop');
     }
 }
 

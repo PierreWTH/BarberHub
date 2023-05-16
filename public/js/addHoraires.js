@@ -16,8 +16,6 @@ var nbChamps = 0
 
 // AJOUTER DES CHAMPS
 // Fonction qui se déclenche au clic du bouton
-$(addOpeningButton).click(function() {
-    
     if (nbChamps < 7)
     {
         // Boucle pour générer les 7 champs
@@ -32,7 +30,7 @@ $(addOpeningButton).click(function() {
             newChamps.append('<td>' + jourActuel + '</td>')
             // Champs caché qui récupère le jour actuel
             newChamps.append('<input type="hidden" id="inputJourActuel" name="jourActuel" value="'+ jourActuel +'" />')
-            // Ajout d'un nouveau champs pour les heures d'ouvertures
+            // Ajout d'un nouveau champs pour les heures d'ouverture
             newChamps.append('<td><input id="heureOuverture" type="time" name="ouverture['+ i +']"></td>');
             // Nouveau champs pour les heures de fermetures
             newChamps.append('<td><input id="heureFermeture" type="time" name="fermeture['+ i +']"></td>');
@@ -40,9 +38,9 @@ $(addOpeningButton).click(function() {
             
             addHorairesTbody.append(newChamps);
             nbChamps++
+  
         }
     }
     
-});
 
 

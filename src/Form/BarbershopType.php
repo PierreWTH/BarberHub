@@ -30,7 +30,9 @@ class BarbershopType extends AbstractType
 
             ->add('ville', TextType::class )
             
-            ->add('horaires', HiddenType::class) 
+            ->add('horaires', HiddenType::class, [
+                'required' =>true,
+            ]) 
             
             ->add('telephone', TextType::class)
             ->add('email', TextType::class, [

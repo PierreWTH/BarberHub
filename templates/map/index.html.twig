@@ -18,6 +18,7 @@
 {# Récupération de coordinates en array JS #}
 <script>
     const coordinates = JSON.parse('{{ coordinates | json_encode | raw }}');
+
 </script>
 {# CDN Leaflet #}
 <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>

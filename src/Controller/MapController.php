@@ -13,7 +13,7 @@ class MapController extends AbstractController
     #[Route('/map', name: 'app_map')]
     public function index(ManagerRegistry $doctrine): Response
     {   
-        $barbershops = $doctrine->getRepository(Barbershop::Class)->findBy([], ["nom"=>"ASC"]);
+        $barbershops = $doctrine->getRepository(Barbershop::Class)->findAll();
         
         foreach ($barbershops as $barbershop) {
             $latitude = $barbershop->getLatitude();
