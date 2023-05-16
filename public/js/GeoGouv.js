@@ -16,12 +16,30 @@ $(document).ready(function() {
         loadThrottle: 300, 
         // Texte d'attente requete
         loadingClass: "Recherche...",
-        placeholder: "Choississez une adresse...",
+        placeholder: "Votre adresse...",
         // Personnalisation du rendu
+        
         render: {
             option: function(item, escape){
-                console.log(item)
+                //console.log(item)
                 return '<div>' + escape(item.label) + '</div>'
+            }
+        },
+        // Quand on selectionne une adresse, remplissage de CP et ville
+        onChange: function(value) {
+            if(value) {
+                var selectedAdress = this.options[value];
+                //console.log(selectedAdress)
+                var codePostal = selectedAdress.postcode;
+                var ville = selectedAdress.city
+
+                $('#barbershop_cp').val(codePostal)
+                $('#barbershop_ville').val(ville)
+            }
+            // Suppression de CP et ville si on suppr l'adresse
+            else{
+                $('#barbershop_cp').val('')
+                $('#barbershop_ville').val('')
             }
         },
     
@@ -30,7 +48,7 @@ $(document).ready(function() {
             // Si l'utilisateur n'a rien écrit ou si moins de 4 caractères
             if (!query.length) return callback();
             if (query.length < 4) return callback();
-
+        
             //Requete AJAX vers GEOGOUV
             $.ajax({
                 url:'https://api-adresse.data.gouv.fr/search/',
@@ -46,19 +64,23 @@ $(document).ready(function() {
                 {
                     callback();
                 },
-                // En cas de succes : on affiche l'adresse et on met l'adresse en valeur
+                // En cas de succes on retourne l'adresse, le nom, le cp et la ville
                 success: function(res) 
                 {
                     callback(res.features.map(function(feature)
                     {   
-                        console.log(res.features)
+                        //console.log(res.features)
                             return {
                                 value: feature.properties.name,
-                                label: feature.properties.name
+                                label: feature.properties.label,
+                                postcode : feature.properties.postcode,
+                                city : feature.properties.city
                             };
                     })); 
+
                 }
             });
         }
     });
+    
 });
