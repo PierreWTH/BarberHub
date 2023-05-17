@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 use App\Entity\Article;
 use Symfony\Component\Form\AbstractType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,9 +25,8 @@ class ArticleType extends AbstractType
             ->add('photo', UrlType::class, ['attr'=>
             ['placeholder ' => 'URL de la photo']
             ])
-            ->add('texte', TextareaType::class, ['attr'=>
-            ['placeholder ' => 'Ecrivez le contenu ici...']
-            ])
+            ->add('texte', CKEditorType::class)
+            
             ->add('user', EntityType::class, [
                 'class' => User::class,
                 'choice_label' => 'pseudo'

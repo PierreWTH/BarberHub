@@ -6,14 +6,18 @@
 
 <h1> Tous les articles </h1>
 
-<a href="{{path ('add_article')}}"> Ajouter un article </a>
+<div><a href="{{path ('add_article')}}"> Ajouter un article </a></div>
 
 {% for article in articles %}
     
 <a href="{{path ('show_article', {id : article.id })}}">{{ article.titre}}</a>
 
+{% if is_granted('ROLE_ADMIN') %}
+    
 <a href="{{path ('edit_article', {id : article.id })}}"> Editer </a>
 <a href="{{path ('delete_article', {id : article.id })}}"> Supprimer </a>
+
+{% endif %}
 
 {% endfor %}
 

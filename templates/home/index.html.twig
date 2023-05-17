@@ -10,7 +10,7 @@
 
 {% for barbershop in lastBarbershops %}
 
- {{barbershop.nom}} 
+<a href="{{path ('show_barbershop', {id : barbershop.id })}}">{{barbershop.nom}}</a>
 
 {% endfor %}
 

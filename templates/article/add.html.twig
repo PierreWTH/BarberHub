@@ -6,6 +6,14 @@
 
 <h1> Ajouter un article </h1>
 
-{{ form(formAddArticle) }}
+{{ form_start(formAddArticle) }}
+{{ form_row(formAddArticle.photo) }}
+{{ form_row(formAddArticle.titre) }}
+{{ form_row(formAddArticle.texte) }}
+{{ form_row(formAddArticle.user) }}
+{{ form_end(formAddArticle) }}
+
+
 
 {% endblock %}
+

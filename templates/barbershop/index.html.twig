@@ -8,7 +8,7 @@
 
 {% if is_granted('ROLE_ADMIN') %}
 
-<a href="{{path ('add_barbershop')}}"> Ajouter un barbier </a>
+<p><a href="{{path ('add_barbershop')}}"> Ajouter un barbier </a></p>
 
 {% endif %}
 
@@ -17,7 +17,13 @@
 {% for barbershop in allBarbershops %}
 
 <a href="{{path ('show_barbershop', {id : barbershop.id })}}"> {{barbershop.nom}}</a>
-<a href="{{path ('edit_barbershop', {id : barbershop.id })}}">Editer </a>
+
+{% if is_granted('ROLE_ADMIN') %}
+    
+<a href="{{path ('edit_barbershop', {id : barbershop.id })}}">Editer</a>
+<a href="{{path ('delete_barbershop', {id : barbershop.id })}}">Supprimer</a>
+
+{% endif %}
 
 {% endfor %}
 
