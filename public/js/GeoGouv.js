@@ -13,7 +13,7 @@ $(document).ready(function() {
         // Fermeture select apres choix
         closeAfterSelect: true,
         // Temps entre chaque requete
-        loadThrottle: 300, 
+        loadThrottle: 250, 
         // Texte d'attente requete
         loadingClass: "Recherche...",
         placeholder: "Votre adresse...",

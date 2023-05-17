@@ -12,6 +12,8 @@
 <h1> Ajouter un barbershop </h1>
 {% endif %}
 
+{# FORMULAIRE #}
+
 {{ form_start(formAddBarbershop) }}
 {{ form_row(formAddBarbershop.nom) }}
 {{ form_row(formAddBarbershop.description) }}
@@ -19,6 +21,7 @@
 {{ form_row(formAddBarbershop.cp) }}
 {{ form_row(formAddBarbershop.ville) }}
 
+{# Tableau des horaires #}
 
 <table class="addHorairesTable">
     <thead>
@@ -36,6 +39,28 @@
 
 {{ form_row(formAddBarbershop.horaires) }}
 {{ form_row(formAddBarbershop.telephone) }}
+
+{# Aperçu de l'image #}
+
+<div>
+<img id="image-preview" src="#" alt="Aperçu de l'image choisie" style="display: none;">
+</div>
+
+{# Affichage de l'image en mode edit #}
+
+{% if edit %}
+
+{% for pic in barbershop.barbershopPics %}
+
+<div>
+<img src="{{ asset('assets/uploads/barbershopPics/barbershop/850x310-' ~ pic.nom) }}" alt="">
+<a href="{{ path('delete_photo', {id : pic.id} )}}" data-delete data-token="{{ csrf_token('delete' ~ pic.id) }}"> Supprimer </a>
+</div>
+
+{% endfor %}
+
+{% endif %}
+
 {{ form_row(formAddBarbershop.images) }}
 {{ form_row(formAddBarbershop.email) }}
 {{ form_row(formAddBarbershop.instagram) }}
@@ -49,21 +74,24 @@
 <script src="{{ asset('js/GeoGouv.js')}}"></script>
 <script src="{{ asset('js/addHoraires.js')}}"></script>
 <script src="{{ asset('js/convertHorairesToJSON.js')}}"></script>
+<script src="{{ asset('js/photoPreviewAddBS.js')}}"></script>
 
 {% if edit %}
+
+{# Récupération des horaires #}
 
 <script>
 
     const editHoraires = JSON.parse('{{ horaires | raw }}');
-    console.log(editHoraires)
     
 </script>
+
+{# Script remplissage horaires + suppresion image #}
 
 <script src="{{ asset('js/editBarbershop.js')}}"></script>
 
 {% endif %}
 
-{% endblock %}
+{% endblock  javascripts %}
 
-
-{% endblock %}
+{% endblock body %}

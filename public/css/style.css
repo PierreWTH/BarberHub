@@ -18,3 +18,8 @@
 .selectize-control{
     width: 300px;
 }
+
+#image-preview {
+    max-height: 300px;
+    width: auto;
+}

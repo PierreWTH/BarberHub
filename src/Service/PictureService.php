@@ -103,8 +103,8 @@ class PictureService
     {
         if($fichier !== 'defaut.webp')
         {
-            $succes = false;
-            $path = $this->params->get('image_directory') .$folder;
+            $success = false;
+            $path = $this->params->get('images_directory') .$folder;
 
             $barbershopPic = $path . '/barbershop/' . $width . 'x' . $height . '-' . $fichier;
 
@@ -118,7 +118,7 @@ class PictureService
 
             if(file_exists($original))
             {
-                unlink($barbershopPic);
+                unlink($original);
                 $success = true;
             }
             return $success;

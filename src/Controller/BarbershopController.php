@@ -9,10 +9,12 @@ use App\Form\BarbershopType;
 use App\Entity\BarbershopPics;
 use App\Service\PictureService;
 use App\HttpClient\NominatimHttpClient;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BarbershopController extends AbstractController
@@ -107,7 +109,8 @@ class BarbershopController extends AbstractController
             'formAddBarbershop' => $form->createView(),
             'edit' => $barbershop->getId(),
             'horaires' => $horaires,
-            'adresse' => $adresse
+            'adresse' => $adresse,
+            'barbershop' => $barbershop
         ]);
     }
 
@@ -158,6 +161,33 @@ class BarbershopController extends AbstractController
         }
         
         return $this->redirectToRoute('app_barbershop');
+    }
+
+    // Suppression de la photo d'un barbershop
+    #[Route('/barbershop/photo/{id}/delete', name: 'delete_photo', methods: ["DELETE"])]
+    public function deletePhoto(BarbershopPics $image, Request $request, EntityManagerInterface $em, PictureService $pictureService): JsonResponse
+    {   
+        // On récupere le contenu de la requete 
+
+        $data = json_decode($request->getContent(), true);
+
+        // Si le token est valide
+        if ($this->isCsrfTokenValid('delete' . $image->getId(), $data["_token"] )){
+            // On récupère le nom de l'image
+            $nom = $image->getNom();
+
+            if($pictureService->delete($nom, 'barbershopPics', 850, 310)){
+                // On supprime l'image de la BDD 
+                $em->remove($image);
+                $em->flush();
+
+                return new JsonResponse(['success' => true], 200);
+            }
+            // Si la suppresion a échoué
+            return new JsonResponse(['error' => 'Erreur de suppression'], 400);
+        }
+        // Si le token est invalide
+        return new JsonResponse(['error' => 'Token invalide'], 400);
     }
 }
 
