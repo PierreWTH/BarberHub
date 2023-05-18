@@ -7,7 +7,8 @@
 <h1> {{ article.titre }} </h1>
 
 <p> Par : {{ article.user.pseudo }} </p>
+<img src="{{ article.photo}}" alt="">
+{{ article.texte|raw}}
 
-{{ article.texte }}
 
 {% endblock %}

@@ -7,4 +7,6 @@ twig:
 fos_ck_editor:
     configs:
         main_config: 
+            height: 300 # Hauteur
+            width: 1000 # Largeur
             toolbar: basic

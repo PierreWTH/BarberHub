@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\BarbershopRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\User;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\BarbershopRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: BarbershopRepository::class)]
 class Barbershop
@@ -61,9 +62,14 @@ class Barbershop
     #[ORM\Column(type: Types::DATETIME_MUTABLE, options:["default"=> "CURRENT_TIMESTAMP"])]
     private ?\DateTimeInterface $creationDate = null;
 
+    #[ORM\ManyToMany(targetEntity: User::class)]
+    #[ORM\JoinTable(name: 'user_barbershop_like')]
+    private Collection $likes;
+
     public function __construct()
     {
         $this->barbershopPics = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -268,4 +274,32 @@ class Barbershop
 
         return $this;
     }
+
+    public function getLikes(): Collection
+    {
+    return $this->likes;
+    }
+
+    public function addLike(User $like): self
+    {
+        if(!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+        }
+
+        return $this;
+    }
+
+    public function removeLike(User $like): self
+    {
+        $this->likes->removeElement($like);
+
+        return $this;
+    }
+
+    public function isLikedByUser(): boolval
+    {
+        return $this->likes->contains($user);
+    }
+
+
 }
