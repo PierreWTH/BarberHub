@@ -1,0 +1,9 @@
+{% if app.user %}  
+<a href="{{ path('like_barbershop', {id: barbershop.id}) }}" data-action = "like">
+{% endif %}
+
+{{barbershop.likes|length }} J'aime 
+
+{% if app.user %}
+</a>
+{% endif %}

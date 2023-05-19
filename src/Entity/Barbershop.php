@@ -296,9 +296,14 @@ class Barbershop
         return $this;
     }
 
-    public function isLikedByUser(): boolval
+    public function isLikedByUser(User $user): bool
     {
         return $this->likes->contains($user);
+    }
+
+    public function __toString()
+    {
+        return $this->nom;
     }
 
 
