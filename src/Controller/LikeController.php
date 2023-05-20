@@ -10,7 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class LikeController extends AbstractController
 {   
-    #[Route('/like/barbershop/{id}', name: 'like_barbershop')]
+    #[Route('/like/barbershop/{id}', name: 'like_barbershop', methods :['GET'])]
+    #[IsGranted('ROLE_USER')]
     public function like(Barbershop $barbershop, EntityManagerInterface $manager): Response
     {
         $user = $this->getUser();
@@ -20,7 +21,10 @@ class LikeController extends AbstractController
             $barbershop->removeLike($user);
             $manager->flush();
 
-            return $this->json(['message => Like supprimé.']);
+            return $this->json([
+                'message' => 'Like supprimé.',
+                'nbLike' => $barbershop->howManyLikes()
+        ]);
         }
 
         // Si le barbershop n'as pas encore été liké par le user
@@ -28,6 +32,9 @@ class LikeController extends AbstractController
         $manager->flush();
 
 
-        return $this->json(['message => Like ajouté.']);
+        return $this->json([
+            'message => Like ajouté.',
+            'nbLike' => $barbershop->howManyLikes()
+        ]);
     }
 }

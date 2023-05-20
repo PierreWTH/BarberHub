@@ -301,6 +301,11 @@ class Barbershop
         return $this->likes->contains($user);
     }
 
+    public function howManyLikes(): int
+    {
+        return count($this->likes);
+    }
+
     public function __toString()
     {
         return $this->nom;
