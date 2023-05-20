@@ -21,11 +21,4 @@ class HomeController extends AbstractController
             'lastBarbershops' => $lastBarbershops
         ]);
     }
-
-    // Profil
-    #[Route('/monespace', name: 'app_myspace')]
-    public function myspace(): Response
-    {
-        return $this->render('home/myspace.html.twig', []);
-    }
 }
