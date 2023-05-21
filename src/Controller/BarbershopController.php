@@ -136,7 +136,7 @@ class BarbershopController extends AbstractController
                     'longitude' => $longitude,
                 ];
             
-            return $this->render('barbershop/show.html.twig', [
+            return $this->render('barbershop/show/show.html.twig', [
                 'barbershop' => $barbershop,
                 'horaires' => json_decode($barbershop->getHoraires(), True),
                 'jourActuel' => $jourActuel,

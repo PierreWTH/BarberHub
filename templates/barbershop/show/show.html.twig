@@ -16,11 +16,11 @@
 
 <h3> Adresse </h3>
 
-{{barbershop.adresse}} {{barbershop.cp}} {{barbershop.ville}}
+{{barbershop.fullAdress}}
 
 <h3> Horaires </h3>
 
-{% include "barbershop/_horaires.html.twig" %}
+{% include "barbershop/show/_horaires.html.twig" %}
 
 <h3> Réseaux sociaux </h3>
 
@@ -29,16 +29,9 @@
 
 <div id="map-barber"></div>
 
-<p><a href="{{path ('add_avis', {id: barbershop.id}) }}"> Ajouter un commentaire </a></p>
-
 <h3> Avis </h3>
 
-{% for avis in barbershop.avis %}
-
-{{avis.note}}
-{{avis.texte}}
-    
-{% endfor %}
+{% include "barbershop/show/_avis.html.twig" %}
 
 <h3> Prestations </h3>
 
@@ -46,12 +39,13 @@
 
 <h3> Réalisations </h3>
 
+{# SCRIPTS #}
+
 {% block javascripts %}
 
-<script>
-    const coordinates = JSON.parse('{{ coordinates | json_encode | raw }}');
-</script>
-
+{# Définition coordinates pour Leaflet #}
+<script> const coordinates = JSON.parse('{{ coordinates | json_encode | raw }}'); </script>
+{# Leaflet #}
 <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
 {# Marker Cluster #}
 <script src="{{ asset('js/MarkerCluster.js')}}"></script>

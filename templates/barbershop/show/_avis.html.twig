@@ -1,0 +1,29 @@
+{% if app.user %}
+    
+<p><a href="{{path ('add_avis', {id: barbershop.id}) }}"> Ajouter un commentaire </a></p>
+
+{% endif %}
+
+{% for avis in barbershop.avis %}
+
+{% set note = avis.note %}
+
+{# Affichage des étoiles #}
+
+{% for i in 1..5 %}
+    {% if i <= note %}
+    <i class="fa-solid fa-star"></i>
+    {% else %}
+    <i class="fa-regular fa-star"></i>
+    {% endif %}
+
+{% endfor %}
+<p>Par {{avis.user.pseudo}}</p>
+<p>{{avis.texte}}</p>
+
+{% if avis.user == app.user %}
+<p><a href="{{ path('edit_avis', { 'id': barbershop.id, 'avisId': avis.id }) }}">Modifier</a></p>
+
+{% endif %}
+    
+{% endfor %}

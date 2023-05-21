@@ -17,6 +17,7 @@ class AvisController extends AbstractController
 {
 
     #[Route('/barbershop/{id}/avis/add', name: 'add_avis')]
+    #[Route('/barbershop/{id}/avis/{avisId}/edit', name: 'edit_avis')]
     public function add(ManagerRegistry $doctrine, Barbershop $barbershop, Avis $avis = null, Request $request) : Response
     {   
         if(!$avis){
@@ -53,5 +54,18 @@ class AvisController extends AbstractController
         return $this->render('avis/add.html.twig', [
             'formAddAvis' => $form->createView(),
         ]);
+    }
+
+    // Supprimer un avis
+    #[Route('/barbershop/{id}/avis/{avisId}/edit', name: 'edit_avis')]
+    public function delete(ManagerRegistry $doctrine, Barbershop $barbershop, Avis $avis = null): Response
+    {   
+        if ($avis){
+            $entityManager = $doctrine->getManager();
+            $entityManager->remove($avis);
+            $entityManager->flush();
+        }
+        
+        return $this->redirectToRoute('show_barbershop',['id' => $barbershop->getId()]);
     }
 }
