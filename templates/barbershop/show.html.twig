@@ -29,6 +29,17 @@
 
 <div id="map-barber"></div>
 
+<p><a href="{{path ('add_avis', {id: barbershop.id}) }}"> Ajouter un commentaire </a></p>
+
+<h3> Avis </h3>
+
+{% for avis in barbershop.avis %}
+
+{{avis.note}}
+{{avis.texte}}
+    
+{% endfor %}
+
 <h3> Prestations </h3>
 
 <h3> Boutique </h3>

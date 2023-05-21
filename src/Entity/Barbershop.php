@@ -66,10 +66,14 @@ class Barbershop
     #[ORM\JoinTable(name: 'user_barbershop_like')]
     private Collection $likes;
 
+    #[ORM\OneToMany(mappedBy: 'barbershop', targetEntity: Avis::class)]
+    private Collection $avis;
+
     public function __construct()
     {
         $this->barbershopPics = new ArrayCollection();
         $this->likes = new ArrayCollection();
+        $this->avis = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -309,6 +313,36 @@ class Barbershop
     public function __toString()
     {
         return $this->nom;
+    }
+
+    /**
+     * @return Collection<int, Avis>
+     */
+    public function getAvis(): Collection
+    {
+        return $this->avis;
+    }
+
+    public function addAvi(Avis $avi): self
+    {
+        if (!$this->avis->contains($avi)) {
+            $this->avis->add($avi);
+            $avi->setBarbershop($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAvi(Avis $avi): self
+    {
+        if ($this->avis->removeElement($avi)) {
+            // set the owning side to null (unless already changed)
+            if ($avi->getBarbershop() === $this) {
+                $avi->setBarbershop(null);
+            }
+        }
+
+        return $this;
     }
 
 
