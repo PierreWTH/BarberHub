@@ -17,8 +17,8 @@ class AvisController extends AbstractController
 {
 
     #[Route('/barbershop/{id}/avis/add', name: 'add_avis')]
-    #[Route('/barbershop/{id}/avis/{avisId}/edit', name: 'edit_avis')]
-    public function add(ManagerRegistry $doctrine, Barbershop $barbershop, Avis $avis = null, Request $request) : Response
+    #[Route('/barbershop/{barbershop}/avis/{avis}/edit', name: 'edit_avis')]
+    public function add(ManagerRegistry $doctrine, Barbershop $barbershop = null, Avis $avis = null, Request $request) : Response
     {   
         if(!$avis){
             $avis = new Avis();
@@ -53,11 +53,12 @@ class AvisController extends AbstractController
 
         return $this->render('avis/add.html.twig', [
             'formAddAvis' => $form->createView(),
+            'edit' => $avis->getId(),
         ]);
     }
 
     // Supprimer un avis
-    #[Route('/barbershop/{id}/avis/{avisId}/edit', name: 'edit_avis')]
+    #[Route('/barbershop/{id}/avis/{avisId}/delete', name: 'delete_avis')]
     public function delete(ManagerRegistry $doctrine, Barbershop $barbershop, Avis $avis = null): Response
     {   
         if ($avis){

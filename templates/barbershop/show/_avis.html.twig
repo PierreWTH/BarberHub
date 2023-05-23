@@ -22,7 +22,7 @@
 <p>{{avis.texte}}</p>
 
 {% if avis.user == app.user %}
-<p><a href="{{ path('edit_avis', { 'id': barbershop.id, 'avisId': avis.id }) }}">Modifier</a></p>
+<p><a href="{{ path('edit_avis', { 'barbershop': barbershop.id, 'avis': avis.id }) }}">Modifier</a></p>
 
 {% endif %}
     

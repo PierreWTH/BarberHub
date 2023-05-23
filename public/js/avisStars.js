@@ -1,9 +1,13 @@
 window.onload = () => {
+    
     // On récupère toutes les étoiles
     const stars = document.querySelectorAll(".fa-star");
 
     // On récupere l'input
     const note = document.querySelector("#avis_note")
+
+    const noteValue = note.value;
+    resetStars(noteValue);
 
     // Valeur de base a 0
     note.value = 0

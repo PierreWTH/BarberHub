@@ -32,7 +32,6 @@ class Like {
 document.addEventListener('DOMContentLoaded', () => {
     // Fonction pour liker
     const likeElements = [].slice.call(document.querySelectorAll('a[data-action=like]'))
-    console.log(likeElements)
     // Si on l'a bien récupéré
     if(likeElements) {
         new Like(likeElements);
