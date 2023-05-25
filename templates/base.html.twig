@@ -4,7 +4,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" type="image/png" href="{{ asset('img/tab_logo.png') }}" />
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('ico/apple-touch-icon.png')}}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('ico/favicon-32x32.png')}}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('ico/favicon-16x16.png')}}">
+        <link rel="manifest" href="{{ asset('ico/site.webmanifest')}}">
         <link rel="stylesheet" href="{{ asset('css/style.css')}}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css">
