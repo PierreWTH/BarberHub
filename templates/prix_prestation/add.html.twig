@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Ajouter une prestation {% endblock %}
+
+{% block body %}
+
+
+<h1> Ajouter une prestation </h1>
+
+{{ form_start(formAddPrixPrestation) }}
+{{ form_row(formAddPrixPrestation.prix) }}
+{{ form_row(formAddPrixPrestation.prestation) }}
+{{ form_row(formAddPrixPrestation.barbershop) }}
+{{ form_end(formAddPrixPrestation) }}
+
+
+
+{% endblock %}

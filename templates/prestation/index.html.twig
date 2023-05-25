@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PrestationController!{% endblock %}
+
+{% block body %}
+
+{% for prestation in prestations %}
+    
+{{prestation.nom}}
+<a href="{{path ('edit_prestation', {id : prestation.id })}}"> Editer </a>
+<a href="{{path ('delete_prestation', {id : prestation.id })}}"> Supprimer </a>
+
+{% endfor %}
+
+{% endblock %}
