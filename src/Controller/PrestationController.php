@@ -12,7 +12,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PrestationController extends AbstractController
 {
-    #[Route('/prestation', name: 'app_prestation')]
+    #[Route('/prestations', name: 'app_prestation')]
+    #[IsGranted('ROLE_ADMIN')]
     public function index(ManagerRegistry $doctrine): Response
     {
 
@@ -24,6 +25,7 @@ class PrestationController extends AbstractController
 
     #[Route('/prestation/add', name: 'add_prestation')]
     #[Route('/prestation/{id}/edit', name: 'edit_prestation')]
+    #[IsGranted('ROLE_ADMIN')]
     public function add(ManagerRegistry $doctrine, Prestation $prestation = null, Request $request) : Response
     {   
         if(!$prestation){

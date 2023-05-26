@@ -12,15 +12,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PrixPrestationController extends AbstractController
 {   
-    #[Route('/prixprestation', name: 'app_prixprestation')]
-    public function index(ManagerRegistry $doctrine): Response
-    {
-
-       
-        return $this->render('prix_prestation/index.html.twig', [
-            
-        ]);
-    }
 
     #[Route('/prixprestation/add', name: 'add_prixprestation')]
     #[Route('/prixprestation/{id}/edit', name: 'edit_prixprestation')]
@@ -41,7 +32,7 @@ class PrixPrestationController extends AbstractController
             
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_prixprestation');
+            return $this->redirectToRoute('app_barbershop');
         }
 
         return $this->render('prix_prestation/add.html.twig', [

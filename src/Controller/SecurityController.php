@@ -31,6 +31,7 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/administration', name: 'control_pannel')]
+    #[IsGranted('ROLE_ADMIN')]
     public function myspace(): Response
     {
         return $this->render('security/controlPannel.html.twig', []);

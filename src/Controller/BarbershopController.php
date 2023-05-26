@@ -29,7 +29,7 @@ class BarbershopController extends AbstractController
             'allBarbershops' => $allBarbershops,
         ]);
     }
-
+    
     #[Route('/barbershop/add', name: 'add_barbershop')]
     #[Route('/barbershop/{id}/edit', name: 'edit_barbershop')]
     public function add(ManagerRegistry $doctrine, Barbershop $barbershop = null, Request $request, PictureService $pictureService, NominatimHttpClient $nominatim, $id = null) : Response
