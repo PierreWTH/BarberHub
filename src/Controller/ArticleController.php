@@ -26,6 +26,7 @@ class ArticleController extends AbstractController
     // Ajouter ou éditer un article
     #[Route('/article/add', name: 'add_article')]
     #[Route('/article/{id}/edit', name: 'edit_article')]
+    #[IsGranted('ROLE_ADMIN')]
     public function add(ManagerRegistry $doctrine, Article $article = null, Request $request) : Response
     {   
         if(!$article){

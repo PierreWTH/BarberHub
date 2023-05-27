@@ -32,6 +32,7 @@ class BarbershopController extends AbstractController
     
     #[Route('/barbershop/add', name: 'add_barbershop')]
     #[Route('/barbershop/{id}/edit', name: 'edit_barbershop')]
+    #[IsGranted('ROLE_ADMIN')]
     public function add(ManagerRegistry $doctrine, Barbershop $barbershop = null, Request $request, PictureService $pictureService, NominatimHttpClient $nominatim, $id = null) : Response
     {
         if ($id !== null) {
