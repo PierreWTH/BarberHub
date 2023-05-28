@@ -72,12 +72,16 @@ class Barbershop
     #[ORM\OneToMany(mappedBy: 'barbershop', targetEntity: PrixPrestation::class)]
     private Collection $prixPrestations;
 
+    #[ORM\OneToMany(mappedBy: 'barbershop', targetEntity: Personnel::class)]
+    private Collection $personnels;
+
     public function __construct()
     {
         $this->barbershopPics = new ArrayCollection();
         $this->likes = new ArrayCollection();
         $this->avis = new ArrayCollection();
         $this->prixPrestations = new ArrayCollection();
+        $this->personnels = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -378,6 +382,36 @@ class Barbershop
             // set the owning side to null (unless already changed)
             if ($prixPrestation->getBarbershop() === $this) {
                 $prixPrestation->setBarbershop(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Personnel>
+     */
+    public function getPersonnels(): Collection
+    {
+        return $this->personnels;
+    }
+
+    public function addPersonnel(Personnel $personnel): self
+    {
+        if (!$this->personnels->contains($personnel)) {
+            $this->personnels->add($personnel);
+            $personnel->setBarbershop($this);
+        }
+
+        return $this;
+    }
+
+    public function removePersonnel(Personnel $personnel): self
+    {
+        if ($this->personnels->removeElement($personnel)) {
+            // set the owning side to null (unless already changed)
+            if ($personnel->getBarbershop() === $this) {
+                $personnel->setBarbershop(null);
             }
         }
 
