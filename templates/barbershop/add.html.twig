@@ -63,8 +63,22 @@
 {{ form_row(formAddBarbershop.instagram) }}
 {{ form_row(formAddBarbershop.facebook) }}
 {{ form_row(formAddBarbershop.submit) }}
-
 {{ form_end(formAddBarbershop) }}
+
+{% if edit %}
+    
+<h2> Prestations </h2>
+
+<p><a href="{{path ('add_prixprestation', {id : barbershop.id })}}"> Ajouter une prestation </a></p>
+
+{% for prestation in barbershop.prixPrestations %}
+
+{{prestation.prestation.nom}}
+{{prestation.prix}} 
+<a href="{{path ('edit_prixprestation', {barbershop : barbershop.id, prixprestation : prestation.id })}}">Editer</a>
+{% endfor %}
+
+{% endif %}
 
 {% block javascripts %}
     

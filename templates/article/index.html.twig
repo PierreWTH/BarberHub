@@ -6,7 +6,11 @@
 
 <h1> Tous les articles </h1>
 
+{% if is_granted('ROLE_ADMIN') %}
+
 <div><a href="{{path ('add_article')}}"> Ajouter un article </a></div>
+
+{% endif %}
 
 {% for article in articles %}
     

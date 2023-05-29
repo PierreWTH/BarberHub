@@ -12,10 +12,13 @@ use App\HttpClient\NominatimHttpClient;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class BarbershopController extends AbstractController
 {
@@ -32,8 +35,7 @@ class BarbershopController extends AbstractController
     
     #[Route('/barbershop/add', name: 'add_barbershop')]
     #[Route('/barbershop/{id}/edit', name: 'edit_barbershop')]
-    #[IsGranted('ROLE_ADMIN')]
-    public function add(ManagerRegistry $doctrine, Barbershop $barbershop = null, Request $request, PictureService $pictureService, NominatimHttpClient $nominatim, $id = null) : Response
+    public function add(ManagerRegistry $doctrine, Barbershop $barbershop = null, Request $request, PictureService $pictureService, NominatimHttpClient $nominatim, Security $security, $id = null ) : Response
     {
         if ($id !== null) {
             $entityManager = $doctrine->getManager();
@@ -46,7 +48,18 @@ class BarbershopController extends AbstractController
             // Créer un nouvel objet Barbershop pour le mode ajout
             $barbershop = new Barbershop();
         }
-        
+
+        $personnel = $barbershop->getPersonnels();
+        $user = $this->getUser();
+
+        // Si l'user n'a pas le role admin
+        if(!$security->isGranted('ROLE_ADMIN')){
+        // et que personnel est vide ou que l'user ne travaille pas dans le barbershop
+            if($personnel->isEmpty() || $personnel[0]->getUser()->getId() !== $user->getId())
+            {
+                throw new AccessDeniedException("Vous n'avez pas les droits nécessaires pour effectuer cette action.");
+            }
+        }
         
         $horaires = $barbershop->getHoraires(); 
         $adresse = $barbershop->getAdresse(); 

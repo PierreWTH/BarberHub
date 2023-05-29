@@ -21,7 +21,6 @@ class PrixPrestationType extends AbstractType
                 'class' => Prestation::class,
                 'choice_label' => 'nom',
             ])
-            ->add('barbershop')
             ->add('submit', SubmitType::class)
         ;
     }

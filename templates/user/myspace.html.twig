@@ -10,7 +10,22 @@
 
 {% for barbershop in likes %}
 
-{{barbershop.nom}}
+{{barbershop.id}}
 
 {% endfor %}
+
+
+
+
+<p> Mon salon </p> 
+{% for personne in app.user.personnels %}
+<p>{{personne.barbershop}}
+
+{% if personne.isManager == true %}
+<a href="{{path ('edit_barbershop', {id : personne.barbershop.id })}}">Editer</a>
+    
+{% endif %}
+{% endfor %}
+
+
 {% endblock %}
