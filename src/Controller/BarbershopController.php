@@ -55,7 +55,7 @@ class BarbershopController extends AbstractController
         // Si l'user n'a pas le role admin
         if(!$security->isGranted('ROLE_ADMIN')){
         // et que personnel est vide ou que l'user ne travaille pas dans le barbershop
-            if($personnel->isEmpty() || $personnel[0]->getUser()->getId() !== $user->getId())
+            if($personnel->isEmpty() || $personnel[0]->getUser()->getId() !== $user->getId() || $personnel[0]->isIsManager() === false)
             {
                 throw new AccessDeniedException("Vous n'avez pas les droits nécessaires pour effectuer cette action.");
             }
