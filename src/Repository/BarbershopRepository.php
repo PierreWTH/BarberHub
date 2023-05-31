@@ -39,6 +39,19 @@ class BarbershopRepository extends ServiceEntityRepository
         }
     }
 
+    public function getValidateBarbershop()
+    {
+        $em = $this->getEntityManager();
+            $qb = $em->createQueryBuilder();
+            $query = 
+                $qb->select('b')
+                ->from('App\Entity\Barbershop', 'b')
+                ->where('b.isValidate = true')
+                ->getQuery();
+    
+            return $query->getResult();
+    }
+
 //    /**
 //     * @return Barbershop[] Returns an array of Barbershop objects
 //     */

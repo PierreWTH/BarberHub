@@ -164,6 +164,25 @@ class BarbershopController extends AbstractController
         
     }
 
+   // Publier un Barbershop
+   #[Route('/barbershop/{id}/validate', name: 'validate_barbershop')]
+   public function validate(ManagerRegistry $doctrine, Barbershop $barbershop): Response
+   {   
+        if ($barbershop->isValidate())
+        {
+            $barbershop->setIsValidate(false);
+        }
+        else
+        {
+            $barbershop->setIsValidate(true);
+        }
+
+        $entityManager = $doctrine->getManager();    
+        $entityManager->flush();
+        
+        return $this->redirectToRoute('app_barbershop');
+   }
+
     // Supprimer un Barbershop
     #[Route('/barbershop/{id}/delete', name: 'delete_barbershop')]
     public function delete(ManagerRegistry $doctrine, barbershop $barbershop = null): Response
