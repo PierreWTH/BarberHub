@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Barbershop;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
@@ -36,4 +38,17 @@ class SecurityController extends AbstractController
     {
         return $this->render('security/controlPannel.html.twig', []);
     }
+
+    #[Route('/administration/barbershops', name: 'admin_barbershop')]
+    #[IsGranted('ROLE_ADMIN')]
+    public function allBarbershopAdmin(ManagerRegistry $doctrine): Response
+    {
+        $barbershops = $doctrine->getRepository(Barbershop::Class)->findBy([], ["creationDate"=>"DESC"]);
+
+        return $this->render('security/barbershops.html.twig', [
+            'barbershops' => $barbershops,
+        ]);
+    }
+
+    
 }

@@ -17,9 +17,8 @@ class HomeController extends AbstractController
     {
         // Récuperer les 3 derniers barbershops de la BDD
         $lastBarbershops = $doctrine->getRepository(Barbershop::Class)->findBy([], ["creationDate"=>"DESC"] , 3);
-        $validate = $doctrine->getRepository(Barbershop::Class)->getValidateBarbershop();
+        $lasbBarbershops = $doctrine->getRepository(Barbershop::Class)->getValidateBarbershop();
 
-        dd($validate);
         return $this->render('home/index.html.twig', [
             'lastBarbershops' => $lastBarbershops
         ]);

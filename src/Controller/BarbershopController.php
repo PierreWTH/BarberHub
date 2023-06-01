@@ -168,7 +168,7 @@ class BarbershopController extends AbstractController
    #[Route('/barbershop/{id}/validate', name: 'validate_barbershop')]
    public function validate(ManagerRegistry $doctrine, Barbershop $barbershop): Response
    {   
-        if ($barbershop->isValidate())
+        if ($barbershop->isIsValidate())
         {
             $barbershop->setIsValidate(false);
         }
@@ -180,7 +180,7 @@ class BarbershopController extends AbstractController
         $entityManager = $doctrine->getManager();    
         $entityManager->flush();
         
-        return $this->redirectToRoute('app_barbershop');
+        return $this->redirectToRoute('admin_barbershop');
    }
 
     // Supprimer un Barbershop

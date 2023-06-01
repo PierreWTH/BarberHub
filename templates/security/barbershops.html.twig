@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Administration {% endblock %}
+
+{% block body %}
+
+{% for barbershop in barbershops %}
+    
+<p>{{ barbershop.nom}}</p>
+
+{% if barbershop.isValidate %}
+
+Publié
+<a href="{{path ('validate_barbershop', {id : barbershop.id })}}"> Retirer </a>
+{% else %}
+
+En attente
+<a href="{{path ('validate_barbershop', {id : barbershop.id })}}"> Publier </a>
+{% endif %}
+{% endfor %}
+
+
+{% endblock %}
