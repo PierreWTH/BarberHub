@@ -26,7 +26,9 @@ class BarbershopController extends AbstractController
     public function index(ManagerRegistry $doctrine): Response
     {
         // Récuperer tous les barbiers de la BDD
-        $allBarbershops = $doctrine->getRepository(Barbershop::Class)->findBy([], ["nom"=>"ASC"]);
+
+        $allBarbershops = $doctrine->getRepository(Barbershop::Class)->getAllValidBarbershop();
+
 
         return $this->render('barbershop/index.html.twig', [
             'allBarbershops' => $allBarbershops,
@@ -109,6 +111,7 @@ class BarbershopController extends AbstractController
 
             // SET IS_VALIDATE
             $barbershop->setIsValidate(0);
+            
 
             // ON ENVOIE LES DONNEES DANS LA BDD
             $entityManager = $doctrine->getManager();
@@ -131,7 +134,7 @@ class BarbershopController extends AbstractController
     #[Route('/barbershop/{id}', name: 'show_barbershop')]
     public function show(Barbershop $barbershop = null) : Response
     {
-        if ($barbershop)
+        if ($barbershop && $barbershop->isIsValidate())
         {
             $dateActuelle = new DateTime();
             $locale = 'fr_FR';

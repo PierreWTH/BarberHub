@@ -39,7 +39,7 @@ class BarbershopRepository extends ServiceEntityRepository
         }
     }
 
-    public function getValidateBarbershop()
+    public function getLastThreeValidBarbershop()
     {
         $em = $this->getEntityManager();
             $qb = $em->createQueryBuilder();
@@ -47,6 +47,22 @@ class BarbershopRepository extends ServiceEntityRepository
                 $qb->select('b')
                 ->from('App\Entity\Barbershop', 'b')
                 ->where('b.isValidate = true')
+                ->orderBy('b.creationDate', 'DESC')
+                ->setMaxResults(3)
+                ->getQuery();
+    
+            return $query->getResult();
+    }
+
+    public function getAllValidBarbershop()
+    {
+        $em = $this->getEntityManager();
+            $qb = $em->createQueryBuilder();
+            $query = 
+                $qb->select('b')
+                ->from('App\Entity\Barbershop', 'b')
+                ->where('b.isValidate = true')
+                ->orderBy('b.nom', 'ASC')
                 ->getQuery();
     
             return $query->getResult();
