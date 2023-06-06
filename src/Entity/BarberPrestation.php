@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BarberPrestationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BarberPrestationRepository::class)]
@@ -23,6 +25,14 @@ class BarberPrestation
     #[ORM\ManyToOne(inversedBy: 'barberPrestations')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Prestation $prestation = null;
+
+    #[ORM\ManyToMany(targetEntity: RendezVous::class, mappedBy: 'barberprestation')]
+    private Collection $rendezVouses;
+
+    public function __construct()
+    {
+        $this->rendezVouses = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -61,6 +71,33 @@ class BarberPrestation
     public function setPrestation(?Prestation $prestation): self
     {
         $this->prestation = $prestation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, RendezVous>
+     */
+    public function getRendezVouses(): Collection
+    {
+        return $this->rendezVouses;
+    }
+
+    public function addRendezVouse(RendezVous $rendezVouse): self
+    {
+        if (!$this->rendezVouses->contains($rendezVouse)) {
+            $this->rendezVouses->add($rendezVouse);
+            $rendezVouse->addBarberprestation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRendezVouse(RendezVous $rendezVouse): self
+    {
+        if ($this->rendezVouses->removeElement($rendezVouse)) {
+            $rendezVouse->removeBarberprestation($this);
+        }
 
         return $this;
     }

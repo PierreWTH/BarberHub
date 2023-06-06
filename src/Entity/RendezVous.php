@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\RendezVousRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -19,6 +21,17 @@ class RendezVous
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $fin = null;
+
+    #[ORM\ManyToMany(targetEntity: BarberPrestation::class, inversedBy: 'rendezVouses')]
+    private Collection $barberprestation;
+
+    #[ORM\ManyToOne(inversedBy: 'rendezVouses')]
+    private ?User $user = null;
+
+    public function __construct()
+    {
+        $this->barberprestation = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -45,6 +58,42 @@ class RendezVous
     public function setFin(\DateTimeInterface $fin): self
     {
         $this->fin = $fin;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, BarberPrestation>
+     */
+    public function getBarberPrestation(): Collection
+    {
+        return $this->barberprestation;
+    }
+
+    public function addBarberPrestation(BarberPrestation $barberprestation): self
+    {
+        if (!$this->barberprestation->contains($barberprestation)) {
+            $this->barberprestation->add($barberprestation);
+        }
+
+        return $this;
+    }
+
+    public function removeBarberPrestation(BarberPrestation $barberprestation): self
+    {
+        $this->barberprestation->removeElement($barberprestation);
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
