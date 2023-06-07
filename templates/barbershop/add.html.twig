@@ -69,13 +69,13 @@
     
 <h2> Prestations </h2>
 
-<p><a href="{{path ('add_prixprestation', {id : barbershop.id })}}"> Ajouter une prestation </a></p>
+<p><a href="{{path ('add_barberPrestation', {id : barbershop.id })}}"> Ajouter une prestation </a></p>
 
-{% for prestation in barbershop.prixPrestations %}
+{% for prestation in barbershop.barberPrestations %}
 
 {{prestation.prestation.nom}}
 {{prestation.prix}} 
-<a href="{{path ('edit_prixprestation', {barbershop : barbershop.id, prixprestation : prestation.id })}}">Editer</a>
+<a href="{{path ('edit_barberPrestation', {barbershop : barbershop.id, barberprestation : prestation.id })}}">Editer</a>
 {% endfor %}
 
 {% endif %}
