@@ -69,9 +69,6 @@ class Barbershop
     #[ORM\OneToMany(mappedBy: 'barbershop', targetEntity: Avis::class)]
     private Collection $avis;
 
-    #[ORM\OneToMany(mappedBy: 'barbershop', targetEntity: Personnel::class)]
-    private Collection $personnels;
-
     #[ORM\OneToMany(mappedBy: 'barbershop', targetEntity: BarberPrestation::class)]
     private Collection $barberPrestations;
 
@@ -80,7 +77,6 @@ class Barbershop
         $this->barbershopPics = new ArrayCollection();
         $this->likes = new ArrayCollection();
         $this->avis = new ArrayCollection();
-        $this->personnels = new ArrayCollection();
         $this->barberPrestations = new ArrayCollection();
     }
 
@@ -358,35 +354,6 @@ class Barbershop
         return $this->adresse .' '. $this->cp .' '. $this->ville;
     }
 
-    /**
-     * @return Collection<int, Personnel>
-     */
-    public function getPersonnels(): Collection
-    {
-        return $this->personnels;
-    }
-
-    public function addPersonnel(Personnel $personnel): self
-    {
-        if (!$this->personnels->contains($personnel)) {
-            $this->personnels->add($personnel);
-            $personnel->setBarbershop($this);
-        }
-
-        return $this;
-    }
-
-    public function removePersonnel(Personnel $personnel): self
-    {
-        if ($this->personnels->removeElement($personnel)) {
-            // set the owning side to null (unless already changed)
-            if ($personnel->getBarbershop() === $this) {
-                $personnel->setBarbershop(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, BarberPrestation>
