@@ -46,6 +46,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: RendezVous::class)]
     private Collection $rendezVouses;
 
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?Personnel $personnel = null;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -238,6 +241,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $rendezVouse->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPersonnel(): ?Personnel
+    {
+        return $this->personnel;
+    }
+
+    public function setPersonnel(Personnel $personnel): self
+    {
+        // set the owning side of the relation if necessary
+        if ($personnel->getUser() !== $this) {
+            $personnel->setUser($this);
+        }
+
+        $this->personnel = $personnel;
 
         return $this;
     }

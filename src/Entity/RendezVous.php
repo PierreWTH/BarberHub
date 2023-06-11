@@ -28,6 +28,10 @@ class RendezVous
     #[ORM\ManyToOne(inversedBy: 'rendezVouses')]
     private ?User $user = null;
 
+    #[ORM\ManyToOne(inversedBy: 'rendezvouses')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Personnel $personnel = null;
+
     public function __construct()
     {
         $this->barberprestation = new ArrayCollection();
@@ -94,6 +98,18 @@ class RendezVous
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getPersonnel(): ?Personnel
+    {
+        return $this->personnel;
+    }
+
+    public function setPersonnel(?Personnel $personnel): self
+    {
+        $this->personnel = $personnel;
 
         return $this;
     }
