@@ -54,7 +54,7 @@ class Barbershop
     private ?string $facebook = null;
 
     #[ORM\Column (type: 'boolean', nullable: true, options: ['default' => false])]
-    private ?bool $isValidate = null;
+    private ?bool $validate = null;
 
     #[ORM\OneToMany(mappedBy: 'barbershop', targetEntity: BarbershopPics::class, orphanRemoval: true, cascade:['persist', 'remove'])]
     private Collection $barbershopPics;
@@ -233,14 +233,14 @@ class Barbershop
         return $this;
     }
 
-    public function isIsValidate(): ?bool
+    public function isValidate(): ?bool
     {
-        return $this->isValidate;
+        return $this->validate;
     }
 
-    public function setIsValidate(bool $isValidate): self
+    public function setValidate(bool $validate): self
     {
-        $this->isValidate = $isValidate;
+        $this->validate = $validate;
 
         return $this;
     }

@@ -36,7 +36,7 @@ class SecurityController extends AbstractController
     #[IsGranted('ROLE_ADMIN')]
     public function myspace(): Response
     {
-        return $this->render('security/controlPannel.html.twig', []);
+        return $this->render('security/admin/controlPannel.html.twig', []);
     }
 
     #[Route('/administration/barbershops', name: 'admin_barbershop')]
@@ -45,7 +45,7 @@ class SecurityController extends AbstractController
     {
         $barbershops = $doctrine->getRepository(Barbershop::Class)->findBy([], ["creationDate"=>"DESC"]);
 
-        return $this->render('security/barbershops.html.twig', [
+        return $this->render('security/admin/barbershops.html.twig', [
             'barbershops' => $barbershops,
         ]);
     }

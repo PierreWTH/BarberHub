@@ -14,18 +14,20 @@
 
 {% endfor %}
 
-
-
-
 <p> Mon salon </p> 
-{% for personne in app.user.personnels %}
-<p>{{personne.barbershop}}
 
-{% if personne.isManager == true %}
-<a href="{{path ('edit_barbershop', {id : personne.barbershop.id })}}">Editer</a>
+{% if app.user.personnel %}
+    
+{{ app.user.personnel.barbershop.nom }}
+
+{% if app.user.personnel.isManager == true %}
+
+<a href="{{path ('edit_barbershop', {id : app.user.personnel.barbershop.id })}}">Editer</a>
     
 {% endif %}
-{% endfor %}
+
+{% endif %}
+
 
 
 {% endblock %}

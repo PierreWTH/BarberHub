@@ -46,7 +46,7 @@ class BarbershopRepository extends ServiceEntityRepository
             $query = 
                 $qb->select('b')
                 ->from('App\Entity\Barbershop', 'b')
-                ->where('b.isValidate = true')
+                ->where('b.validate = true')
                 ->orderBy('b.creationDate', 'DESC')
                 ->setMaxResults(3)
                 ->getQuery();
@@ -61,7 +61,7 @@ class BarbershopRepository extends ServiceEntityRepository
             $query = 
                 $qb->select('b')
                 ->from('App\Entity\Barbershop', 'b')
-                ->where('b.isValidate = true')
+                ->where('b.validate = true')
                 ->orderBy('b.nom', 'ASC')
                 ->getQuery();
     

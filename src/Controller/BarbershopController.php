@@ -57,7 +57,7 @@ class BarbershopController extends AbstractController
         // Si l'user n'a pas le role admin
         if(!$security->isGranted('ROLE_ADMIN')){
         // et que personnel est vide ou que l'user ne travaille pas dans le barbershop
-            if($personnel->isEmpty() || $personnel[0]->getUser()->getId() !== $user->getId() || $personnel[0]->isIsManager() === false)
+            if($personnel->isEmpty() || $personnel[0]->getUser()->getId() !== $user->getId() || $personnel[0]->isManager() === false)
             {
                 throw new AccessDeniedException("Vous n'avez pas les droits nécessaires pour effectuer cette action.");
             }
@@ -110,7 +110,7 @@ class BarbershopController extends AbstractController
             $barbershop->setCreationDate($date);
 
             // SET IS_VALIDATE
-            $barbershop->setIsValidate(0);
+            $barbershop->setValidate(0);
             
 
             // ON ENVOIE LES DONNEES DANS LA BDD
@@ -134,7 +134,7 @@ class BarbershopController extends AbstractController
     #[Route('/barbershop/{id}', name: 'show_barbershop')]
     public function show(Barbershop $barbershop = null) : Response
     {
-        if ($barbershop && $barbershop->isIsValidate())
+        if ($barbershop && $barbershop->isValidate())
         {
             $dateActuelle = new DateTime();
             $locale = 'fr_FR';
@@ -171,13 +171,13 @@ class BarbershopController extends AbstractController
    #[Route('/barbershop/{id}/validate', name: 'validate_barbershop')]
    public function validate(ManagerRegistry $doctrine, Barbershop $barbershop): Response
    {   
-        if ($barbershop->isIsValidate())
+        if ($barbershop->isValidate())
         {
-            $barbershop->setIsValidate(false);
+            $barbershop->setValidate(false);
         }
         else
         {
-            $barbershop->setIsValidate(true);
+            $barbershop->setValidate(true);
         }
 
         $entityManager = $doctrine->getManager();    
