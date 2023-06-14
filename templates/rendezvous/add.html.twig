@@ -6,13 +6,37 @@
 
 <h1> Votre rendez vous </h1>
 
+Votre réservation : {{prestation.prestation.nom}} chez {{barbershop.nom}}
+
 {{ form_start(formAddRendezVous) }}
+
+<p> Date et heure </p>
+
 {{ form_row(formAddRendezVous.debut) }}
-{{ form_row(formAddRendezVous.fin) }}
+
+<select name="" id="">
+{% for personnel in personnels %}
+    <option value="{{personnel.id}}">{{personnel.user.pseudo}}</option> 
+{% endfor %}
+</select>
+
 {{ form_row(formAddRendezVous.personnel) }}
-{{ form_row(formAddRendezVous.barberPrestation) }}
+
 {{ form_end(formAddRendezVous) }}
 
 
 
 {% endblock %}
+
+{% block javascripts %}
+
+<script>
+    $(document).ready(function() {
+        $('#rendez_vous_personnel').on('change', function() {
+            var selectedValue = $(this).val();
+            $('#rendez_vous_personnel').val(selectedValue);
+        });
+    });
+</script>
+    
+{% endblock javascripts %}

@@ -2,5 +2,8 @@
 
 {{prestation.prestation.nom}}
 {{prestation.prix}} €
+<a href="{{path ('add_rendezvous', {barbershop : barbershop.id, barberprestation : prestation.id })}}"> Reserver </a>
+
+
 
 {% endfor %}

@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Barbershop;
 use App\Entity\RendezVous;
 use App\Form\RendezVousType;
+use App\Entity\BarberPrestation;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,20 +22,30 @@ class RendezVousController extends AbstractController
         ]);
     }
 
-    #[Route('/rendezvous/add', name: 'add_rendezvous')]
-    #[Route('/rendezvous/{id}/edit', name: 'edit_rendezvous')]
-    public function add(ManagerRegistry $doctrine, RendezVous $rendezvous = null, Request $request) : Response
+    #[Route('/barbershop/{barbershop}/prestation/{barberprestation}/rendezvous/add', name: 'add_rendezvous')]
+    #[Route('/barbershop/{barbershop}/rendezvous/{id}/edit', name: 'edit_rendezvous')]
+    public function add(ManagerRegistry $doctrine, Barbershop $barbershop, BarberPrestation $barberPrestation, RendezVous $rendezvous = null, Request $request) : Response
     {   
         if(!$rendezvous){
             $rendezvous = new RendezVous();
         }
 
-        $form = $this->createForm(RendezVousType::class, $rendezvous);
+        $form = $this->createForm(RendezVousType::class, $rendezvous, [
+        ]);
         $form->handleRequest($request);
 
+        $personnel = $barbershop->getPersonnels();
+
         if($form->isSubmitted() && $form->isValid())
-        {
+        {   
+            
             $rendezvous = $form->getData();
+
+            // Ajout de la prestation
+            $rendezvous->addBarberPrestation($barberPrestation);
+            // Ajout du barbershop
+            $rendezvous->setBarbershop($barbershop);
+
             $entityManager = $doctrine->getManager();
             $entityManager->persist($rendezvous);
             
@@ -44,6 +56,9 @@ class RendezVousController extends AbstractController
 
         return $this->render('rendezvous/add.html.twig', [
             'formAddRendezVous' => $form->createView(),
+            'barbershop' => $barbershop,
+            'prestation' => $barberPrestation,
+            'personnels' => $personnel
         ]);
     }
 }
