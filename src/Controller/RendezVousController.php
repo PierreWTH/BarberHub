@@ -22,9 +22,9 @@ class RendezVousController extends AbstractController
         ]);
     }
 
-    #[Route('/barbershop/{barbershop}/prestation/{barberprestation}/rendezvous/add', name: 'add_rendezvous')]
-    #[Route('/barbershop/{barbershop}/rendezvous/{id}/edit', name: 'edit_rendezvous')]
-    public function add(ManagerRegistry $doctrine, Barbershop $barbershop, BarberPrestation $barberPrestation, RendezVous $rendezvous = null, Request $request) : Response
+    #[Route('/barbershop/{barberPrestation}/rendezvous/add', name: 'add_rendezvous')]
+    #[Route('/barbershop/rendezvous/{id}/edit', name: 'edit_rendezvous')]
+    public function add(ManagerRegistry $doctrine, BarberPrestation $barberPrestation, RendezVous $rendezvous = null, Request $request) : Response
     {   
         if(!$rendezvous){
             $rendezvous = new RendezVous();
@@ -34,6 +34,7 @@ class RendezVousController extends AbstractController
         ]);
         $form->handleRequest($request);
 
+        $barbershop = $barberPrestation->getBarbershop();
         $personnel = $barbershop->getPersonnels();
 
         if($form->isSubmitted() && $form->isValid())
@@ -43,8 +44,14 @@ class RendezVousController extends AbstractController
 
             // Ajout de la prestation
             $rendezvous->addBarberPrestation($barberPrestation);
-            // Ajout du barbershop
-            $rendezvous->setBarbershop($barbershop);
+            
+            // Ajout du User
+            $user = $this->getUser();
+            $rendezvous->setUser($user);
+
+            // Début de la prestation
+
+            // Fin de la prestation
 
             $entityManager = $doctrine->getManager();
             $entityManager->persist($rendezvous);

@@ -14,7 +14,10 @@ Votre réservation : {{prestation.prestation.nom}} chez {{barbershop.nom}}
 
 {{ form_row(formAddRendezVous.debut) }}
 
+<p> Choississez un professionnel : </p>
+
 <select name="" id="">
+    <option> choisir </option>
 {% for personnel in personnels %}
     <option value="{{personnel.id}}">{{personnel.user.pseudo}}</option> 
 {% endfor %}
@@ -35,6 +38,7 @@ Votre réservation : {{prestation.prestation.nom}} chez {{barbershop.nom}}
         $('#rendez_vous_personnel').on('change', function() {
             var selectedValue = $(this).val();
             $('#rendez_vous_personnel').val(selectedValue);
+            console.log( $('#rendez_vous_personnel').val())
         });
     });
 </script>

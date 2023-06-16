@@ -23,10 +23,10 @@ class RendezVousType extends AbstractType
                 ],
                 'label' => false,
             ])
-            // ->add('fin', DateTimeType::class, [
-            //     'time_label' => 'Starts On',
-            //     'minutes' => range(0, 30, 30),
-            // ])
+            ->add('fin', DateTimeType::class, [
+                'time_label' => 'Starts On',
+                'minutes' => range(0, 30, 30),
+            ])
             ->add('personnel', HiddenType::class, [
                 'attr' => [
                     'id' => 'personne-input',
