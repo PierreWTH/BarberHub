@@ -107,6 +107,6 @@ class Personnel
 
     public function __toString()
     {
-        return $this->user;
+        return $this->user->pseudo;
     }
 }

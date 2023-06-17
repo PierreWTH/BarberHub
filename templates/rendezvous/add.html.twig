@@ -4,6 +4,23 @@
 
 {% block body %}
 
+{% block javascripts %}
+
+<script>
+    $(document).ready(function() {
+        $('#personnel').on('change', function() {
+            var jour = $(this).val();
+            $('#rendez_vous_personnel').val(jour);
+            
+            console.log($('#rendez_vous_personnel').val());
+        });
+    });
+</script>
+
+
+    
+{% endblock javascripts %}
+
 <h1> Votre rendez vous </h1>
 
 Votre réservation : {{prestation.prestation.nom}} chez {{barbershop.nom}}
@@ -16,7 +33,7 @@ Votre réservation : {{prestation.prestation.nom}} chez {{barbershop.nom}}
 
 <p> Choississez un professionnel : </p>
 
-<select name="" id="">
+<select name="personnel" id="personnel">
     <option> choisir </option>
 {% for personnel in personnels %}
     <option value="{{personnel.id}}">{{personnel.user.pseudo}}</option> 
@@ -31,16 +48,4 @@ Votre réservation : {{prestation.prestation.nom}} chez {{barbershop.nom}}
 
 {% endblock %}
 
-{% block javascripts %}
 
-<script>
-    $(document).ready(function() {
-        $('#rendez_vous_personnel').on('change', function() {
-            var selectedValue = $(this).val();
-            $('#rendez_vous_personnel').val(selectedValue);
-            console.log( $('#rendez_vous_personnel').val())
-        });
-    });
-</script>
-    
-{% endblock javascripts %}

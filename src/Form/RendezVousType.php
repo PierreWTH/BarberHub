@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Personnel;
 use App\Entity\RendezVous;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,10 +28,14 @@ class RendezVousType extends AbstractType
                 'time_label' => 'Starts On',
                 'minutes' => range(0, 30, 30),
             ])
-            ->add('personnel', HiddenType::class, [
-                'attr' => [
-                    'id' => 'personne-input',
-                ],
+            ->add('personnel', EntityType::class, [
+                'class' => Personnel::class,
+                'choice_label' => function ($personnel) {
+                    $barbershop = $personnel->getBarbershop();
+                    $personnel = $barbershop->getPersonnels();
+                    
+                    return $personnel;
+                }
             ])
             ->add('submit', SubmitType::class)
         ;
