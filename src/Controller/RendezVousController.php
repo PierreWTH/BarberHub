@@ -30,12 +30,19 @@ class RendezVousController extends AbstractController
             $rendezvous = new RendezVous();
         }
 
-        $form = $this->createForm(RendezVousType::class, $rendezvous, [
+        $barbershop = $barberPrestation->getBarbershop();
+        $personnel = $barbershop->getPersonnels();
+        $barbershopId = $barbershop->getId();
+        
+        var_dump($barbershopId);
+        
+
+        $form = $this->createForm(RendezVousType::class, $rendezvous, ['barbershopId' => $barbershopId
         ]);
         $form->handleRequest($request);
 
-        $barbershop = $barberPrestation->getBarbershop();
-        $personnel = $barbershop->getPersonnels();
+       
+        
 
         if($form->isSubmitted() && $form->isValid())
         {   

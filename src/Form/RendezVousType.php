@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Personnel;
 use App\Entity\RendezVous;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -16,7 +17,10 @@ class RendezVousType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $barbershopId = $options['barbershopId'];
+
         $builder
+        
             ->add('debut', DateTimeType::class, [
                 'minutes' => range(0, 30, 30),
                 'attr' => [
@@ -28,15 +32,17 @@ class RendezVousType extends AbstractType
                 'time_label' => 'Starts On',
                 'minutes' => range(0, 30, 30),
             ])
+
             ->add('personnel', EntityType::class, [
                 'class' => Personnel::class,
-                'choice_label' => function ($personnel) {
-                    $barbershop = $personnel->getBarbershop();
-                    $personnel = $barbershop->getPersonnels();
-                    
-                    return $personnel;
+                'query_builder' => function (EntityRepository $er) use ($barbershopId) {
+                    return $er->createQueryBuilder('p')
+                        ->where('p.barbershop = :barbershopId')
+                        ->setParameter('barbershopId', $barbershopId);
                 }
+                
             ])
+
             ->add('submit', SubmitType::class)
         ;
     }
@@ -45,6 +51,8 @@ class RendezVousType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => RendezVous::class,
+            'barbershopId' => false
+            
         ]);
     }
 }
