@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateInterval;
 use App\Entity\Barbershop;
 use App\Entity\RendezVous;
 use App\Form\RendezVousType;
@@ -33,11 +34,31 @@ class RendezVousController extends AbstractController
         $barbershop = $barberPrestation->getBarbershop();
         $personnel = $barbershop->getPersonnels();
         $barbershopId = $barbershop->getId();
+        $horaires = $barbershop->getHoraires();
         
-        var_dump($barbershopId);
-        
+        // Afficher les créneaux horaires
+        $plagesHoraires = [];
+        $heureDebut = 8; // A remplacer par le vrai horaire
+        $heureFin = 18; // A remplacer par le vrai horaire
 
-        $form = $this->createForm(RendezVousType::class, $rendezvous, ['barbershopId' => $barbershopId
+        $heure = $heureDebut;
+        $minute = 0;
+
+        while ($heure <= $heureFin) {
+            $heureDebutFormat = sprintf('%02d:%02d', $heure, $minute);
+            $heureFinFormat = sprintf('%02d:%02d', $heure, $minute + 30);
+            $plage = $heureDebutFormat . ' - ' . $heureFinFormat;
+            $plagesHoraires[$plage] = $plage;
+
+            // Ajouter 1 à l'heure suivante
+            $heure = ($minute === 30) ? $heure + 1 : $heure;
+            $minute = ($minute === 60) ? 0 : 30;
+        }
+
+        var_dump($plagesHoraires);
+
+        // Création du form avec envoi de $barbershopId au form builder
+        $form = $this->createForm(RendezVousType::class, $rendezvous, ['barbershopId' => $barbershopId, 'plageHoraires' => $plagesHoraires
         ]);
         $form->handleRequest($request);
 
@@ -72,7 +93,7 @@ class RendezVousController extends AbstractController
             'formAddRendezVous' => $form->createView(),
             'barbershop' => $barbershop,
             'prestation' => $barberPrestation,
-            'personnels' => $personnel
+            'horaires' => $horaires
         ]);
     }
 }

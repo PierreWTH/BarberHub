@@ -4,22 +4,7 @@
 
 {% block body %}
 
-{% block javascripts %}
 
-<script>
-    $(document).ready(function() {
-        $('#personnel').on('change', function() {
-            var jour = $(this).val();
-            $('#rendez_vous_personnel').val(jour);
-            
-            console.log($('#rendez_vous_personnel').val());
-        });
-    });
-</script>
-
-
-    
-{% endblock javascripts %}
 
 <h1> Votre rendez vous </h1>
 
@@ -27,7 +12,15 @@ Votre réservation : {{prestation.prestation.nom}} chez {{barbershop.nom}}
 
 {{ form_start(formAddRendezVous) }}
 
-<p> Date et heure </p>
+<p>Choississez un jour : </p>
+
+<input type="date" name="date" min="2018-01-01" id="datePickerId">
+
+<div id="select-container">
+    
+</div>
+
+<p> Heure</p>
 
 {{ form_row(formAddRendezVous.debut) }}
 
@@ -37,7 +30,84 @@ Votre réservation : {{prestation.prestation.nom}} chez {{barbershop.nom}}
 
 {{ form_end(formAddRendezVous) }}
 
+{% block javascripts %}
 
+<script>
+    
+    /* LIMITER SELECTION DATE A MINIMUM LA DATE DU JOUR */
+    
+    datePickerId.min = new Date().toLocaleDateString('fr-ca')
+
+    /* RECUPERER LE JOUR DE LA SEMAINE ET LA DATE SELECTIONNEE */
+
+    // Récupérer le champ de saisie de type date
+    const dateInput = document.getElementById('datePickerId');
+
+    // Écouter l'événement onchange sur le champ de saisie de type date
+    dateInput.onchange = function() {
+    const selectedDate = new Date(dateInput.value);
+
+    const options = { weekday: 'long'};
+
+    const jour = selectedDate.toLocaleDateString('fr-FR', options);
+    const date = document.getElementById('datePickerId').value;
+
+    /* AFFICHER LES HORAIRES DU BARBIER POUR CE JOUR SEULEMENT */
+
+    // Récupération des horaires du jour 
+    const horaires = JSON.parse('{{ horaires | raw }}');
+    const horairesJour = horaires[jour];
+
+    // Récupération ouverture et fermeture
+    const ouverture = horairesJour.ouverture
+    const fermeture = horairesJour.fermeture
+
+    console.log(ouverture);
+    console.log(fermeture);
+
+    // Conversion des heures en objets Date
+    const heureOuverture = new Date('1970-01-01T' + ouverture + ':00');
+    const heureFermeture = new Date('1970-01-01T' + fermeture + ':00');
+
+    // Création du select
+    const select = document.createElement('select');
+    select.id = "select-heure";
+
+    // Parcours des créneaux horaires de 30 minutes
+    let currentHour = heureOuverture;
+
+    while (currentHour < heureFermeture) {
+        const heure = currentHour.getHours();
+        const minute = currentHour.getMinutes();
+
+        // Création de l'option
+        const option = document.createElement('option');
+        option.value = `${heure.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+        option.text = `${heure.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+
+        // Ajout de l'option au select
+        select.appendChild(option);
+
+        // Créneaux de 30 minutes
+        currentHour.setMinutes(minute + 30);
+    }
+
+    // Ajout du select
+    const container = document.getElementById('select-container');
+    container.appendChild(select);
+
+    const hourSelect = document.getElementById('select-heure');
+    console.log(hourSelect.value)
+    hourSelect.onchange = function() {
+        console.log(hourSelect.value)
+    }
+
+};
+
+    
+
+</script>
+{% endblock javascripts %}
 
 {% endblock %}
 
