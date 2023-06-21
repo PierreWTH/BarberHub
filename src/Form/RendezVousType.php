@@ -23,10 +23,7 @@ class RendezVousType extends AbstractType
 
         $builder
         
-            ->add('debut', ChoiceType::class, [
-                'choices' => $plagesHoraires,
-                'label' => false,
-            ])
+            ->add('debut', HiddenType::class)
 
             ->add('fin', HiddenType::class)
 

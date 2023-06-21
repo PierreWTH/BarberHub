@@ -62,9 +62,6 @@ Votre réservation : {{prestation.prestation.nom}} chez {{barbershop.nom}}
     const ouverture = horairesJour.ouverture
     const fermeture = horairesJour.fermeture
 
-    console.log(ouverture);
-    console.log(fermeture);
-
     // Conversion des heures en objets Date
     const heureOuverture = new Date('1970-01-01T' + ouverture + ':00');
     const heureFermeture = new Date('1970-01-01T' + fermeture + ':00');
@@ -96,10 +93,22 @@ Votre réservation : {{prestation.prestation.nom}} chez {{barbershop.nom}}
     const container = document.getElementById('select-container');
     container.appendChild(select);
 
+    // Récupération de l'heure 
     const hourSelect = document.getElementById('select-heure');
-    console.log(hourSelect.value)
+    
     hourSelect.onchange = function() {
-        console.log(hourSelect.value)
+        const rdvHour = hourSelect.value
+
+    // Heure complete
+    const dateRDV = date + '' + hourSelect
+
+    const [annee, mois, jour] = date.split('-');
+    const [heure, minute] = rdvHour.split(':');
+
+    const heureDebut = new Date(annee, mois - 1, jour, heure, minute);
+    const heureFin = new Date(heureDebut.getTime() + 30 * 60000);
+
+        
     }
 
 };
