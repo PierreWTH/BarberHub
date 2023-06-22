@@ -108,6 +108,16 @@ Votre réservation : {{prestation.prestation.nom}} chez {{barbershop.nom}}
     const heureDebut = new Date(annee, mois - 1, jour, heure, minute);
     const heureFin = new Date(heureDebut.getTime() + 30 * 60000);
 
+    const heureDebutString = heureDebut.toISOString();
+    const heureFinString = heureFin.toISOString();
+    
+    // Récupération des valeurs dans les champs cachés 
+    document.getElementById('rendez_vous_debut').setAttribute('value', heureDebut);
+    document.getElementById('rendez_vous_fin').setAttribute('value', heureFin);
+
+    const valeurDebut = document.getElementById('rendez_vous_debut').value;
+
+    console.log(valeurDebut)
         
     }
 
