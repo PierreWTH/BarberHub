@@ -23,9 +23,9 @@ class RendezVousType extends AbstractType
 
         $builder
         
-            ->add('debut', HiddenType::class)
-
-            ->add('fin', HiddenType::class)
+            ->add('debut', HiddenType::class, [
+                'mapped' => false,
+            ])
 
             // N'affiche que le personnel qui travaille dans le barber $barbershopID
             ->add('personnel', EntityType::class, [

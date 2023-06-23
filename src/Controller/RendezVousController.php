@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use DateInterval;
+use DateTimeImmutable;
 use App\Entity\Barbershop;
 use App\Entity\RendezVous;
 use App\Form\RendezVousType;
@@ -35,40 +36,26 @@ class RendezVousController extends AbstractController
         $personnel = $barbershop->getPersonnels();
         $barbershopId = $barbershop->getId();
         $horaires = $barbershop->getHoraires();
-        
-        // Afficher les créneaux horaires
-        $plagesHoraires = [];
-        $heureDebut = 8; // A remplacer par le vrai horaire
-        $heureFin = 18; // A remplacer par le vrai horaire
-
-        $heure = $heureDebut;
-        $minute = 0;
-
-        while ($heure <= $heureFin) {
-            $heureDebutFormat = sprintf('%02d:%02d', $heure, $minute);
-            $heureFinFormat = sprintf('%02d:%02d', $heure, $minute + 30);
-            $plage = $heureDebutFormat . ' - ' . $heureFinFormat;
-            $plagesHoraires[$plage] = $plage;
-
-            // Ajouter 1 à l'heure suivante
-            $heure = ($minute === 30) ? $heure + 1 : $heure;
-            $minute = ($minute === 60) ? 0 : 30;
-        }
-
-        var_dump($plagesHoraires);
 
         // Création du form avec envoi de $barbershopId au form builder
-        $form = $this->createForm(RendezVousType::class, $rendezvous, ['barbershopId' => $barbershopId, 'plageHoraires' => $plagesHoraires
-        ]);
+        $form = $this->createForm(RendezVousType::class, $rendezvous, ['barbershopId' => $barbershopId]);
         $form->handleRequest($request);
-
-       
-        
 
         if($form->isSubmitted() && $form->isValid())
         {   
-            
             $rendezvous = $form->getData();
+
+            // Récupération de début
+            $debut = $form->get('debut')->getData();
+
+            // Conversion en datetim pour début
+            $heureDebut = $dateTime = new DateTimeImmutable($debut);
+            // Rajout de 30min pour heure de fin
+            $heureFin = $heureDebut->modify('+30 minutes');
+
+            // Set heure de fin et heure de début
+            $rendezvous->setDebut($heureDebut);
+            $rendezvous->setFin($heureFin);
 
             // Ajout de la prestation
             $rendezvous->addBarberPrestation($barberPrestation);
@@ -76,10 +63,6 @@ class RendezVousController extends AbstractController
             // Ajout du User
             $user = $this->getUser();
             $rendezvous->setUser($user);
-
-            // Début de la prestation
-
-            // Fin de la prestation
 
             $entityManager = $doctrine->getManager();
             $entityManager->persist($rendezvous);
