@@ -12,15 +12,13 @@ Votre réservation : {{prestation.prestation.nom}} chez {{barbershop.nom}}
 
 {{ form_start(formAddRendezVous) }}
 
-<p>Choississez un jour : </p>
+<h3>Choississez un jour : </h3>
 
 <input type="date" name="date" min="2018-01-01" id="datePickerId">
 
 <div id="select-container">
     
 </div>
-
-<p> Heure</p>
 
 {{ form_row(formAddRendezVous.debut) }}
 
@@ -33,18 +31,21 @@ Votre réservation : {{prestation.prestation.nom}} chez {{barbershop.nom}}
 {% block javascripts %}
 
 <script>
+
+/* LIMITER SELECTION DATE A MINIMUM LA DATE DU JOUR */
     
-    /* LIMITER SELECTION DATE A MINIMUM LA DATE DU JOUR */
-    
-    datePickerId.min = new Date().toLocaleDateString('fr-ca')
+datePickerId.min = new Date().toLocaleDateString('fr-ca')
 
-    /* RECUPERER LE JOUR DE LA SEMAINE ET LA DATE SELECTIONNEE */
+/* RECUPERER LE JOUR DE LA SEMAINE ET LA DATE SELECTIONNEE */
 
-    // Récupérer le champ de saisie de type date
-    const dateInput = document.getElementById('datePickerId');
+// Récupérer le champ de saisie de type date
+const dateInput = document.getElementById('datePickerId');
 
-    // Écouter l'événement onchange sur le champ de saisie de type date
-    dateInput.onchange = function() {
+// Écouter l'événement onchange sur le champ de saisie de type date
+dateInput.onchange = function() {
+
+    const existingSelect = container.querySelector('#select-heure');
+
     const selectedDate = new Date(dateInput.value);
 
     const options = { weekday: 'long'};
@@ -67,6 +68,10 @@ Votre réservation : {{prestation.prestation.nom}} chez {{barbershop.nom}}
     const heureFermeture = new Date('1970-01-01T' + fermeture + ':00');
 
     // Création du select
+    const textHeure = document.createElement('h3');
+    textHeure.textContent = "Selectionnez une heure :";
+    textHeure.id = "select-heure";
+
     const select = document.createElement('select');
     select.id = "select-heure";
 
@@ -88,40 +93,35 @@ Votre réservation : {{prestation.prestation.nom}} chez {{barbershop.nom}}
         // Créneaux de 30 minutes
         currentHour.setMinutes(minute + 30);
     }
-
-    // Ajout du select
     const container = document.getElementById('select-container');
+    
+    // Ajout du select
+    container.appendChild(textHeure);
     container.appendChild(select);
 
     // Récupération de l'heure 
     const hourSelect = document.getElementById('select-heure');
-    
+
     hourSelect.onchange = function() {
-        const rdvHour = hourSelect.value
-
-    // Heure complete
-    const dateRDV = date + '' + hourSelect
-
-    const [annee, mois, jour] = date.split('-');
-    const [heure, minute] = rdvHour.split(':');
-
-    const heureDebut = new Date(annee, mois - 1, jour, heure, minute);
-
-    const heureDebutString = heureDebut.toISOString();
-    
-    // Récupération des valeurs dans les champs cachés 
-    document.getElementById('rendez_vous_debut').setAttribute('value', heureDebutString);
-
-    const valeurDebut = document.getElementById('rendez_vous_debut').value;
-
-    console.log(valeurDebut)
         
+        const rdvHour = hourSelect.value
+        // Heure complete
+        const dateRDV = date + '' + hourSelect
+
+        const [annee, mois, jour] = date.split('-');
+        const [heure, minute] = rdvHour.split(':');
+
+        const heureDebut = new Date(annee, mois - 1, jour, heure, minute);
+
+        const heureDebutString = heureDebut.toISOString();
+
+        // Récupération des valeurs dans les champs cachés 
+        document.getElementById('rendez_vous_debut').setAttribute('value', heureDebutString);
+
+        const valeurDebut = document.getElementById('rendez_vous_debut').value;
     }
 
 };
-
-    
-
 </script>
 {% endblock javascripts %}
 
