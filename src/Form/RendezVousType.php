@@ -29,6 +29,7 @@ class RendezVousType extends AbstractType
 
             // N'affiche que le personnel qui travaille dans le barber $barbershopID
             ->add('personnel', EntityType::class, [
+                'label' => false,
                 'class' => Personnel::class,
                 'query_builder' => function (EntityRepository $er) use ($barbershopId) {
                     return $er->createQueryBuilder('p')
