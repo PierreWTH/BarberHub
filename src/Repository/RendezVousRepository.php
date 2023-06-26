@@ -39,6 +39,21 @@ class RendezVousRepository extends ServiceEntityRepository
         }
     }
 
+    public function checkIfExist($debut, $personnel){
+
+        $result = $this->createQueryBuilder('r')
+           ->andWhere('r.debut = :debut')
+           ->andWhere('r.personnel = :personnel')
+           ->setParameter('debut', $debut)
+           ->setParameter('personnel', $personnel)
+           ->getQuery()
+           ->getOneOrNullResult()
+       ;
+
+       return ($result !== null);
+
+    }
+
 //    /**
 //     * @return RendezVous[] Returns an array of RendezVous objects
 //     */

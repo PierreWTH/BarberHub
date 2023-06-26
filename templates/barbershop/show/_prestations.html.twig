@@ -2,8 +2,12 @@
 
 {{prestation.prestation.nom}}
 {{prestation.prix}} €
+
+{% if app.user %}
+    
 <a href="{{path ('add_rendezvous', { barberPrestation : prestation.id })}}"> Reserver </a>
 
+{% endif %}
 
 
 {% endfor %}

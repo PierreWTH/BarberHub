@@ -8,11 +8,14 @@ use App\Entity\Barbershop;
 use App\Entity\RendezVous;
 use App\Form\RendezVousType;
 use App\Entity\BarberPrestation;
+use App\Repository\RendezVousRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 
 class RendezVousController extends AbstractController
 {
@@ -26,7 +29,8 @@ class RendezVousController extends AbstractController
 
     #[Route('/barbershop/{barberPrestation}/rendezvous/add', name: 'add_rendezvous')]
     #[Route('/barbershop/rendezvous/{id}/edit', name: 'edit_rendezvous')]
-    public function add(ManagerRegistry $doctrine, BarberPrestation $barberPrestation, RendezVous $rendezvous = null, Request $request) : Response
+    #[IsGranted('ROLE_USER')]
+    public function add(ManagerRegistry $doctrine, BarberPrestation $barberPrestation, RendezVous $rendezvous = null, Request $request, RendezVousRepository $rvr) : Response
     {   
         if(!$rendezvous){
             $rendezvous = new RendezVous();
@@ -47,9 +51,15 @@ class RendezVousController extends AbstractController
 
             // Récupération de début
             $debut = $form->get('debut')->getData();
+            $personnel = $form->get('personnel')->getData();
+            
+            $test = $rvr->checkIfExist($debut, $personnel);
+           
 
             // Conversion en datetim pour début
             $heureDebut = $dateTime = new DateTimeImmutable($debut);
+            var_dump($heureDebut);
+            die();
             // Rajout de 30min pour heure de fin
             $heureFin = $heureDebut->modify('+30 minutes');
 
