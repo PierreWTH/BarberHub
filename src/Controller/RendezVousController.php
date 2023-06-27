@@ -51,15 +51,27 @@ class RendezVousController extends AbstractController
 
             // Récupération de début
             $debut = $form->get('debut')->getData();
-            $personnel = $form->get('personnel')->getData();
-            
-            $test = $rvr->checkIfExist($debut, $personnel);
-           
+            var_dump($debut);
+
+            date_default_timezone_set('Europe/Paris');
 
             // Conversion en datetim pour début
             $heureDebut = $dateTime = new DateTimeImmutable($debut);
-            var_dump($heureDebut);
-            die();
+
+            // Récupération de personnel ID et heure début en string pour requete checkIfRdvExist
+            $personnelId = $form->get('personnel')->getData()->getId();
+            $stringDebut = $heureDebut->format('Y-m-d H:i:s');
+            dd($stringDebut);
+            
+            // On verifie si le RDV existe
+            $alreadyExist = $rvr->checkIfRdvExist($stringDebut, $personnelId);
+
+            // Message d'erreur si le RDV existe déja 
+            if($alreadyExist){
+                echo 'Ce créneaux a déja été reservé';
+                die();
+            }
+    
             // Rajout de 30min pour heure de fin
             $heureFin = $heureDebut->modify('+30 minutes');
 

@@ -39,7 +39,7 @@ class RendezVousRepository extends ServiceEntityRepository
         }
     }
 
-    public function checkIfExist($debut, $personnel){
+    public function checkIfRdvExist($debut, $personnel){
 
         $result = $this->createQueryBuilder('r')
            ->andWhere('r.debut = :debut')

@@ -70,13 +70,13 @@ dateInput.onchange = function() {
     // Création du select
     const textHeure = document.createElement('h3');
     textHeure.textContent = "Selectionnez une heure :";
-    textHeure.id = "select-heure";
 
     const select = document.createElement('select');
     select.id = "select-heure";
 
     // Parcours des créneaux horaires de 30 minutes
     let currentHour = heureOuverture;
+    
 
     while (currentHour < heureFermeture) {
         const heure = currentHour.getHours();
@@ -93,6 +93,7 @@ dateInput.onchange = function() {
         // Créneaux de 30 minutes
         currentHour.setMinutes(minute + 30);
     }
+    
     const container = document.getElementById('select-container');
     container.innerHTML = '';
 
@@ -103,10 +104,11 @@ dateInput.onchange = function() {
         return
     }  
     
+    
     // Ajout du select
     container.appendChild(textHeure);
     container.appendChild(select);
-
+    
     // Récupération de l'heure 
     const hourSelect = document.getElementById('select-heure');
 
