@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use DateInterval;
 use DateTimeImmutable;
+use IntlDateFormatter;
 use App\Entity\Barbershop;
 use App\Entity\RendezVous;
 use App\Form\RendezVousType;
@@ -51,9 +52,6 @@ class RendezVousController extends AbstractController
 
             // Récupération de début
             $debut = $form->get('debut')->getData();
-            var_dump($debut);
-
-            date_default_timezone_set('Europe/Paris');
 
             // Conversion en datetim pour début
             $heureDebut = $dateTime = new DateTimeImmutable($debut);
@@ -61,9 +59,17 @@ class RendezVousController extends AbstractController
             // Récupération de personnel ID et heure début en string pour requete checkIfRdvExist
             $personnelId = $form->get('personnel')->getData()->getId();
             $stringDebut = $heureDebut->format('Y-m-d H:i:s');
-            dd($stringDebut);
+
+            // VERIF SI RDV PRIS UN JOUR DE FERMETURE
+
+            // Récupération du jour en français
+            setlocale(LC_TIME, 'fr_FR.UTF-8');
+            $jour = strtolower(strftime('%A', $heureDebut->getTimestamp()));
+            $horairesArray = json_decode($horaires, true);
+            var_dump($horairesArray[$jour]);
+            die();
             
-            // On verifie si le RDV existe
+            // VERIF SI LE RDV EXISTE DEJA 
             $alreadyExist = $rvr->checkIfRdvExist($stringDebut, $personnelId);
 
             // Message d'erreur si le RDV existe déja 

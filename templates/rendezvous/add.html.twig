@@ -123,6 +123,10 @@ dateInput.onchange = function() {
 
         const heureDebut = new Date(annee, mois - 1, jour, heure, minute);
 
+        // On ajoute deux heures car toISOSString fait passer sur le fuseaux horaire UTC au lieu de UTC+2
+        heureDebut.setHours(heureDebut.getHours() + 2);
+
+        // On converti en ISOS string pour que ce soit traité plus facilement dans le back. 
         const heureDebutString = heureDebut.toISOString();
 
         // Récupération des valeurs dans les champs cachés 
