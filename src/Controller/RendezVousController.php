@@ -66,8 +66,15 @@ class RendezVousController extends AbstractController
             setlocale(LC_TIME, 'fr_FR.UTF-8');
             $jour = strtolower(strftime('%A', $heureDebut->getTimestamp()));
             $horairesArray = json_decode($horaires, true);
-            var_dump($horairesArray[$jour]);
-            die();
+
+            
+            if($horairesArray[$jour]['ouverture'] == 'ferme' || $horairesArray[$jour]['fermeture'] == 'ferme' ){
+                echo 'Le barbershop est fermé ce jour la.';
+                die();
+            }
+
+            // VERIF SI LE RDV EST BIEN PRIS PENDANT LES HEURES D'OUVERTURE
+            
             
             // VERIF SI LE RDV EXISTE DEJA 
             $alreadyExist = $rvr->checkIfRdvExist($stringDebut, $personnelId);
