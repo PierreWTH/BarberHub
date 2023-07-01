@@ -114,14 +114,17 @@ dateInput.onchange = function() {
 
     hourSelect.onchange = function() {
         
-        const rdvHour = hourSelect.value
+        const rdvHour = hourSelect.value 
         // Heure complete
-        const dateRDV = date + '' + hourSelect
+
+        console.log(hourSelect)
 
         const [annee, mois, jour] = date.split('-');
         const [heure, minute] = rdvHour.split(':');
 
         const heureDebut = new Date(annee, mois - 1, jour, heure, minute);
+
+        console.log(heureDebut)
 
         // On ajoute deux heures car toISOSString fait passer sur le fuseaux horaire UTC au lieu de UTC+2
         heureDebut.setHours(heureDebut.getHours() + 2);
@@ -131,8 +134,6 @@ dateInput.onchange = function() {
 
         // Récupération des valeurs dans les champs cachés 
         document.getElementById('rendez_vous_debut').setAttribute('value', heureDebutString);
-
-        const valeurDebut = document.getElementById('rendez_vous_debut').value;
     }
 
 };

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateTime;
 use DateInterval;
 use DateTimeImmutable;
 use IntlDateFormatter;
@@ -53,12 +54,28 @@ class RendezVousController extends AbstractController
             // Récupération de début
             $debut = $form->get('debut')->getData();
 
+            if(!$debut){
+                echo 'Heure du rendez vous invalide.';
+            }
+            
+            dd($debut);
+
             // Conversion en datetim pour début
             $heureDebut = $dateTime = new DateTimeImmutable($debut);
+
+            dd($heureDebut);
 
             // Récupération de personnel ID et heure début en string pour requete checkIfRdvExist
             $personnelId = $form->get('personnel')->getData()->getId();
             $stringDebut = $heureDebut->format('Y-m-d H:i:s');
+
+            // VERIF SI LE RDV EST PRIS APRES L'HEURE ET LE JOUR D'AUJOURD'HUI
+            $today = new DateTime();
+
+            if($heureDebut->getTimestamp() <= $today->getTimestamp()){
+
+                echo 'Le rendez vous ne peux pas être pris avant le jour actuel';
+            }
 
             // VERIF SI RDV PRIS UN JOUR DE FERMETURE
 
@@ -74,7 +91,13 @@ class RendezVousController extends AbstractController
             }
 
             // VERIF SI LE RDV EST BIEN PRIS PENDANT LES HEURES D'OUVERTURE
-            
+            $ouvertureBS = new DateTime($horairesArray[$jour]['ouverture']);
+            $fermetureBS = new DateTime($horairesArray[$jour]['fermeture']);
+
+            if($heureDebut->format('H:i:s')  < $ouvertureBS->format('H:i:s')  || $heureDebut->format('H:i:s')  > $fermetureBS->format('H:i:s') )
+            {
+                echo 'Vous ne pouvez pas prendre rendez-vous en dehors des heures d\'ouverture.';
+            }
             
             // VERIF SI LE RDV EXISTE DEJA 
             $alreadyExist = $rvr->checkIfRdvExist($stringDebut, $personnelId);
@@ -82,7 +105,7 @@ class RendezVousController extends AbstractController
             // Message d'erreur si le RDV existe déja 
             if($alreadyExist){
                 echo 'Ce créneaux a déja été reservé';
-                die();
+               die();
             }
     
             // Rajout de 30min pour heure de fin
