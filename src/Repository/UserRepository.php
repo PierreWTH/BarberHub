@@ -79,6 +79,52 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             return $query->getResult();
         }
 
+        // Récuperer les rendez vous à venir
+        public function getUpcomingRendezVous($user)
+        {
+            $em = $this->getEntityManager();
+
+            $qb = $em->createQueryBuilder();
+        
+            $query = 
+                // On selectionne les barbershops b
+                $qb->select('r')
+                // Depuis l'entité barbershop, on donne l'alias b
+                ->from('App\Entity\RendezVous', 'r')
+                // Ou user id est égal au user passé en paramètre
+                ->where('r.debut > :currentdate')
+                ->andWhere('r.user = :user')
+                ->setParameter('currentdate', new \DateTime())
+                ->setParameter('user', $user)
+                ->getQuery();
+    
+            return $query->getResult();
+        }
+
+        // Récuperer les rendez vous passés
+        public function getPastRendezVous($user)
+        {
+            $em = $this->getEntityManager();
+
+            $qb = $em->createQueryBuilder();
+        
+            $query = 
+                // On selectionne les barbershops b
+                $qb->select('r')
+                // Depuis l'entité barbershop, on donne l'alias b
+                ->from('App\Entity\RendezVous', 'r')
+                // Ou user id est égal au user passé en paramètre
+                ->where('r.debut < :currentdate')
+                ->andWhere('r.user = :user')
+                ->setParameter('currentdate', new \DateTime())
+                ->setParameter('user', $user)
+                ->getQuery();
+    
+            return $query->getResult();
+        }
+
+        
+
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */

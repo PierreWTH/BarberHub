@@ -14,9 +14,43 @@
 
 {% endfor %}
 
-<p> Mon salon </p> 
+<h2> Mes rendez-vous à venir </h2>
+
+{% for rdv in upcomingRdvs %}
+
+Le {{rdv.debut|date("l d F à H:i")}} <br>
+Avec {{rdv.personnel}}<br>
+Chez {{rdv.personnel.barbershop}}<br>
+
+{% for barberPrestation in rdv.barberPrestation %}
+
+Votre prestation : {{barberPrestation.prestation.nom}}<br>
+Prix : {{barberPrestation.prix}}€
+    
+{% endfor %}
+<br><br>
+{% endfor %}
+
+<h2> Mes rendez-vous passés </h2>
+
+{% for rdv in pastRdvs %}
+
+Le {{rdv.debut|date("l d F à H:i")}} <br>
+Avec {{rdv.personnel}}<br>
+Chez {{rdv.personnel.barbershop}}<br>
+
+{% for barberPrestation in rdv.barberPrestation %}
+
+Votre prestation : {{barberPrestation.prestation.nom}}<br>
+Prix : {{barberPrestation.prix}}€
+    
+{% endfor %}
+<br><br>
+{% endfor %}
 
 {% if app.user.personnel %}
+
+<p> Mon salon </p> 
     
 {{ app.user.personnel.barbershop.nom }}
 

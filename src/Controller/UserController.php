@@ -14,13 +14,18 @@ class UserController extends AbstractController
     {
         // Récuperer les likes de l'utilisateur
 
-        $user = $this->getUser()->getId();
-        $likes = $ur->getLikedBarbershops($user);
+        $user = $this->getUser();
+        $userId = $this->getUser()->getId();
+        $likes = $ur->getLikedBarbershops($userId);
 
-        // Récuperer les rendez vous de l'utilisateur
+        $upcomingRdvs = $ur->getUpcomingRendezVous($user);
+        $pastRdvs = $ur->getPastRendezVous($user);
 
         return $this->render('user/myspace.html.twig', [
-            'likes' => $likes
+            'likes' => $likes,
+            'upcomingRdvs' => $upcomingRdvs,
+            'pastRdvs' => $pastRdvs
         ]);
+        
     }
 }
