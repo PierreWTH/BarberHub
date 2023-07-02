@@ -104,35 +104,40 @@ dateInput.onchange = function() {
         return
     }  
     
-    
     // Ajout du select
     container.appendChild(textHeure);
     container.appendChild(select);
-    
+
     // Récupération de l'heure 
     const hourSelect = document.getElementById('select-heure');
+    
+    // HEURE PAR DEFAUT 
 
+    // Récuperation année, mois jour heure minute
+    const [anneeDF, moisDF, jourDF] = date.split('-');
+    const [heureDF, minuteDF] = ouverture.split(':');
+
+    // Formatage de la date complète
+    const heureDebutDF = new Date(anneeDF, moisDF - 1, jourDF, heureDF, minuteDF);
+
+    // On ajoute deux heures car toISOSString fait passer sur le fuseaux horaire UTC au lieu de UTC+2
+    heureDebutDF.setHours(heureDebutDF.getHours() + 2);
+
+    // On converti en ISOS string pour que ce soit traité plus facilement dans le back. 
+    const heureDebutStringDF = heureDebutDF.toISOString();
+
+    // Récupération des valeurs dans les champs cachés 
+    document.getElementById('rendez_vous_debut').setAttribute('value', heureDebutStringDF);
+
+    // Meme traitement si on selectionne une heure
     hourSelect.onchange = function() {
-        
         const rdvHour = hourSelect.value 
-        // Heure complete
-
-        console.log(hourSelect)
-
         const [annee, mois, jour] = date.split('-');
         const [heure, minute] = rdvHour.split(':');
-
         const heureDebut = new Date(annee, mois - 1, jour, heure, minute);
-
-        console.log(heureDebut)
-
-        // On ajoute deux heures car toISOSString fait passer sur le fuseaux horaire UTC au lieu de UTC+2
         heureDebut.setHours(heureDebut.getHours() + 2);
-
-        // On converti en ISOS string pour que ce soit traité plus facilement dans le back. 
         const heureDebutString = heureDebut.toISOString();
 
-        // Récupération des valeurs dans les champs cachés 
         document.getElementById('rendez_vous_debut').setAttribute('value', heureDebutString);
     }
 

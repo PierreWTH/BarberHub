@@ -56,14 +56,11 @@ class RendezVousController extends AbstractController
 
             if(!$debut){
                 echo 'Heure du rendez vous invalide.';
+                die();
             }
-            
-            dd($debut);
 
-            // Conversion en datetim pour début
-            $heureDebut = $dateTime = new DateTimeImmutable($debut);
-
-            dd($heureDebut);
+            // Conversion en datetime pour début
+            $heureDebut = new DateTimeImmutable($debut);
 
             // Récupération de personnel ID et heure début en string pour requete checkIfRdvExist
             $personnelId = $form->get('personnel')->getData()->getId();
@@ -73,8 +70,8 @@ class RendezVousController extends AbstractController
             $today = new DateTime();
 
             if($heureDebut->getTimestamp() <= $today->getTimestamp()){
-
                 echo 'Le rendez vous ne peux pas être pris avant le jour actuel';
+                die();
             }
 
             // VERIF SI RDV PRIS UN JOUR DE FERMETURE
@@ -97,6 +94,7 @@ class RendezVousController extends AbstractController
             if($heureDebut->format('H:i:s')  < $ouvertureBS->format('H:i:s')  || $heureDebut->format('H:i:s')  > $fermetureBS->format('H:i:s') )
             {
                 echo 'Vous ne pouvez pas prendre rendez-vous en dehors des heures d\'ouverture.';
+                die();
             }
             
             // VERIF SI LE RDV EXISTE DEJA 
