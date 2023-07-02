@@ -17,6 +17,8 @@ class UserController extends AbstractController
         $user = $this->getUser()->getId();
         $likes = $ur->getLikedBarbershops($user);
 
+        // Récuperer les rendez vous de l'utilisateur
+
         return $this->render('user/myspace.html.twig', [
             'likes' => $likes
         ]);
