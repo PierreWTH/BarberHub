@@ -23,3 +23,8 @@
     max-height: 300px;
     width: auto;
 }
+
+#calendar{
+    width: 80%;
+    margin: auto;
+}
