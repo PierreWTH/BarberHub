@@ -28,4 +28,22 @@ class UserController extends AbstractController
         ]);
         
     }
+
+    #[Route('/monespace/rdv', name: 'app_myrdv')]
+    public function displayRendezVous(UserRepository $ur): Response
+    {
+        $user = $this->getUser();
+        $events = $user->getRendezVouses();
+
+        $rdv = [];
+
+        foreach($events as $event){
+            $rdvs[] = [
+                'id'
+            ];
+        }
+        
+    }
+
+
 }
