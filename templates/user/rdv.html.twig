@@ -4,6 +4,8 @@
 
 {% block body %}
 
+{{ dump(data) }}
+
 <div id='calendar'></div>
 
 {% block javascripts %}
@@ -20,9 +22,19 @@
         headerToolbar: {
             start : 'prev,next,today',
             center:'title',
-            end: 'dayGridMonth,timeGridWeek'
-        }
+            end: 'dayGridMonth,timeGridWeek, timeGridDay'
+        }, 
+        
       });
+
+      let events = JSON.parse('{{ data|raw }}').map(appointment => ({
+        title: appointment.prestation,
+        start: appointment.debut, 
+        end: appointment.fin, 
+        prestation : appointment.client,
+      }));
+    
+      calendar.addEventSource(events);
       calendar.render();
     };
 
