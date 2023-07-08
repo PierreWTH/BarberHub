@@ -33,23 +33,23 @@ class UserController extends AbstractController
     public function displayRendezVous(UserRepository $ur): Response
     {
         $user = $this->getUser();
-        $events = $ur->getUpcomingRendezVous($user);
+
+        $events = $user->getPersonnel()->getRendezVouses();
+        
 
         $rdvs = [];        
         // Boucle sur chaque rdv
         foreach($events as $event){
-
              $prestations = $event->getBarberPrestation();
 
             // Boucle sur chaque collection de prestation
             foreach($prestations as $prestation){
             $rdvs[] = [
                 'id'=> $event->getId(),
-                'debut' => $event->getDebut()->format('Y-m-d H:i:s'),
-                'fin' => $event->getFin()->format('Y-m-d H:i:s'),
-                'client' => $event->getUser()->getPseudo(),
-                'prestation' => $prestation->getPrestation()->getNom(),
-                'prix' => $prestation->getPrix()
+                'start' => $event->getDebut()->format('Y-m-d H:i:s'),
+                'end' => $event->getFin()->format('Y-m-d H:i:s'),
+                'title' => $event->getUser()->getPseudo() . " - " .$prestation->getPrestation()->getNom(),
+
             ];
             }
         }

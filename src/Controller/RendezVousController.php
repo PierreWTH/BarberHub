@@ -29,6 +29,14 @@ class RendezVousController extends AbstractController
         ]);
     }
 
+    #[Route('/rendezvous/confirmation', name: 'app_rendezvous_confirm')]
+    public function confirmRdv(): Response
+    {
+        return $this->render('rendezvous/confirm.html.twig', [
+            'controller_name' => 'RendezVousController',
+        ]);
+    }
+
     #[Route('/barbershop/{barberPrestation}/rendezvous/add', name: 'add_rendezvous')]
     #[Route('/barbershop/rendezvous/{id}/edit', name: 'edit_rendezvous')]
     #[IsGranted('ROLE_USER')]
@@ -125,7 +133,7 @@ class RendezVousController extends AbstractController
             
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_rendezvous');
+            return $this->redirectToRoute('app_rendezvous_confirm');
         }
 
         return $this->render('rendezvous/add.html.twig', [
