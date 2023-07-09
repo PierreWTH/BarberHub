@@ -10,6 +10,7 @@ use App\Entity\Barbershop;
 use App\Entity\RendezVous;
 use App\Form\RendezVousType;
 use App\Entity\BarberPrestation;
+use App\Repository\UserRepository;
 use App\Repository\RendezVousRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,10 +31,13 @@ class RendezVousController extends AbstractController
     }
 
     #[Route('/rendezvous/confirmation', name: 'app_rendezvous_confirm')]
-    public function confirmRdv(): Response
+    public function confirmRdv(UserRepository $ur): Response
     {
+        $user = $this->getUser();
+        $lastRDV = $ur->getLastRendezVous($user);
+        
         return $this->render('rendezvous/confirm.html.twig', [
-            'controller_name' => 'RendezVousController',
+            'lastRDV' => $lastRDV,
         ]);
     }
 

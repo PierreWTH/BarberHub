@@ -123,6 +123,27 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             return $query->getResult();
         }
 
+        // Récuperer le dernier RDV
+        public function getLastRendezVous($user)
+        {
+            $em = $this->getEntityManager();
+
+            $qb = $em->createQueryBuilder();
+
+            $query =
+                $qb->select('r')
+                    ->from('App\Entity\RendezVous', 'r')
+                    ->where('r.debut > :currentdate')
+                    ->andWhere('r.user = :user')
+                    ->setParameter('currentdate', new \DateTime())
+                    ->setParameter('user', $user)
+                    ->orderBy('r.debut', 'DESC') // Tri par ordre décroissant de la date de début
+                    ->setMaxResults(1) // Limite les résultats à un seul rendez-vous
+                    ->getQuery();
+
+            return $query->getSingleResult();
+        }
+
         
 
 //    /**

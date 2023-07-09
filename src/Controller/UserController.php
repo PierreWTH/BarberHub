@@ -49,7 +49,6 @@ class UserController extends AbstractController
             $events = $user->getPersonnel()->getRendezVouses();
         }
     
-
         $rdvs = [];        
         // Boucle sur chaque rdv
         foreach($events as $event){
@@ -57,6 +56,7 @@ class UserController extends AbstractController
 
             // Boucle sur chaque collection de prestation
             foreach($prestations as $prestation){
+                // tableau avec toutes les infos
             $rdvs[] = [
                 'id'=> $event->getId(),
                 'start' => $event->getDebut()->format('Y-m-d H:i:s'),
@@ -66,7 +66,7 @@ class UserController extends AbstractController
             ];
             }
         }
-
+        // On le met en JSOn et on l'envoie a la vue
         $data = json_encode($rdvs);
 
         return $this->render('user/rdv.html.twig', compact('data'));        
