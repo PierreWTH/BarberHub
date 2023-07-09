@@ -54,7 +54,7 @@ class PersonnelRepository extends ServiceEntityRepository
                 ->where('r.debut > :currentdate')
                 ->andWhere('r.personnel = :personnel')
                 ->setParameter('currentdate', new \DateTime())
-                ->setParameter('user', $user)
+                ->setParameter('personnel', $personnel)
                 ->getQuery();
     
             return $query->getResult();

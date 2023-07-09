@@ -4,11 +4,14 @@
 
 {% block body %}
 
-{{ dump(data) }}
-
-<form action="" method="POST">
-    <input type="hidden" name="afficherTousLesRendezVous" value="1">
-    <button type="submit">Afficher tous les rendez-vous</button>
+<h1> Mes rendez-vous </h1>
+<form method="POST" action="{{ path('app_myrdv') }}" id="displayRDV">
+	<input type="hidden" value="0" name="displayAllRdv">
+	<button type="submit">A venir</button>
+</form>
+<form method="POST" action="{{ path('app_myrdv') }}" id="displayRDV">
+	<input type="hidden" value="1" name="displayUpcomingRdv">
+	<button type="submit"> Tous </button>
 </form>
 
 <div id='calendar'></div>
@@ -16,13 +19,15 @@
 {% block javascripts %}
 
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
 <script>
+	
 
   const data = JSON.parse('{{ data|raw }}')
     window.onload = () => {
       let calendarEl = document.querySelector('#calendar');
       let calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'timeGridWeek',
+        initialView: 'dayGridMonth',
         locale : 'fr',
         timeZone : 'Europe/Paris',
         headerToolbar: {

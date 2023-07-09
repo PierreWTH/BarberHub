@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Repository\UserRepository;
+use App\Repository\PersonnelRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,12 +32,36 @@ class UserController extends AbstractController
     }
 
     #[Route('/monespace/rdv', name: 'app_myrdv')]
-    public function displayRendezVous(UserRepository $ur): Response
+    public function displayRendezVous(UserRepository $ur, PersonnelRepository $pr, Request $request): Response
     {
         $user = $this->getUser();
+        $personnel = $user->getPersonnel();
+        $display = 0;
 
-        $events = $user->getPersonnel()->getRendezVouses();
-        
+
+        // fonctionne mais Logique a revoir 
+        if ($request->isMethod('POST')) {
+            $allRDV = $request->request->get('displayAllRdv');
+            $upcomingRDV = $request->request->get('displayUpcomingRdv');
+            
+            if($upcomingRDV){
+                $display = 1;
+            }
+
+            if($allRDV){
+                $display = 0;
+            }
+        }
+
+        if ($display === 0)
+        {
+            $events = $pr->getUpcomingRendezVous($personnel);
+        }
+        else
+        {
+            $events = $user->getPersonnel()->getRendezVouses();
+        }
+    
 
         $rdvs = [];        
         // Boucle sur chaque rdv
