@@ -36,29 +36,16 @@ class UserController extends AbstractController
     {
         $user = $this->getUser();
         $personnel = $user->getPersonnel();
-        $display = 0;
+        // affichage des rendez vous a venir par défaut
+        $display = 'upcoming'; 
 
-
-        // fonctionne mais Logique a revoir 
         if ($request->isMethod('POST')) {
-            $allRDV = $request->request->get('displayAllRdv');
-            $upcomingRDV = $request->request->get('displayUpcomingRdv');
-            
-            if($upcomingRDV){
-                $display = 1;
-            }
-
-            if($allRDV){
-                $display = 0;
-            }
+            $display = $request->request->get('displayType');
         }
 
-        if ($display === 0)
-        {
+        if ($display === 'upcoming') {
             $events = $pr->getUpcomingRendezVous($personnel);
-        }
-        else
-        {
+        } else {
             $events = $user->getPersonnel()->getRendezVouses();
         }
     

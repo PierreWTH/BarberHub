@@ -5,13 +5,14 @@
 {% block body %}
 
 <h1> Mes rendez-vous </h1>
+
 <form method="POST" action="{{ path('app_myrdv') }}" id="displayRDV">
-	<input type="hidden" value="0" name="displayAllRdv">
-	<button type="submit">A venir</button>
+    <input type="hidden" value="upcoming" name="displayType">
+    <button type="submit">A venir</button>
 </form>
 <form method="POST" action="{{ path('app_myrdv') }}" id="displayRDV">
-	<input type="hidden" value="1" name="displayUpcomingRdv">
-	<button type="submit"> Tous </button>
+    <input type="hidden" value="all" name="displayType">
+    <button type="submit">Tous</button>
 </form>
 
 <div id='calendar'></div>
