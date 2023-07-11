@@ -31,10 +31,21 @@ class RendezVousController extends AbstractController
     }
 
     #[Route('/rendezvous/confirmation', name: 'app_rendezvous_confirm')]
+    #[IsGranted('ROLE_USER')]
     public function confirmRdv(UserRepository $ur): Response
     {
         $user = $this->getUser();
+
+        // Si le jeton de session hasRendezVous n'est pas défini ou n'est pas a true
+        if (!isset($_SESSION['justBookedRdv']) || $_SESSION['justBookedRdv'] !== true) {
+
+            return $this->redirectToRoute('app_home');
+        }
+
         $lastRDV = $ur->getLastRendezVous($user);
+
+        // Une fois la page consultée on repasse le jeton a true
+        $_SESSION['justBookedRdv'] = false;
         
         return $this->render('rendezvous/confirm.html.twig', [
             'lastRDV' => $lastRDV,
@@ -136,6 +147,9 @@ class RendezVousController extends AbstractController
             $entityManager->persist($rendezvous);
             
             $entityManager->flush();
+
+            // Jeton de session pour indiquer que le user vient de prendre un RDV ( pour page confirm ) 
+            $_SESSION['justBookedRdv'] = true;
 
             return $this->redirectToRoute('app_rendezvous_confirm');
         }

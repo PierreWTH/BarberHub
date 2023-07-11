@@ -74,15 +74,20 @@
 
     {% if app.user.personnel %}
 
-        <h3> Mon salon </h3> 
-            
+        <h2> Mon salon </h2> 
+
         {{ app.user.personnel.barbershop.nom }}
 
         {% if app.user.personnel.isManager == true %}
 
-            <a href="{{path ('edit_barbershop', {id : app.user.personnel.barbershop.id })}}"> Gerer </a>
+        <p><a href="{{path ('edit_barbershop', {id : app.user.personnel.barbershop.id })}}"> Gerer les informations du salon  </a></p>
             
         {% endif %}
+
+        <p><a href="{{path ('app_myrdv')}}"> Voir mon planning </a></p>
+            
+        
+
 
     {% endif %}
 
