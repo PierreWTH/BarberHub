@@ -21,7 +21,7 @@
 {% if is_granted('ROLE_ADMIN') %}
     
 <a href="{{path ('edit_barbershop', {id : barbershop.id })}}">Editer</a>
-<a href="{{path ('delete_barbershop', {id : barbershop.id })}}">Supprimer</a>
+<a href="{{path ('delete_barbershop', {id : barbershop.id })}}">Supprimer</a> <br>
 
 {% endif %}
 

@@ -4,10 +4,6 @@
 
 {% block body %}
 
-
-
-
-
 <table>
     <thead>
         <tr>
@@ -17,8 +13,8 @@
         </tr>
     </thead>
     <tbody>
+        {% for personne in personnel %}
         <tr>
-            {% for personne in personnel %}
             <td>{{ personne.user}}</td>
             <td>{{ personne.barbershop.nom}}</td>
             {% if personne.isManager == 1 %}
@@ -26,8 +22,8 @@
             {% else %}
                 <td> Employé </td>
             {% endif %}
-            {% endfor %}
         </tr>
+        {% endfor %}
     </tbody>
 </table>
     

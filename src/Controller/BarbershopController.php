@@ -84,6 +84,13 @@ class BarbershopController extends AbstractController
             // On passe les données a nominatim
             $coordinates = $nominatim->getCoordinates($adresse,$ville,$cp);
 
+            // Si coordinates est vide : message d'erreur 
+            if (empty($coordinates)) {
+                // Les coordonnées sont vides, on ajoute un message d'erreur dans les messages flash
+                $this->addFlash('error', 'Aucune coordonnée trouvée pour l\'adresse spécifiée.');
+                
+            }
+
             // On set la latitude et la longitude du bar
             $barbershop->setLatitude($coordinates[0]['lat']);
             $barbershop->setLongitude($coordinates[0]['lon']);
