@@ -9,7 +9,7 @@
 Vous pourrez retrouver les détails de votre rendez-vous dans votre espace. </p>
 
 <h2>Votre rendez vous : </h2>
-Date : {{lastRDV.debut|date("m/d/Y")}} <br />
+Date : {{lastRDV.debut|date("d/m/Y")}} <br />
 Heure : {{lastRDV.debut|date("H:i")}} - {{lastRDV.fin | date("H:i")}} <br />
 {% for prestation in lastRDV.barberprestation %}
 Prestation : {{prestation.prestation.nom}} {{prestation.prix}}€ <br />

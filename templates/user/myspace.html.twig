@@ -4,64 +4,86 @@
 
 {% block body %}
 
-<h1> Bienvenue, {{app.user.pseudo}} </h1>
+    <h1> Bienvenue, {{app.user.pseudo}} </h1>
 
-<h2> Mes barbershops préférés </h2>
+    <h2> Mes barbershops préférés </h2>
 
-{% for barbershop in likes %}
+    {% if likes is not empty %}
+        
+        {% for barbershop in likes %}
 
-{{barbershop.nom}}
+            {{barbershop.nom}}
 
-{% endfor %}
+        {% endfor %}
 
-<h2> Mes rendez-vous à venir </h2>
+    {% else %}
 
-{% for rdv in upcomingRdvs %}
+        <p>Vous n'avez pas encore ajouté de barbershop en favori. </p>
 
-Le {{rdv.debut|date("l d F à H:i")}} <br>
-Avec {{rdv.personnel}}<br>
-Chez {{rdv.personnel.barbershop}}<br>
+    {% endif %}
 
-{% for barberPrestation in rdv.barberPrestation %}
+    <h2> Mes rendez vous </h2>
 
-Votre prestation : {{barberPrestation.prestation.nom}}<br>
-Prix : {{barberPrestation.prix}}€
-    
-{% endfor %}
-<br><br>
-{% endfor %}
+    {% if upcomingRdvs is empty and pastRdvs is empty %}
+        
+    <p> Vous n'avez pas encore de rendez-vous </p>
 
-<h2> Mes rendez-vous passés </h2>
+    {% endif %}
 
-{% for rdv in pastRdvs %}
+    {% if upcomingRdvs is not empty %}
 
-Le {{rdv.debut|date("l d F à H:i")}} <br>
-Avec {{rdv.personnel}}<br>
-Chez {{rdv.personnel.barbershop}}<br>
+        <h3> Mes rendez-vous à venir </h3>
 
-{% for barberPrestation in rdv.barberPrestation %}
+        {% for rdv in upcomingRdvs %}
 
-Votre prestation : {{barberPrestation.prestation.nom}}<br>
-Prix : {{barberPrestation.prix}}€
-    
-{% endfor %}
-<br><br>
-{% endfor %}
+            Le {{rdv.debut | format_datetime('full', 'short', locale='fr')}} <br>
+            Avec {{rdv.personnel}}<br>
+            Chez {{rdv.personnel.barbershop}}<br>
 
-{% if app.user.personnel %}
+            {% for barberPrestation in rdv.barberPrestation %}
 
-<p> Mon salon </p> 
-    
-{{ app.user.personnel.barbershop.nom }}
+                Votre prestation : {{barberPrestation.prestation.nom}}<br>
+                Prix : {{barberPrestation.prix}}€
+            
+            {% endfor %}
+            <br><br>
+        {% endfor %}
 
-{% if app.user.personnel.isManager == true %}
+    {% endif %}
 
-<a href="{{path ('edit_barbershop', {id : app.user.personnel.barbershop.id })}}">Editer</a>
-    
-{% endif %}
+    {% if pastRdvs is not empty %}
 
-{% endif %}
+        <h3> Mes rendez-vous passés </h3>
 
+        {% for rdv in pastRdvs %}
 
+        Le {{rdv.debut | format_datetime('full', 'short', locale='fr')}} <br>
+        Avec {{rdv.personnel}}<br>
+        Chez {{rdv.personnel.barbershop}}<br>
+
+            {% for barberPrestation in rdv.barberPrestation %}
+
+            Votre prestation : {{barberPrestation.prestation.nom}}<br>
+            Prix : {{barberPrestation.prix}}€
+                
+            {% endfor %}
+            <br><br>
+        {% endfor %}
+
+    {% endif %}
+
+    {% if app.user.personnel %}
+
+        <h3> Mon salon </h3> 
+            
+        {{ app.user.personnel.barbershop.nom }}
+
+        {% if app.user.personnel.isManager == true %}
+
+            <a href="{{path ('edit_barbershop', {id : app.user.personnel.barbershop.id })}}"> Gerer </a>
+            
+        {% endif %}
+
+    {% endif %}
 
 {% endblock %}
