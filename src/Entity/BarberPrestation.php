@@ -6,6 +6,7 @@ use App\Repository\BarberPrestationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BarberPrestationRepository::class)]
 class BarberPrestation
@@ -16,6 +17,7 @@ class BarberPrestation
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Le prix ne peut pas être vide. ")]
     private ?float $prix = null;
 
     #[ORM\ManyToOne(inversedBy: 'barberPrestations')]

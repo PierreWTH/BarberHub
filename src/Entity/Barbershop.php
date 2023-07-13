@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\BarbershopRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BarbershopRepository::class)]
 class Barbershop
@@ -18,18 +19,23 @@ class Barbershop
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: "Le nom ne peut pas être vide. ")]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: "La description ne peut pas être vide. ")]
     private ?string $description = null;
 
     #[ORM\Column(length: 150)]
+    #[Assert\NotBlank(message: "L'adresse ne peut pas être vide. ")]
     private ?string $adresse = null;
 
     #[ORM\Column(length: 15)]
+    #[Assert\NotBlank(message: "Le code postal ne peut pas être vide. ")]
     private ?string $cp = null;
 
     #[ORM\Column(length: 45)]
+    #[Assert\NotBlank(message: "La ville ne peut pas être vide. ")]
     private ?string $ville = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -42,6 +48,7 @@ class Barbershop
     private ?float $longitude = null;
 
     #[ORM\Column(length: 16)]
+    #[Assert\NotBlank(message: "La téléphone ne peut pas être vide. ")]
     private ?string $telephone = null;
 
     #[ORM\Column(length: 100, nullable: true)]
