@@ -6,6 +6,8 @@ use App\Repository\PrestationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: PrestationRepository::class)]
 class Prestation
@@ -16,6 +18,7 @@ class Prestation
     private ?int $id = null;
 
     #[ORM\Column(length: 70)]
+    #[Assert\NotBlank(message: "Le nom ne peux pas être vide. ")]
     private ?string $nom = null;
 
     #[ORM\OneToMany(mappedBy: 'prestation', targetEntity: BarberPrestation::class)]

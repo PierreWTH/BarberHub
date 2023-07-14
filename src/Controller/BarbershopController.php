@@ -89,7 +89,6 @@ class BarbershopController extends AbstractController
                 // Les coordonnées sont vides, on ajoute un message d'erreur dans les messages flash
                 echo "erreur";
                 die();
-                
             }
 
             // On set la latitude et la longitude du bar

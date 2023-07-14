@@ -33,6 +33,7 @@ class RendezVous
 
     #[ORM\ManyToOne(inversedBy: 'rendezvouses')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank(message: "Merci de choisir qui effectuera la prestation. ")]
     private ?Personnel $personnel = null;
 
     public function __construct()

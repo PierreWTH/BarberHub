@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Utilisateurs {% endblock %}
+
+{% block body %}
+
+<table>
+    <thead>
+        <th> Pseudo </th>
+        <th> Validé </th>
+        <th> Role </th>
+    </thead>
+    <tbody>
+        {% for user in users %}   
+            <tr>
+                <td> {{user.pseudo}}</td>
+                <td> {{user.isVerified}}</td>
+                {% for role in user.roles %}
+                    {% if role == "ROLE_ADMIN" %}
+
+                        <td> Administrateur </td>
+
+                    {% elseif role == "ROLE_USER" %}
+
+                        <td> Utilisateur </td>
+
+                    {% elseif role == "ROLE_BARBER" %}
+
+                        <td> Barbier </td>
+
+                    {% endif %}
+                    
+                {% endfor %}
+                <td><a href="">Modifier</a></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

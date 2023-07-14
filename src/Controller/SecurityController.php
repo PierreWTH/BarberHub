@@ -31,24 +31,5 @@ class SecurityController extends AbstractController
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
-
-    #[Route('/administration', name: 'control_pannel')]
-    #[IsGranted('ROLE_ADMIN')]
-    public function myspace(): Response
-    {
-        return $this->render('security/admin/controlPannel.html.twig', []);
-    }
-
-    #[Route('/administration/barbershops', name: 'admin_barbershop')]
-    #[IsGranted('ROLE_ADMIN')]
-    public function allBarbershopAdmin(ManagerRegistry $doctrine): Response
-    {
-        $barbershops = $doctrine->getRepository(Barbershop::Class)->findBy([], ["creationDate"=>"DESC"]);
-
-        return $this->render('security/admin/barbershops.html.twig', [
-            'barbershops' => $barbershops,
-        ]);
-    }
-
     
 }
