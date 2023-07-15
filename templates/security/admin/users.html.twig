@@ -31,7 +31,7 @@
                     {% endif %}
                     
                 {% endfor %}
-                <td><a href="">Modifier</a></td>
+                <td><a href="{{ path( 'admin_edituser', {id : user.id } )}}">Modifier</a></td>
             </tr>
         {% endfor %}
     </tbody>

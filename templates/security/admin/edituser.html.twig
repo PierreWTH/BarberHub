@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Utilisateurs {% endblock %}
+
+{% block body %}
+
+{{form_start(userForm)}}
+{{form_row(userForm.roles)}}
+{{form_end(userForm)}}
+
+{% endblock %}
