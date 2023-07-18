@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Barbershop;
 use App\Form\EditUserType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,18 +45,18 @@ class AdminController extends AbstractController
 
     #[Route('/administration/users/edit/{id}', name: 'admin_edituser')]
     #[IsGranted('ROLE_ADMIN')]
-    public function editUsers(User $user, Request $request): Response
+    public function editUsers(User $user, ManagerRegistry $doctrine, Request $request): Response
     {
         $form = $this->createForm(EditUserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $doctrine->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
 
             $this->addFlash('message', 'Utilisateur modifié avec succès');
-            return $this->redirectToRoute('admin_utilisateurs');
+            return $this->redirectToRoute('admin_users');
         }
     
     return $this->render('security/admin/edituser.html.twig', [

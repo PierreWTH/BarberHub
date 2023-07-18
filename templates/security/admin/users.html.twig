@@ -14,7 +14,16 @@
         {% for user in users %}   
             <tr>
                 <td> {{user.pseudo}}</td>
-                <td> {{user.isVerified}}</td>
+
+                {% if user.isVerified == 1 %}
+
+                <td> Vérifié </td>
+
+                {% else %}
+
+                <td> Non vérifié </td>
+                    
+                {% endif %}
                 {% for role in user.roles %}
                     {% if role == "ROLE_ADMIN" %}
 

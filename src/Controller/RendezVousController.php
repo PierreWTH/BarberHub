@@ -16,7 +16,6 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
@@ -30,31 +29,8 @@ class RendezVousController extends AbstractController
         ]);
     }
 
-    #[Route('/rendezvous/confirmation', name: 'app_rendezvous_confirm')]
-    #[IsGranted('ROLE_USER')]
-    public function confirmRdv(UserRepository $ur): Response
-    {
-        $user = $this->getUser();
-
-        // Si le jeton de session hasRendezVous n'est pas défini ou n'est pas a true
-        if (!isset($_SESSION['justBookedRdv']) || $_SESSION['justBookedRdv'] !== true) {
-
-            return $this->redirectToRoute('app_home');
-        }
-
-        $lastRDV = $ur->getLastRendezVous($user);
-
-        // Une fois la page consultée on repasse le jeton a true
-        $_SESSION['justBookedRdv'] = false;
-        
-        return $this->render('rendezvous/confirm.html.twig', [
-            'lastRDV' => $lastRDV,
-        ]);
-    }
-
     #[Route('/barbershop/{barberPrestation}/rendezvous/add', name: 'add_rendezvous')]
     #[Route('/barbershop/rendezvous/{id}/edit', name: 'edit_rendezvous')]
-    #[IsGranted('ROLE_USER')]
     public function add(ManagerRegistry $doctrine, BarberPrestation $barberPrestation, RendezVous $rendezvous = null, Request $request, RendezVousRepository $rvr) : Response
     {   
         if(!$rendezvous){
@@ -154,11 +130,36 @@ class RendezVousController extends AbstractController
             return $this->redirectToRoute('app_rendezvous_confirm');
         }
 
+        var_dump($form->isSubmitted());
+        
+
         return $this->render('rendezvous/add.html.twig', [
             'formAddRendezVous' => $form->createView(),
             'barbershop' => $barbershop,
             'prestation' => $barberPrestation,
             'horaires' => $horaires
+        ]);
+    }
+
+
+    #[Route('/rendezvous/confirmation', name: 'app_rendezvous_confirm')]
+    public function confirmRdv(UserRepository $ur): Response
+    {
+        $user = $this->getUser();
+
+        // Si le jeton de session hasRendezVous n'est pas défini ou n'est pas a true
+        if (!isset($_SESSION['justBookedRdv']) || $_SESSION['justBookedRdv'] !== true) {
+
+            return $this->redirectToRoute('app_home');
+        }
+
+        $lastRDV = $ur->getLastRendezVous($user);
+
+        // Une fois la page consultée on repasse le jeton a true
+        $_SESSION['justBookedRdv'] = false;
+        
+        return $this->render('rendezvous/confirm.html.twig', [
+            'lastRDV' => $lastRDV,
         ]);
     }
 }
