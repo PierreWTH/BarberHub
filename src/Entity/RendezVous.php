@@ -19,7 +19,6 @@ class RendezVous
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Assert\NotBlank(message: "Rendez-vous invalide. ")]
     private ?\DateTimeInterface $debut = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]

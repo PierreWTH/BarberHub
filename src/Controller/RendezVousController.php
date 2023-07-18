@@ -10,14 +10,15 @@ use App\Entity\Barbershop;
 use App\Entity\RendezVous;
 use App\Form\RendezVousType;
 use App\Entity\BarberPrestation;
+use Symfony\Component\Mime\Email;
 use App\Repository\UserRepository;
 use App\Repository\RendezVousRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
 
 class RendezVousController extends AbstractController
 {
@@ -31,7 +32,7 @@ class RendezVousController extends AbstractController
 
     #[Route('/barbershop/{barberPrestation}/rendezvous/add', name: 'add_rendezvous')]
     #[Route('/barbershop/rendezvous/{id}/edit', name: 'edit_rendezvous')]
-    public function add(ManagerRegistry $doctrine, BarberPrestation $barberPrestation, RendezVous $rendezvous = null, Request $request, RendezVousRepository $rvr) : Response
+    public function add(ManagerRegistry $doctrine, BarberPrestation $barberPrestation, RendezVous $rendezvous = null, Request $request, RendezVousRepository $rvr, MailerInterface $mailer) : Response
     {   
         if(!$rendezvous){
             $rendezvous = new RendezVous();
@@ -63,6 +64,7 @@ class RendezVousController extends AbstractController
 
             // Récupération de personnel ID et heure début en string pour requete checkIfRdvExist
             $personnelId = $form->get('personnel')->getData()->getId();
+            $personnelName = $form->get('personnel')->getData()->getPseudo();
             $stringDebut = $heureDebut->format('Y-m-d H:i:s');
 
             // VERIF SI LE RDV EST PRIS APRES L'HEURE ET LE JOUR D'AUJOURD'HUI
@@ -124,14 +126,33 @@ class RendezVousController extends AbstractController
             
             $entityManager->flush();
 
+            // Envoie du mail de confirmation 
+
+            $email = (new Email())
+            ->from('admin@barberhub.com')
+            ->to($user->getEmail())
+            ->subject('Votre rendez vous chez '. $barbershop->getNom())
+
+            ->html( '<p>Cher '.$user->getPseudo().',</p> <p>Nous sommes ravis de vous confirmer votre rendez-vous chez '.$barbershop->getNom().'</p> 
+            <p> Voici les détails de votre rendez-vous : </p>
+            
+            <p> Date : '.$heureDebut->format('d/m/Y').'</p>
+            <p> Heure : '.$heureDebut->format('H:i').'</p>
+            <p> Prestation : dégradé.</p> 
+            <p> Barbier : '.$personnelName.'
+            
+            <p> Nous vous remercions de votre confiance et nous sommes impatients de vous accueillir, </p>
+            <p> Cordialement, </p>
+            <p> L\'équipe'. $barbershop->getNom());
+
+
+            $mailer->send($email);
+
             // Jeton de session pour indiquer que le user vient de prendre un RDV ( pour page confirm ) 
             $_SESSION['justBookedRdv'] = true;
 
             return $this->redirectToRoute('app_rendezvous_confirm');
-        }
-
-        var_dump($form->isSubmitted());
-        
+        }        
 
         return $this->render('rendezvous/add.html.twig', [
             'formAddRendezVous' => $form->createView(),
