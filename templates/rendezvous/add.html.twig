@@ -4,6 +4,12 @@
 
 {% block body %}
 
+{% for message in app.flashes('notice') %}
+    <div class="flash-notice">
+        {{ message }}
+    </div>
+{% endfor %}
+
 <h1> Votre rendez vous </h1>
 
 Votre réservation : {{prestation.prestation.nom}} chez {{barbershop.nom}}

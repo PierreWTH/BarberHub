@@ -137,7 +137,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                     ->andWhere('r.user = :user')
                     ->setParameter('currentdate', new \DateTime())
                     ->setParameter('user', $user)
-                    ->orderBy('r.debut', 'DESC') // Tri par ordre décroissant de la date de début
+                    ->orderBy('r.id', 'DESC') // Tri par ordre décroissant de la date de début
                     ->setMaxResults(1) // Limite les résultats à un seul rendez-vous
                     ->getQuery();
 

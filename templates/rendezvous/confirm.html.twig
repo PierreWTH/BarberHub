@@ -4,6 +4,12 @@
 
 {% block body %}
 
+{% for message in app.flashes('notice') %}
+    <div class="flash-notice">
+        {{ message }}
+    </div>
+{% endfor %}
+
 <h1> Merci ! </h1>
 <p>Votre rendez-vous à bien été pris en compte. Vous allez recevoir un email de confirmation. 
 Vous pourrez retrouver les détails de votre rendez-vous dans votre espace. </p>
@@ -15,6 +21,8 @@ Heure : {{lastRDV.debut|date("H:i")}} - {{lastRDV.fin | date("H:i")}} <br />
 Prestation : {{prestation.prestation.nom}} {{prestation.prix}}€ <br />
 {% endfor %}
 Avec : {{lastRDV.personnel.user.pseudo}}
+
+<p><a href="{{path('app_home')}}">Revenir a l'acceuil</a> - <a href="{{path('app_myspace')}}">Voir mes rendez-vous</a></p>
 
 
 {% endblock %}
