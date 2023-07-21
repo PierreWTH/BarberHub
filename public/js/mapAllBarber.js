@@ -22,7 +22,10 @@ var markers = new L.MarkerClusterGroup();
 // Boucle sur les markers
 for (var i = 0; i < coordinates.length; i++)
 {
-    markers.addLayer(L.marker([coordinates[i]['latitude'], coordinates[i]['longitude']], {icon: barberIcon}));
+    markers.addLayer(L.marker([coordinates[i]['latitude'], coordinates[i]['longitude']], 
+    {icon: barberIcon})
+    .bindPopup('test')
+    );
     
 }
 
