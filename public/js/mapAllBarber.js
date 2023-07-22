@@ -16,15 +16,23 @@ var barberIcon = L.icon({
     popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 });
 
+
 // Regroupement des points en clusters
 var markers = new L.MarkerClusterGroup();
 
 // Boucle sur les markers
 for (var i = 0; i < coordinates.length; i++)
-{
+{   
+    const name = coordinates[i]['name']
+    // On décode l'adresse
+    const adresse = decodeURI(coordinates[i]['adresse'].replace(/\+/g, ' '))
+    const ville = coordinates[i]['ville']
+    const image = '<img src = https://rdironworks.com/wp-content/uploads/2017/12/dummy-200x200.png>'
+
+    const popup =  name + '<br>' + adresse + ' - '+ ville + '<br>' + image 
     markers.addLayer(L.marker([coordinates[i]['latitude'], coordinates[i]['longitude']], 
     {icon: barberIcon})
-    .bindPopup('test')
+    .bindPopup(popup)
     );
     
 }

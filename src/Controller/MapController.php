@@ -18,11 +18,18 @@ class MapController extends AbstractController
         foreach ($barbershops as $barbershop) {
             $latitude = $barbershop->getLatitude();
             $longitude = $barbershop->getLongitude();
+            $name = $barbershop->getNom();
+            $adresse = $barbershop->getAdresse();
+            $ville = $barbershop->getVille();
             
             // Ajoutez les coordonnées à un tableau
             $coordinates[] = [
                 'latitude' => $latitude,
                 'longitude' => $longitude,
+                'name' => $name,
+                // Encode url pour pas avoir d'erreur dans le JSON
+                'adresse' => urlencode($adresse),
+                'ville' => $ville
             ];
         }
 

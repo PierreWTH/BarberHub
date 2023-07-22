@@ -15,10 +15,10 @@
 
 {% block javascripts %}
 
-{# Récupération de coordinates en array JS #}
+{# Récupération des infos du barber en array JS #}
 <script>
-    const coordinates = JSON.parse('{{ coordinates | json_encode | raw }}');
-
+    const coordinates = JSON.parse('{{ coordinates | json_encode | raw }}');    
+    console.log(coordinates)
 </script>
 {# CDN Leaflet #}
 <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
@@ -26,7 +26,7 @@
 <script src="{{ asset('js/MarkerCluster.js')}}"></script>
 {# Script affichage leaflet + markercluster #}
 <script src="{{ asset('js/mapAllBarber.js')}}"></script>
-
+ 
 {% endblock %}
 {% endblock %}
 
