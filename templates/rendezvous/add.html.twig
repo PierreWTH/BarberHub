@@ -18,7 +18,7 @@ Votre réservation : {{prestation.prestation.nom}} chez {{barbershop.nom}}
 
 <h3>Choississez un jour : </h3>
 
-<input type="date" name="date" min="2018-01-01" id="datePickerId">
+<input type="date" name="date" id="datePickerId">
 
 <div id="select-container">
     
@@ -52,6 +52,7 @@ dateInput.onchange = function() {
 
     const selectedDate = new Date(dateInput.value);
 
+    // Récuperer le jour de la semaine en entier
     const options = { weekday: 'long'};
 
     const jour = selectedDate.toLocaleDateString('fr-FR', options);
@@ -71,6 +72,13 @@ dateInput.onchange = function() {
     const heureOuverture = new Date('1970-01-01T' + ouverture + ':00');
     const heureFermeture = new Date('1970-01-01T' + fermeture + ':00'); 
 
+    // Si le barbier est fermé ce jour la 
+    if (ouverture === "ferme" && fermeture === "ferme") {
+        dateInput.value = "";
+        alert("Ce barbier n'est pas disponible à cette date. ");
+        return
+    }  
+
     // Création du select
     const textHeure = document.createElement('h3');
     textHeure.textContent = "Selectionnez une heure :";
@@ -81,7 +89,6 @@ dateInput.onchange = function() {
     // Parcours des créneaux horaires de 30 minutes
     let currentHour = heureOuverture;
     
-
     while (currentHour < heureFermeture) {
         const heure = currentHour.getHours();
         const minute = currentHour.getMinutes();
@@ -100,13 +107,6 @@ dateInput.onchange = function() {
     
     const container = document.getElementById('select-container');
     container.innerHTML = '';
-
-    // Si le barbier est fermé ce jour la 
-    if (ouverture === "ferme" && fermeture === "ferme") {
-        dateInput.value = "";
-        alert("Ce barbier n'est pas disponible à cette date. ");
-        return
-    }  
     
     // Ajout du select
     container.appendChild(textHeure);

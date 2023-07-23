@@ -25,12 +25,14 @@
 	
 
   const data = JSON.parse('{{ data|raw }}')
+
     window.onload = () => {
       let calendarEl = document.querySelector('#calendar');
       let calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         locale : 'fr',
         timeZone : 'Europe/Paris',
+        navLinks: true,
         headerToolbar: {
             start : 'prev,next,today',
             center:'title',
@@ -41,8 +43,6 @@
 			
 			const start = new Date(info.event.start).toISOString().substr(11, 5)
 			const end = new Date(info.event.end).toISOString().substr(11, 5)
-			var description = info.event.description;
-			console.log(description)
 
 			const alertMessage = info.event.title + '\n' +
 								'Début : ' + start + '\n' +
@@ -50,7 +50,6 @@
 
 			alert(alertMessage);
         },
-		navLinks: true
       });
 
       calendar.render();

@@ -19,7 +19,6 @@ class RendezVousType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $barbershopId = $options['barbershopId'];
-        $plagesHoraires = $options['plageHoraires'];
 
         $builder
         
@@ -48,7 +47,6 @@ class RendezVousType extends AbstractType
         $resolver->setDefaults([
             'data_class' => RendezVous::class,
             'barbershopId' => false,
-            'plageHoraires' =>false
             
         ]);
     }

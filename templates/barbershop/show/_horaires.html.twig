@@ -16,9 +16,18 @@
         
         {% for jour in horaires %}
         <tr>
-            <td>{{ jour['jour'] }}</td>
+            <td>{{ jour['jour']|capitalize }}</td>
+            {% if jour['ouverture'] == 'ferme' %}
+            <td> Fermé </td>
+            {% else %}
             <td>{{ jour['ouverture'] }}</td>
+            {% endif %}
+            {% if jour['fermeture'] == 'ferme' %}
+            <td> Fermé </td>
+            {% else %}
             <td>{{ jour['fermeture'] }}</td>
+            {% endif %}
+            
         </tr>
         {% endfor %}
     </tbody>

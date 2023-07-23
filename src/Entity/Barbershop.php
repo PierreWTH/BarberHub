@@ -360,12 +360,6 @@ class Barbershop
         return $this;
     }
 
-    public function getFullAdress(): string
-    {
-        return $this->adresse .' '. $this->cp .' '. $this->ville;
-    }
-
-
     /**
      * @return Collection<int, BarberPrestation>
      */
