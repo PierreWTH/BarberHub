@@ -1,5 +1,6 @@
 $(document).ready(function() {
     
+    
     $('#barbershop_adresse').selectize({
         valueField: 'value',
         labelField: 'label',
@@ -8,6 +9,7 @@ $(document).ready(function() {
         create: false,
         // Pas de surbrillance pour les correspondances dans la liste
         highlight: false,
+        maxOptions : 20,
         // 1 choix max
         maxItems: 1,
         // Fermeture select apres choix
@@ -15,13 +17,12 @@ $(document).ready(function() {
         // Temps entre chaque requete
         loadThrottle: 250, 
         // Texte d'attente requete
-        loadingClass: "Recherche...",
+        loadingClass: "loading",
         placeholder: "Votre adresse...",
         // Personnalisation du rendu
         
         render: {
             option: function(item, escape){
-                //console.log(item)
                 return '<div>' + escape(item.label) + '</div>'
             }
         },
@@ -29,7 +30,6 @@ $(document).ready(function() {
         onChange: function(value) {
             if(value) {
                 var selectedAdress = this.options[value];
-                //console.log(selectedAdress)
                 var codePostal = selectedAdress.postcode;
                 var ville = selectedAdress.city
 
@@ -67,9 +67,9 @@ $(document).ready(function() {
                 // En cas de succes on retourne l'adresse, le nom, le cp et la ville
                 success: function(res) 
                 {
+                    
                     callback(res.features.map(function(feature)
-                    {   
-                        //console.log(res.features)
+                    {      console.log(feature.properties.label)
                             return {
                                 value: feature.properties.name,
                                 label: feature.properties.label,

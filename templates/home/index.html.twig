@@ -8,11 +8,19 @@
 
 <h2> Les barbiers de la semaine </h2>
 
+{% if lastBarbershops %}
+    
 {% for barbershop in lastBarbershops %}
 
 <a href="{{path ('show_barbershop', {id : barbershop.id })}}">{{barbershop.nom}}</a>
 
 {% endfor %}
+
+{% else %}
+
+<p> Pas de barbier réçents. </p>
+
+{% endif %}
 
 <div>
 <p> Découvrez les barbiers de votre ville </p>

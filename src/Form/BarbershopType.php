@@ -47,9 +47,13 @@ class BarbershopType extends AbstractType
                 'required' =>false,
             ])
 
-            ->add('instagram', UrlType::class)
+            ->add('instagram', UrlType::class, [
+                'required' =>false,
+            ])
 
-            ->add('facebook', UrlType::class)
+            ->add('facebook', UrlType::class, [
+                'required' =>false,
+            ])
             
             ->add('submit', SubmitType::class)
         ;
