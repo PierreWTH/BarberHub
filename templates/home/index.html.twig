@@ -39,4 +39,18 @@ Lorem ipsum dolor sit amet, consectetur Maecenas et consectetur odio. Curabitur 
 
 <h2> Nos derniers articles </h2>
 
+{% if lastArticles %}
+    
+{% for article in lastArticles %}
+{# <img src="{{article.photo}}" alt=""> #}
+<a href="{{path ('show_article', {id : article.id })}}">{{article.titre}}</a>
+
+{% endfor %}
+
+{% else %}
+
+<p> Pas de barbier réçents. </p>
+
+{% endif %}
+
 {% endblock %}

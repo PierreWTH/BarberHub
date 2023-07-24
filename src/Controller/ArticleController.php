@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Article;
 use App\Form\ArticleType;
 use Doctrine\Persistence\ManagerRegistry;
@@ -41,6 +42,10 @@ class ArticleController extends AbstractController
         {
             $article = $form->getData();
             $entityManager = $doctrine->getManager();
+            
+            date_default_timezone_set('Europe/Paris');
+            $today = new DateTime();
+            $article->setDate($today);
             $entityManager->persist($article);
             
             $entityManager->flush();

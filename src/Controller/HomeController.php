@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
 use App\Entity\Barbershop;
 use App\Repository\BarbershopRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -18,10 +19,11 @@ class HomeController extends AbstractController
         // Récuperer les 3 derniers barbershops de la BDD
 
         $lastBarbershops = $doctrine->getRepository(Barbershop::Class)->getLastThreeValidBarbershop();
-        $lastArticles = $doctrine->getRepository(Barbershop::Class)->findBy([], [""=>"ASC"] , 3);
-
+        $lastArticles = $doctrine->getRepository(Article::Class)->findBy([], ["date"=>"DESC"] , 2);
+        
         return $this->render('home/index.html.twig', [
-            'lastBarbershops' => $lastBarbershops
+            'lastBarbershops' => $lastBarbershops,
+            'lastArticles' => $lastArticles
         ]);
     }
 }
