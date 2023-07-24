@@ -11,6 +11,7 @@ use App\Service\PictureService;
 use App\HttpClient\NominatimHttpClient;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,12 +24,18 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class BarbershopController extends AbstractController
 {
     #[Route('/barbershops', name: 'app_barbershop')]
-    public function index(ManagerRegistry $doctrine): Response
+    public function index(ManagerRegistry $doctrine, PaginatorInterface $paginator, Request $request): Response
     {
         // Récuperer tous les barbiers de la BDD
 
         $allBarbershops = $doctrine->getRepository(Barbershop::Class)->getAllValidBarbershop();
-
+        
+        // Pagination
+        $allBarbershops = $paginator->paginate(
+            $allBarbershops, 
+            $request->query->getInt('page', 1), 
+            6
+        );
 
         return $this->render('barbershop/index.html.twig', [
             'allBarbershops' => $allBarbershops,
