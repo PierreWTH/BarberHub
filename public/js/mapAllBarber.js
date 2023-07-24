@@ -18,7 +18,10 @@ var barberIcon = L.icon({
 
 
 // Regroupement des points en clusters
-var markers = new L.MarkerClusterGroup();
+var markers = new L.MarkerClusterGroup({
+    // Distance a laquelle se font les clusters (+ c'est petit - il y a de clusters )
+    maxClusterRadius : 50
+});
 
 // Boucle sur les markers
 for (var i = 0; i < coordinates.length; i++)
