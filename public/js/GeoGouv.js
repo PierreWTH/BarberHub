@@ -2,14 +2,14 @@ $(document).ready(function() {
     
     
     $('#barbershop_adresse').selectize({
-        valueField: 'value',
-        labelField: 'label',
         searchField: 'label',
+        valueField: 'label',
+        labelField: 'label',
         // Pas possible de creer de nouveaux champs
         create: false,
         // Pas de surbrillance pour les correspondances dans la liste
         highlight: false,
-        maxOptions : 20,
+        maxOptions : 10,
         // 1 choix max
         maxItems: 1,
         // Fermeture select apres choix
@@ -21,11 +21,11 @@ $(document).ready(function() {
         placeholder: "Votre adresse...",
         // Personnalisation du rendu
         
-        render: {
-            option: function(item, escape){
-                return '<div>' + escape(item.label) + '</div>'
-            }
-        },
+        /* // render: {
+        //     option: function(item, escape){
+        //         return '<div>' + escape(item.label) + '</div>'
+        //     }
+        // }, */
         // Quand on selectionne une adresse, remplissage de CP et ville
         onChange: function(value) {
             if(value) {
@@ -51,13 +51,14 @@ $(document).ready(function() {
         
             //Requete AJAX vers GEOGOUV
             $.ajax({
-                url:'https://api-adresse.data.gouv.fr/search/',
+                url:'https://api-adresse.data.gouv.fr/search/?',
                 type: 'GET',
-                dataType: 'json',
+                dataType: 'JSON',
                 data: 
                 {
                     q: query,
-                    limit: 10
+                    limit: '10',
+                    type: 'housenumber'
                 },
                 // En cas d'erreur : rien a afficher
                 error: function() 
@@ -69,7 +70,7 @@ $(document).ready(function() {
                 {
                     
                     callback(res.features.map(function(feature)
-                    {      console.log(feature.properties.label)
+                    {      
                             return {
                                 value: feature.properties.name,
                                 label: feature.properties.label,

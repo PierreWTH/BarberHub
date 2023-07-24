@@ -34,7 +34,7 @@ class BarbershopController extends AbstractController
         $allBarbershops = $paginator->paginate(
             $allBarbershops, 
             $request->query->getInt('page', 1), 
-            6
+            10
         );
 
         return $this->render('barbershop/index.html.twig', [
@@ -84,7 +84,13 @@ class BarbershopController extends AbstractController
 
             // On récupere les données du formulaire
             // Urlencode pour que l'adresse soit formatée pour être valide dans une URL (car elle vas passer dans l'API)
-            $adresse = urlencode($form->get('adresse')->getData());
+            $adresseRaw = $form->get('adresse')->getData();
+
+            // Regex pour enlever la ville et le code postal de l'adresse récupérée (selectize n'affiche pas les options ayant la meme valeur donc obligé de récuperer le label)
+            $pattern = '/ \d{5} [A-Za-z]+$/';
+            $adresseShorted = preg_replace($pattern, '', $adresseRaw);
+            $adresse = urlencode($adresseShorted);
+
             $ville = urlencode($form->get('ville')->getData());
             $cp = $form->get('cp')->getData();
 
@@ -98,9 +104,12 @@ class BarbershopController extends AbstractController
                 die();
             }
 
-            // On set la latitude et la longitude du bar
+            // On set la latitude et la longitude du barbershop
             $barbershop->setLatitude($coordinates[0]['lat']);
             $barbershop->setLongitude($coordinates[0]['lon']);
+
+            // On set l'adresse modifiée
+            $barbershop->setAdresse($adresseShorted);
 
             // RECUPERER LES IMAGES
             $image = $form->get('images')->getData();

@@ -17,14 +17,11 @@
         {% for jour in horaires %}
         <tr>
             <td>{{ jour['jour']|capitalize }}</td>
-            {% if jour['ouverture'] == 'ferme' %}
+            {% if jour['ouverture'] == 'ferme' or jour['fermeture'] == 'ferme'%}
             <td> Fermé </td>
+            <td></td>
             {% else %}
             <td>{{ jour['ouverture'] }}</td>
-            {% endif %}
-            {% if jour['fermeture'] == 'ferme' %}
-            <td> Fermé </td>
-            {% else %}
             <td>{{ jour['fermeture'] }}</td>
             {% endif %}
             
