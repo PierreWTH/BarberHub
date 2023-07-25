@@ -20,10 +20,11 @@ class HomeController extends AbstractController
 
         $lastBarbershops = $doctrine->getRepository(Barbershop::Class)->getLastThreeValidBarbershop();
         $lastArticles = $doctrine->getRepository(Article::Class)->findBy([], ["date"=>"DESC"] , 2);
-        
+        $isHomePage = true;
         return $this->render('home/index.html.twig', [
             'lastBarbershops' => $lastBarbershops,
-            'lastArticles' => $lastArticles
+            'lastArticles' => $lastArticles,
+            'isHomePage' => $isHomePage
         ]);
     }
 }
