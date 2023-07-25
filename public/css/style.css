@@ -1,8 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
-
-* {
-    font-family: 'Poppins';
-}
+@import url('https://fonts.googleapis.com/css2?family=Smythe&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
 #map-all-barber { 
     height: 800px; 
@@ -28,3 +25,429 @@
     width: 80%;
     margin: auto;
 }
+
+
+/****** GENERAL *******/
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+ 
+}
+
+body {
+    font-family: 'Poppins';
+    font-weight: 400;
+}
+
+a{
+    text-decoration: none;
+}
+
+/****** Variables *******/
+
+:root {
+    /* couleurs */
+    --white: #ffffff;
+    --light-gray: #F5F2F2;
+    --dark-gray: #3F3F3F;
+    --black: #000000;
+  
+    /*font weight */
+    --regular: 400;
+    --medium: 500;
+    --semi-bold: 600;
+  }
+
+.title {
+    text-align: center;
+    font-family: 'Smythe';
+    font-size: 50px;
+}
+
+.sub-title {
+    text-align: center;
+    margin: 5rem 0rem ;
+    font-family: 'Smythe';
+    font-size: 30px;
+}
+
+/********************************************** HOME *************************************************/
+
+/*****************************************/
+/***************** HEADER *****************/
+
+.home {
+    width: 100%;
+    height: 100vh;
+    background-image: linear-gradient(rgba(12,3,51,0.3), rgba(12,3,51,0.3));
+    position: relative;
+    padding: 0 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+nav{
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 20px 8%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+nav .logo{
+    width: 80px;
+}
+
+nav ul li {
+    list-style: none;
+    display: inline-block;
+    margin-left: 40px;
+}
+
+nav ul li a {
+    color: var(--white);
+}
+
+.header-content {
+    text-align: center;
+}
+
+.header-content h1{
+    font-size: 100px;
+    font-family: 'Smythe';
+    color: var(--white);
+}
+
+.header-content a{
+    display: inline-block;
+    color: var(--white);
+    border: 2px solid var(--white);
+    padding: 14px 70px;
+    border-radius: 50px;
+    margin-top: 30px;
+    transition: 0.5s;
+}
+
+.header-content a:hover{
+    background-color: white;
+    color: black;
+}
+
+.home-video{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    ;
+}
+
+@media(min-aspect-ratio: 16/9 ){
+    .home-video{
+        width: 100%;
+        height: auto;
+    }
+}
+
+@media(max-aspect-ratio: 16/9 ){
+    .home-video{
+        width: auto;
+        height: 100%;
+    }
+}
+
+/*****************************************/
+/***************** CARDS *****************/
+
+#card-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    padding: 5rem 0;
+    gap: 5rem;
+    background-color: var(--light-gray);
+}
+
+.barbershop-card-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    background: var(--light-gray);
+    
+}
+
+.card-container{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 100px 50px;
+    padding: 50px 40px ;
+}
+
+.card-container .card{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 350px;
+    height: 300px;
+    background:var(--white);
+    border-radius: 15px;
+    box-shadow: 0 35px 80px rgba(0,0,0,0,15);
+    transition: 0.5s;
+}
+
+.card-container .card:hover{
+    height: 400px;
+}
+
+.card-container .card .imgBx {
+    position: absolute;
+    top: 20px;
+    width: 300px;
+    height: 220px;
+    background: #3F3F3F;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: 0.5s;
+}
+
+.card-container .card:hover .imgBx {
+    top: -100px;
+    scale: 0.75;
+    box-shadow: 0 15px 45px rgba(0,0,0,0,15);
+}
+
+.card-container .card .imgBx img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-container .card .card-content{
+    position: absolute;
+    top: 252px;
+    width: 100%;
+    padding: 0 30px;
+    height: 30px;
+    overflow: hidden;
+    text-align: center;
+    transition: 0.5s;
+}
+
+.card-container .card:hover .card-content{
+    top: 130px;
+    height: 250px;
+}
+
+.card-container .card .card-content a{
+    position: relative;
+    top: 15px;
+    display: inline-block;
+    padding: 12px 25px;
+    background: var(--black);
+    color: var(--white);
+    border-radius: 8px;
+}
+
+/*****************************************/
+/*********** FONCTIONNALITES *************/
+
+#home-features {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 5rem;
+    min-height: 70vh;
+    padding: 5rem 0;
+}
+
+.features-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 70px;
+    align-items: center;
+}
+
+.line{
+    background-color: #3F3F3F;
+    width: 3px;
+    height: 300px;
+}
+
+.features{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+    max-width: 350px;
+}
+
+.features i {
+    color: var(--dark-gray);
+    font-size: 70px;
+    transition: 0.5s;
+}
+
+.features i:hover{
+    transform: translateY(-20px);
+}
+
+@media screen and (max-width : 1405px) {
+
+    .line{
+        display: none;
+    }
+}
+
+/*****************************************/
+/*********** ARTICLES *************/
+
+#home-articles {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 5rem;
+    min-height: 70vh;
+    background: var(--light-gray);
+    padding: 5rem 0;
+
+    
+}
+
+.article-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 70px;
+    align-items: center;
+    background: var(--light-gray);
+    padding: 50px;
+}
+
+.article-card {
+    display: grid;
+    grid-template-columns: 285px minmax(200px, 350px);
+    max-width: 730px;
+    border-radius: 10px;
+    box-shadow: 6px 6px 5px hsla(0, 0%, 0%, 0.02),
+                25px 25px 20px hsla(0, 0%, 0%, 0.03),
+                100px 100px 80px hsla(0, 0%, 0%, 0.05);
+    transition: 0.5s;
+  }
+  
+.article-card:hover{
+    transform: translateY(-15px);
+}
+  
+  .img-box {
+    border-radius: 10px 0 0 10px;
+    overflow: hidden;
+  }
+  
+  .article-banner {
+    width:  100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: left;
+    transition: all 0.5s ease;
+  }
+
+  .article-card:hover .article-banner {transform: scale(1.1);}
+
+  .article-content{
+    background: var(--white);
+    padding: 32px 40px;
+    border-radius: 0 10px 10px 0;
+  }
+
+  .article-title {
+    font-size: 20px;
+    color: var(--black);
+    margin-bottom: 12px;
+    line-height: 1.4;
+    transition: 0.5s;
+  }
+
+  .article-title:hover{
+    color: var(--dark-gray);
+  }
+
+  .article-text{
+    margin-bottom: 18px;
+    line-height: 1.5;
+  }
+
+  .author{
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+  }
+
+  .author i {
+    font-size: 25px;
+    margin-right: 15px;
+
+  }
+
+  .publish-date{
+    font-size: 13px;
+  }
+
+  @media screen and (max-width : 768px) {
+    
+    .article-card{
+        grid-template-columns: 1fr;
+        max-width: 294px;
+        overflow: hidden;
+    }
+
+    .img-box, .article-content {border-radius: 0;}
+
+    .img-box{ height: 180px;}
+
+    .article-content{padding: 30px 28px 20px;}
+
+    .article-title{font-size: 15px;}
+
+    .article-text{margin-bottom: 30px;}
+  }
+
+  /***** FOOTER *****/
+
+  footer{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: var(--dark-gray);
+    height: 5rem;
+    color: var(--white);
+  }
+
+  footer a {
+    color: var(--white);
+  }
+
+  footer i {
+    font-size: 25px;
+  }

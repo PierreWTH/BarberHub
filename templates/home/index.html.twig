@@ -4,16 +4,47 @@
 
 {% block body %}
 
-<h1>  Trouvez le barbier qui vous correspond ! </h1>
+<div class="home">
+    <video autoplay loop muted plays-inline class="home-video">
+        <source src="{{asset('images/barber-pole.mp4')}}" type="video/mp4">
+    </video>
 
-<h2> Les barbiers de la semaine </h2>
+    {% include "layout/_navbar.html.twig" %}
 
+    <div class="header-content">
+        <h1>Trouvez le barbier qui vous corresponds</h1>
+        <a href="">Découvrir</a>
+    </div>
+</div>
+
+
+<section id="card-section">
+    
+    <h2 class="title">  Les barbiers de la semaine </h2>
+
+<div class="barbershop-card-container">
+    
 {% if lastBarbershops %}
     
 {% for barbershop in lastBarbershops %}
+{% for pics in barbershop.barbershopPics %}
+    
 
-<a href="{{path ('show_barbershop', {id : barbershop.id })}}">{{barbershop.nom}}</a>
+<div class="card-container">
+    <div class="card">
+        <div class="imgBx">
+            <img src="{{asset('assets/uploads/barbershopPics/31d4f1bdc0bc953ef2d5dca61aadb128.webp')}}" alt="">
+        </div>
+        <div class="card-content">
+            <h3> {{barbershop.nom}}</h3>
+            <p>{{barbershop.description|slice(0, 160)}}...</p>
+            <a href="{{path ('show_barbershop', {id : barbershop.id })}}">Découvrir</a>
+        </div>
+    </div>
+</div>
 
+{# <a href="{{path ('show_barbershop', {id : barbershop.id })}}">{{barbershop.nom}}</a>
+ #}{% endfor %}
 {% endfor %}
 
 {% else %}
@@ -22,35 +53,97 @@
 
 {% endif %}
 
-<div>
-<p> Découvrez les barbiers de votre ville </p>
-<p> Lorem ipsum dolor sit amet, consectetur Maecenas et consectetur odio. Curabitur a purus id sem dictum laoreet. Phasellus non semper enim. Praesent vulputate interdum porta. Fusce nec scelerisque enim.</p>
 </div>
 
-<div>
-<p> Reservez un rendez vous </p>
-Lorem ipsum dolor sit amet, consectetur Maecenas et consectetur odio. Curabitur a purus id sem dictum laoreet. Phasellus non semper enim. Praesent vulputate interdum porta. Fusce nec scelerisque enim.Lorem ipsum dolor sit amet, consectetur Maecenas et consectetur odio. 
+</section>
+
+<section id="home-features">
+    <h3 class="title"> Simplifiez vous la vie...</h3>
+    <div class="features-container">
+    
+    <div class="features">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <p class="sub-title"> Découvrez les barbiers de votre ville </p>
+        <p> Redécouvrez l'art du rasage chez les barbiers de votre ville ! Optez pour un style unique grâce à notre carte interactive, avec horaires et détails de chaque salon.</p>
+    </div>
+
+    <div class="line"></div>
+
+    <div class="features">
+        <i class="fa-regular fa-calendar-check"></i>
+        <p class="sub-title"> Reservez un rendez vous chez votre barbier préféré </p>
+        <p>Facilitez-vous la vie : réservez dès maintenant chez votre barbier préféré en quelques clics grâce à notre système de réservation en ligne rapide et efficace !</p> 
+    </div>
+
+    <div class="line"></div>
+
+    <div class="features">
+        <i class="fa-solid fa-basket-shopping"></i>
+        <p class="sub-title"> Achetez des produits professionnels</p>
+        <p>Prenez soin de votre style avec les produits professionnels disponibles dans la boutique de chaque barbier. Découvrez une sélection haut de gamme pour sublimer votre quotidien.</p>
+    </div>
+
 </div>
 
-<div>
-<p> Achetez vos produits préférés</p>
-Lorem ipsum dolor sit amet, consectetur Maecenas et consectetur odio. Curabitur a purus id sem dictum laoreet. Phasellus non semper enim. Praesent vulputate interdum porta. Fusce nec scelerisque enim.
-</div>
+</section>
 
-<h2> Nos derniers articles </h2>
+<section id="home-articles">
+
+    <h3 class="title"> Nos derniers articles </h3>
+    
+    <div class="article-container">
 
 {% if lastArticles %}
     
 {% for article in lastArticles %}
-{# <img src="{{article.photo}}" alt=""> #}
-<a href="{{path ('show_article', {id : article.id })}}">{{article.titre}}</a>
 
+<article class="article-card">
+
+    <div class="img-box">
+        <a href="{{path ('show_article', {id : article.id })}}">
+      <img src="{{article.photo}}" alt="" class="article-banner"></a>
+    </div>
+
+
+    <div class="article-content">
+
+      <a href="{{path ('show_article', {id : article.id })}}">
+        <h3 class="article-title">{{article.titre}}</h3>
+      </a>
+
+      <p class="article-text">Prenez soin de votre style avec les produits professionnels disponibles dans la boutique de chaque barbier. Découvrez une sélection haut de gamme pour sublimer votre quotidien.</p>
+
+      <div class="acticle-content-footer">
+
+        <div class="author">
+        <i class="fa-regular fa-circle-user"></i>
+
+          <div class="author-info">
+              <h4 class="author-name">{{article.user.pseudo}}</h4>
+            <div class="publish-date">{{article.date| format_datetime('short', 'short', locale='fr')}}</div>
+          </div>
+        </div>   
+      </div>
+
+    </div>
+
+  </article>
+
+
+
+{# <img src="{{article.photo}}" alt=""> #}
+{# <a href="{{path ('show_article', {id : article.id })}}">{{article.titre}}</a>
+ #}
 {% endfor %}
+
 
 {% else %}
 
-<p> Pas de barbier réçents. </p>
+<p> Pas d'articles réçents. </p>
 
 {% endif %}
+</div>
+</section>
+
 
 {% endblock %}

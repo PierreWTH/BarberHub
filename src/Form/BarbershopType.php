@@ -26,9 +26,9 @@ class BarbershopType extends AbstractType
               
             ->add('adresse', TextType::class)
             
-            ->add('cp', TextType::class )
+            ->add('cp', HiddenType::class )
 
-            ->add('ville', TextType::class )
+            ->add('ville', HiddenType::class )
             
             ->add('horaires', HiddenType::class, [
                 'required' =>true,
