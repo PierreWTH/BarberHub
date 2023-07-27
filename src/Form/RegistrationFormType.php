@@ -22,6 +22,7 @@ class RegistrationFormType extends AbstractType
             ->add('email')
             ->add('pseudo', TextType::class)
             ->add('agreeTerms', CheckboxType::class, [
+                'label' =>false,
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
@@ -35,7 +36,7 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les mots de passe doivent être identiques.',
-                'options' => ['attr' => ['class' => 'password-field']],
+                'options' => ['attr' => ['class' => 'password']],
                 'required' => true,
                 'first_options'  => ['label' => 'Mot de passe'],
                 'second_options' => ['label' => 'Confirmez le mot de passe'],

@@ -7,15 +7,47 @@
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-    <h1> Inscription </h1>
+<div class="register-splitscreen">
+    <div class="register-left">
+        <div class="copy">
+            <h1>Votre barbier à portée de main. </h1>
+            <p> Trouvez le barbier qui vous corresponds. </p>
+        </div>
+    </div>
+    <div class="register-right">
+        {{ form_start(registrationForm) }}
+        <div class="copy">
+            <h2> Inscription </h2>
+            <div class="login-container">
+                <p>Déja inscrit ? <a href=""> <strong>Se connecter</strong></a></p>
+            </div>
+        </div>
+        <div class="input-container name">
+            {{ form_row(registrationForm.pseudo) }}
+        </div>
+        <div class="input-container email">
+            {{ form_row(registrationForm.email) }}
+        </div>
+        <div class="input-container password">
+            {{ form_row(registrationForm.plainPassword, { label: 'Password'}) }}
+            <i class="far fa-eye-slash"></i>
+        </div>
+        <div class="input-container terms">
+            <label class="checkbox-container">
+            {% block form_row %}
+                {{ form_errors(registrationForm.agreeTerms) }}
+                {{ form_widget(registrationForm.agreeTerms) }}
+            {% endblock %}
+                <span class="checkmark"></span>
+                J'accepte les conditions
+            </label>
+        </div>
+            <button type="submit" class="signup-btn"> S'inscrire </button>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn"> S'inscrire </button>
-    {{ form_end(registrationForm) }}
+            <div class="copy legal">
+                <p><span class="small"> En continuant, vous acceptez nos conditions et nos politiques de confidentialités. </span></p>
+            </div>
+        {{ form_end(registrationForm) }}
+    </div>
+</div>
 {% endblock %}
