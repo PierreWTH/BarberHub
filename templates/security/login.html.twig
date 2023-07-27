@@ -4,39 +4,75 @@
 
 {% block body %}
 
-<section id="login">
-    <div class="login-container">
-        <div class="container-img">
-            <img src="../../public/images/" alt="">
+<div class="login-splitscreen">
+    
+    <div class="login-left">
+        <div class="login-copy">
+            <h1>Bon retour parmis nous ! </h1>
+            <p> Des nouveautés vous attendent ! </p>
         </div>
     </div>
-    <form method="post">
+    <div class="login-right">
+        <form method="post">
         
-        
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
-
-        {% if app.user %}
-            <div class="mb-3">
-                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+    
+            {% if app.user %}
+                <div class="mb-3">
+                    You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                </div>
+            {% endif %} 
+        <div class="login-copy">
+            <h2> Connexion </h2>
+            <div class="login-container">
+                <p>Pas de compte ? <a href=""> <strong>S'inscrire</strong></a></p>
             </div>
-        {% endif %}
-        
+        </div>
+        <div class="login-input-container email">
+            <label for="inputPassword">Email </label>
             <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-            <label for="inputEmail">Email</label>
-            
-            <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+        </div>
+        <div class="login-input-container password">
             <label for="inputPassword">Mot de passe </label>
-            <input type="hidden" name="_csrf_token"
-                value="{{ csrf_token('authenticate') }}"
-            >
+            <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                    <input type="hidden" name="_csrf_token"
+                        value="{{ csrf_token('authenticate') }}"
+                    >
+                <i class="fa-solid fa-eye-slash"  onclick="showPassword()" id="password-toggle"></i>
+        </div>
+        <div class="forget-password">
+             <a href=""> Mot de passe oublié ? </a>   
+        </div>
+            <button type="submit" class="login-signup-btn"> Connexion </button>
 
-        <button type="submit"> Sign in </button>
-    </form>
-        
-</section>
+            
+       
+    </div>
+   
+</div>
+{% block javascript %}
 
-
-
+<script>
+    
+    function showPassword() {
+        var inputPassword = document.getElementById("inputPassword");
+        var icon = document.getElementById("password-toggle");
+    
+        if (inputPassword.type === "password") {
+            inputPassword.type = "text";
+            // Remplacez la classe pour afficher l'icône "fa-eye"
+            icon.classList.remove("fa-solid", "fa-eye-slash");
+            icon.classList.add("fa-regular", "fa-eye");
+        } else {
+            inputPassword.type = "password";
+            // Remplacez la classe pour afficher l'icône "fa-eye-slash"
+            icon.classList.remove("fa-regular", "fa-eye");
+            icon.classList.add("fa-solid", "fa-eye-slash");
+        }
+    }
+</script>
+    
+{% endblock javascript %}
 {% endblock %}

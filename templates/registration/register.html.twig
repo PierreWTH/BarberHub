@@ -30,7 +30,7 @@
         </div>
         <div class="input-container password">
             {{ form_row(registrationForm.plainPassword, { label: 'Password'}) }}
-            <i class="far fa-eye-slash"></i>
+            <i class="fa-solid fa-eye-slash"  onclick="showPassword()" id="password-toggle"></i>
         </div>
         <div class="input-container terms">
             <label class="checkbox-container">
@@ -50,4 +50,30 @@
         {{ form_end(registrationForm) }}
     </div>
 </div>
+
+{% block javascript %}
+
+<script>
+    
+    function showPassword() {
+        var inputPassword = document.getElementById("registration_form_plainPassword_first");
+        var icon = document.getElementById("password-toggle");
+    
+        if (inputPassword.type === "password") {
+            inputPassword.type = "text";
+            // Remplacez la classe pour afficher l'icône "fa-eye"
+            icon.classList.remove("fa-solid", "fa-eye-slash");
+            icon.classList.add("fa-regular", "fa-eye");
+        } else {
+            inputPassword.type = "password";
+            // Remplacez la classe pour afficher l'icône "fa-eye-slash"
+            icon.classList.remove("fa-regular", "fa-eye");
+            icon.classList.add("fa-solid", "fa-eye-slash");
+        }
+    }
+</script>
+    
+{% endblock javascript %}
+
 {% endblock %}
+
