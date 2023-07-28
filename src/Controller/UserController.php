@@ -13,7 +13,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class UserController extends AbstractController
 {
     #[Route('/monespace', name: 'app_myspace')]
-    #[IsGranted('ROLE_ADMIN')]
     public function index(UserRepository $ur): Response
     {
         // Récuperer les likes de l'utilisateur

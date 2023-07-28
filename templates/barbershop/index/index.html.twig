@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tous les barbiers{% endblock %}
+
+{% block body %}
+
+<h1> Tous les barbiers </h1>
+
+{# Barre de recherche #}
+
+{% include "barbershop/index/_barberCards.html.twig" %}
+
+{{ knp_pagination_render(allBarbershops) }}
+
+{% block javascripts %}
+
+<script src="{{ asset('js/like.js')}}"></script>
+
+{% endblock javascripts %}
+
+{% endblock %}

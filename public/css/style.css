@@ -962,7 +962,8 @@ footer i {
 .barbershop-card-title {
     margin-top: 5px;
     margin-bottom: 10px;
-    font-family: 'Roboto Slab', serif;
+    font-family: 'Smythe';
+    font-size: 1.8rem;
 }
 
 .barbershop-card-adress {

@@ -37,7 +37,7 @@ class BarbershopController extends AbstractController
             10
         );
         
-        return $this->render('barbershop/index.html.twig', [
+        return $this->render('barbershop/index/index.html.twig', [
             'allBarbershops' => $allBarbershops,
         ]);
     }
@@ -87,7 +87,7 @@ class BarbershopController extends AbstractController
             $adresseRaw = $form->get('adresse')->getData();
 
             // Regex pour enlever la ville et le code postal de l'adresse récupérée (selectize n'affiche pas les options ayant la meme valeur donc obligé de récuperer le label)
-            $pattern = '/ \d{5} [A-Za-z]+$/';
+            $pattern = '/ \d{5} [A-Za-z\-]+$/';
             $adresseShorted = preg_replace($pattern, '', $adresseRaw);
             $adresse = urlencode($adresseShorted);
 
@@ -96,7 +96,7 @@ class BarbershopController extends AbstractController
 
             // On passe les données a nominatim
             $coordinates = $nominatim->getCoordinates($adresse,$ville,$cp);
-
+            
             // Si coordinates est vide : message d'erreur 
             if (empty($coordinates)) {
                 // Les coordonnées sont vides, on ajoute un message d'erreur dans les messages flash
@@ -249,5 +249,3 @@ class BarbershopController extends AbstractController
         return new JsonResponse(['error' => 'Token invalide'], 400);
     }
 }
-
-
