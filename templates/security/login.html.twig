@@ -14,16 +14,6 @@
     </div>
     <div class="login-right">
         <form method="post">
-        
-            {% if error %}
-                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-            {% endif %}
-    
-            {% if app.user %}
-                <div class="mb-3">
-                    You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-                </div>
-            {% endif %} 
         <div class="login-copy">
             <h2> Connexion </h2>
             <div class="login-container">
@@ -45,13 +35,21 @@
         <div class="forget-password">
              <a href=""> Mot de passe oublié ? </a>   
         </div>
-            <button type="submit" class="login-signup-btn"> Connexion </button>
-
-            
-       
+            <button type="submit" class="login-signup-btn"> Connexion </button>  
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+    
+            {% if app.user %}
+                <div class="mb-3">
+                    You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                </div>
+            {% endif %} 
+       </form>
     </div>
    
 </div>
+
 {% block javascript %}
 
 <script>

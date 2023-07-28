@@ -22,7 +22,7 @@
     
     <h2 class="title">  Les barbiers de la semaine </h2>
 
-<div class="barbershop-card-container">
+<div class="home-barbershop-card-container">
     
 {% if lastBarbershops %}
     
@@ -43,8 +43,7 @@
     </div>
 </div>
 
-{# <a href="{{path ('show_barbershop', {id : barbershop.id })}}">{{barbershop.nom}}</a>
- #}{% endfor %}
+ {% endfor %}
 {% endfor %}
 
 {% else %}

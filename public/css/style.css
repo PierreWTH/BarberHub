@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Smythe&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700');
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i');
 
 
 #map-all-barber { 
@@ -33,9 +35,9 @@
 *,
 *::before,
 *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
  
 }
 
@@ -43,8 +45,8 @@ body {
     font-family: 'Poppins';
     font-weight: 400;
     min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 a{
@@ -201,7 +203,7 @@ a{
     background-color: var(--light-gray);
 }
 
-.barbershop-card-container{
+.home-barbershop-card-container{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -384,62 +386,62 @@ a{
     transform: translateY(-15px);
 }
   
-  .img-box {
+.img-box {
     border-radius: 10px 0 0 10px;
     overflow: hidden;
-  }
-  
-  .article-banner {
+}
+
+.article-banner {
     width:  100%;
     height: 100%;
     object-fit: cover;
     object-position: left;
     transition: all 0.5s ease;
-  }
+}
 
-  .article-card:hover .article-banner {transform: scale(1.1);}
+.article-card:hover .article-banner {transform: scale(1.1);}
 
-  .article-content{
+.article-content{
     background: var(--white);
     padding: 32px 40px;
     border-radius: 0 10px 10px 0;
-  }
+}
 
-  .article-title {
+.article-title {
     font-size: 20px;
     color: var(--black);
     margin-bottom: 12px;
     line-height: 1.4;
     transition: 0.5s;
-  }
+}
 
-  .article-title:hover{
+.article-title:hover{
     color: var(--dark-gray);
-  }
+}
 
-  .article-text{
+.article-text{
     margin-bottom: 18px;
     line-height: 1.5;
-  }
+}
 
-  .author{
+.author{
     display: flex;
     align-items: center;
     font-size: 13px;
-  }
+}
 
-  .author i {
+.author i {
     font-size: 25px;
     margin-right: 15px;
 
-  }
+}
 
-  .publish-date{
+.publish-date{
     font-size: 13px;
-  }
+}
 
-  @media screen and (max-width : 768px) {
-    
+@media screen and (max-width : 768px) {
+
     .article-card{
         grid-template-columns: 1fr;
         max-width: 294px;
@@ -455,11 +457,11 @@ a{
     .article-title{font-size: 15px;}
 
     .article-text{margin-bottom: 30px;}
-  }
+}
 
   /***** FOOTER *****/
 
-  footer{
+footer{
     margin-top: auto;
     width: 100%;
     display: flex;
@@ -468,19 +470,19 @@ a{
     background-color: var(--dark-gray);
     height: 5rem;
     color: var(--white);
-  }
+}
 
-  footer a {
+footer a {
     color: var(--white);
-  }
+}
 
-  footer i {
+footer i {
     font-size: 25px;
-  }
+}
 
   /********************************************** NAV OTHERS PAGE *************************************************/
 
-  #nav{
+#nav{
     width: 100%;
     padding: 20px 8%;
     display: flex;
@@ -526,31 +528,31 @@ a{
 }
 
   /********************************************** LOGIN *************************************************/
-  .login-splitscreen h1{
+.login-splitscreen h1{
     font-size: 2.25rem;
     font-weight: var(--semi-bold);
-  }
+}
 
-  .login--splitscreen h2{
+.login--splitscreen h2{
     font-size: 1.5rem;
     font-weight: var(--semi-bold);
-  }
+}
 
-  .login-splitscreen a{
+.login-splitscreen a{
     text-decoration: none;
     color: var(--dark-gray);
-  }
+}
 
-  .login-splitscreen a:hover{
+.login-splitscreen a:hover{
     text-decoration: underline;
-  }
+}
 
 .login-splitscreen{
     display: flex;
     flex-direction: column;
     gap: 1rem;
 
-  }
+}
 
 .login-left{
     height: 200px;
@@ -664,34 +666,30 @@ a{
 
   /********************************************** REGISTER *************************************************/
 
-  /* .agree-terms
-  .register-splitscreen
-  .register-left
-  .register-right
-*/
-  .register-splitscreen h1{
+ 
+.register-splitscreen h1{
     font-size: 2.25rem;
     font-weight: var(--semi-bold);
-  }
+}
 
-  .register-splitscreen h2{
+.register-splitscreen h2{
     font-size: 1.5rem;
     font-weight: var(--semi-bold);
-  }
+}
 
-  .register-splitscreen a{
+.register-splitscreen a{
     text-decoration: none;
     color: var(--dark-gray);
-  }
+}
 
-  .register-splitscreen a:hover{
+.register-splitscreen a:hover{
     text-decoration: underline;
-  }
+}
 
-  .small{
+.small{
     font-size: 80%;
     text-align: center;
-  }
+}
 
 .register-splitscreen{
     display: flex;
@@ -772,38 +770,38 @@ a{
     cursor: pointer;
  }
  
- .checkbox-container input {
-     position: absolute;
-     opacity: 0;
-     cursor: pointer;
-     height: 0;
-     width: 0;
-     background-color: black;
-    }
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+    background-color: black;
+}
     
-    .input-container.terms .checkbox-container {
-       display: block;
-       position: relative;
-       padding-left: 2rem;
-       cursor: pointer;
-       user-select: none;
-       margin: 0 0 1.25rem 0;
-    }
-    .checkbox-container input:checked~.checkmark {
-     background-color: black;
-     border: 1px solid black;
-    }
+.input-container.terms .checkbox-container {
+    display: block;
+    position: relative;
+    padding-left: 2rem;
+    cursor: pointer;
+    user-select: none;
+    margin: 0 0 1.25rem 0;
+}
+.checkbox-container input:checked~.checkmark {
+    background-color: black;
+    border: 1px solid black;
+}
     
-    .checkmark {
-        position: absolute;
-        width: 24px;
-        height: 24px;
-        background: white;
-        border: 1px solid #c4c4c4;
-        border-radius: 2px;
-        top: -4px;
-        left: 0;
-    }
+.checkmark {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: white;
+    border: 1px solid #c4c4c4;
+    border-radius: 2px;
+    top: -4px;
+    left: 0;
+}
     
 .checkmark:after {
     content: "";
@@ -857,4 +855,150 @@ a{
         height: auto;
     }
     
+}
+
+/***************************** BARBERSHOPS LIST ************************************/
+
+.barbershop-cards-container {
+    width: 90%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 5%;
+    padding: 3rem;
+}
+
+.barbershop-card-img-hover img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+
+.barbershop-card-like {
+    width: 30px;
+}
+
+.barbershop-card-img {
+    visibility: hidden;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 235px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  
+}
+
+.card-info-hover {
+    position: absolute;
+    padding: 16px;
+    width: 100%;
+    opacity: 0;
+    top: 0;
+    z-index: 1;
+}
+
+.card-info-hover a{ 
+    color: black;
+}
+
+.barbershop-card-img-hover {
+    transition: 0.2s all ease-out;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    position: absolute;
+    height: 235px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    top: 0;
+  
+}
+.barbershop-card {
+    margin-top: 4rem;
+    transition: all .4s cubic-bezier(0.175, 0.885, 0, 1);
+    background-color: #fff;
+    width: 350px;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0px 13px 10px -7px rgba(0, 0, 0,0.1);
+}
+.barbershop-card:hover {
+    box-shadow: 0px 30px 18px -8px rgba(0, 0, 0,0.1);
+    transform: scale(1.10, 1.10);
+}
+
+.barbershop-card-info {
+    z-index: 2;
+    background-color: #fff;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    padding: 16px 24px 24px 24px;
+}
+
+.barber-admin-link  {
+    color: #000000;
+    font-size: 0.8rem;
+}
+
+.barber-admin-link:hover {
+    text-decoration: underline;
+}
+
+.barbershop-card-note {
+    font-family: 'Raleway', sans-serif;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 2px;
+    font-weight: 500;
+    color: #868686;
+}
+
+.barbershop-card-title {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-family: 'Roboto Slab', serif;
+}
+
+.barbershop-card-adress {
+    font-size: 12px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 500;
+}
+
+.barbershop-card-adress {
+    font-weight: 600;
+    text-decoration: none;
+    color: #AD7D52;
+}
+
+.barbershop-card:hover .barbershop-card-img-hover {
+    height: 100%;
+    opacity: 0.09;
+}
+
+.barbershop-card:hover .barbershop-card-info {
+    background-color: transparent;
+    position: relative;
+}
+
+.barbershop-card:hover .card-info-hover {
+    opacity: 1;
+}
+
+.fa-heart.hidden {
+    display: none;
+}
+
+#heartUnfilled, #heartFilled{
+    font-size: 22px;
+}
+
+#heartFilled {
+    color: #E66F64;
 }

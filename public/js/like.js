@@ -21,10 +21,22 @@ class Like {
             .then(data => {
             // Récupération du nombre de likes
             const nb = data.nbLike;
-            const span = this.querySelector('span');
+            const span = this.querySelector('.like-span');
 
             this.dataset.nb = nb;
-            span.innerHTML = nb + ' J\'aime';
+            if(span){
+                span.innerHTML = nb + ' J\'aime';
+            }
+
+            const heartFilled = this.querySelector('#heartFilled');
+            const heartUnfilled = this.querySelector('#heartUnfilled');
+
+            if(heartFilled && heartUnfilled){
+                heartFilled.classList.toggle('hidden');
+                heartUnfilled.classList.toggle('hidden');
+            }
+
+            
         })
     }
 }

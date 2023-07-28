@@ -36,7 +36,7 @@ class BarbershopController extends AbstractController
             $request->query->getInt('page', 1), 
             10
         );
-
+        
         return $this->render('barbershop/index.html.twig', [
             'allBarbershops' => $allBarbershops,
         ]);
