@@ -34,7 +34,7 @@ class BarbershopController extends AbstractController
         $allBarbershops = $paginator->paginate(
             $allBarbershops, 
             $request->query->getInt('page', 1), 
-            10
+            9
         );
         
         return $this->render('barbershop/index/index.html.twig', [
