@@ -11,10 +11,43 @@
 <div><a href="{{path ('add_article')}}"> Ajouter un article </a></div>
 
 {% endif %}
+<div class="article-container">
 
 {% for article in articles %}
+
+<article class="article-card">
+
+    <div class="img-box">
+        <a href="{{path ('show_article', {id : article.id })}}">
+      <img src="{{article.photo}}" alt="" class="article-banner"></a>
+    </div>
+
+
+    <div class="article-content">
+
+      <a href="{{path ('show_article', {id : article.id })}}">
+        <h3 class="article-title">{{article.titre}}</h3>
+      </a>
+
+      <p class="article-text">{{article.texte|striptags|slice(0, 160)|raw}}... <br><br> <a href="{{path ('show_article', {id : article.id })}}"> Lire la suite </a></p>
+
+      <div class="acticle-content-footer">
+
+        <div class="author">
+        <i class="fa-regular fa-circle-user"></i>
+
+          <div class="author-info">
+              <h4 class="author-name">{{article.user.pseudo}}</h4>
+            <div class="publish-date">{{article.date| format_datetime('short', 'short', locale='fr')}}</div>
+          </div>
+        </div>   
+      </div>
+
+    </div>
+
+  </article>
     
-<a href="{{path ('show_article', {id : article.id })}}">{{ article.titre}}</a>
+
 
 {% if is_granted('ROLE_ADMIN') %}
     
@@ -24,5 +57,7 @@
 {% endif %}
 
 {% endfor %}
+
+</div>
 
 {% endblock %}

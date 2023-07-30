@@ -4,10 +4,7 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i');
 
 
-#map-all-barber { 
-    height: 800px; 
-    width: 90%;
-}
+
 
 #map-barber { 
     height: 400px; 
@@ -361,7 +358,7 @@ a{
     
 }
 
-.article-container{
+.home-article-container{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -373,8 +370,9 @@ a{
 
 .article-card {
     display: grid;
-    grid-template-columns: 285px minmax(200px, 350px);
+    grid-template-columns: 285px minmax(200px, 450px);
     max-width: 730px;
+    min-height: 350px;
     border-radius: 10px;
     box-shadow: 6px 6px 5px hsla(0, 0%, 0%, 0.02),
                 25px 25px 20px hsla(0, 0%, 0%, 0.03),
@@ -881,7 +879,7 @@ footer i {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 5%;
+    gap: 3rem;
     padding: 3rem;
 }
 
@@ -1057,3 +1055,23 @@ footer i {
     border-radius: 5px;
 }
 
+/***************************** MAP ************************************/
+
+#map-all-barber{
+    width: 90%;
+    margin: auto;
+    border-radius: 20px;
+    min-height: 90vh;
+    
+}
+
+/************************* ARTICLES **********************************/
+
+.article-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 70px;
+    align-items: center;
+    padding: 50px;
+}

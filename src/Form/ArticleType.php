@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -25,6 +26,17 @@ class ArticleType extends AbstractType
             ->add('photo', UrlType::class, ['attr'=>
             ['placeholder ' => 'URL de la photo']
             ])
+            ->add('description', TextType::class, [
+                'attr'=>
+                ['placeholder ' => '200 caractères max.'],
+                'constraints' => [
+                    new Length([
+                        'max' => 200,
+                        'maxMessage' => 'La description ne peut pas dépasser {{ limit }} caractères.'
+                    ]),
+                ],
+            ])
+
             ->add('texte', CKEditorType::class)
             
             ->add('user', EntityType::class, [
