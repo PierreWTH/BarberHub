@@ -6,50 +6,42 @@
 {% block body %}
 
 
-
-
-
 <div id="map-container">
     <div id="map-details-barber">
         <div class="map-barbershop-container">
-        {% for barbershop in barbershops %}
-        {% for pics in barbershop.barbershopPics %}
-            
-        <article class="map-barbershop-card" data-latitude="{{ barbershop.latitude }}" data-longitude="{{ barbershop.longitude }}">
-            <div class="img-box">
-                <a href="">
-                    <img src="{{asset('assets/uploads/barbershopPics/' ~ pics.nom)}}" alt="" class="article-banner"></a>
-                </div>
-                
-                
-                <div class="article-content">
-                    
-                    <a href="">
-                        <h3 class="article-title">{{barbershop.nom}}</h3>
-                    </a>
-                    
-                    <p class="article-text">test</p>
-                    
-                    <div class="acticle-content-footer">
-                        
-                        <div class="author">
-                            <i class="fa-solid fa-location-dot"></i>
-                            
-                            <div class="author-info">
-                                <h4 class="author-name">{{barbershop.adresse}}</h4>
-                                <div class="publish-date">{{barbershop.ville}}</div>
+            <h1> Explorez les salons </h1>
+            {% for barbershop in barbershops %}
+                {% for pics in barbershop.barbershopPics %}
+                    <article class="map-barbershop-card" data-latitude="{{ barbershop.latitude }}" data-longitude="{{ barbershop.longitude }}" id="barber-card-{{barbershop.id}}">
+                        <div class="img-box">
+                            <img src="{{asset('assets/uploads/barbershopPics/' ~ pics.nom)}}" alt="" class="article-banner">
+                        </div>
+                        <div class="article-content">
+                            <h3 class="article-title">{{barbershop.nom}}</h3>
+                            <p class="article-text"><a href="{{path ('show_barbershop', {id : barbershop.id })}}"> Découvrir</a></p>
+                            <div class="acticle-content-footer">
+                                <div class="author">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    <div class="author-info">
+                                        <h4 class="author-name">{{barbershop.adresse}}</h4>
+                                        <div class="publish-date">{{barbershop.ville}}</div>
+                                    </div>
+                                </div>   
                             </div>
-                        </div>   
-                    </div>
-                    
-                </div>
+                        </div>
+                    </article>
                 {% endfor %}
-        </article>
-        {% endfor %}
+            {% endfor %}
         </div>
     </div>
+                        
     <div id="map-all-barber"></div>
+                    
 </div>
+                    
+                    
+
+
 
 
 

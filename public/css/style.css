@@ -1066,27 +1066,34 @@ footer i {
 /***************************** MAP ************************************/
 #map-container{
     display: flex;
+    height: calc(100vh - 102.833px);
+
 }
 
 #map-details-barber{
     width: 40%;
-    max-height: 100vh;
     overflow: auto;
 }
 
 #map-all-barber{
     width: 60%;
-    height: 100vh;
+    
+    
 }
 
 .map-barbershop-container{
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     justify-content: center;
     gap: 30px;
     align-items: center;
     background: var(--light-gray);
     padding: 50px;
+}
+
+.map-barbershop-container h1{
+    font-size: 40px;
+    font-family: 'Smythe';
 }
 
 .map-barbershop-card {
@@ -1096,6 +1103,7 @@ footer i {
     max-height: 250px;
     border-radius: 10px;
     transition: 0.5s;
+    cursor: pointer;
   }
 
   .map-barbershop-card a{
@@ -1107,9 +1115,7 @@ footer i {
   }
   
 .map-barbershop-card:hover{
-    box-shadow: 6px 6px 5px hsla(0, 0%, 0%, 0.02),
-                25px 25px 20px hsla(0, 0%, 0%, 0.03),
-                100px 100px 80px hsla(0, 0%, 0%, 0.05);;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
 }
   
 .img-box {
@@ -1148,6 +1154,19 @@ footer i {
 .article-text{
     margin-bottom: 18px;
     line-height: 1.5;
+    font-size: 13px;
+}
+
+.article-text a {
+    padding: 0.3rem;
+    border: 1px solid black;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.article-text a:hover{
+    background: black;
+    color: white;
 }
 
 .author{

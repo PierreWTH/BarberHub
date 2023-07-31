@@ -22,7 +22,7 @@ class MapController extends AbstractController
                 $name = $barbershop->getNom();
                 $adresse = $barbershop->getAdresse();
                 $ville = $barbershop->getVille();
-                
+                $id = $barbershop->getId();
                 // Ajoutez les coordonnées à un tableau
                 $coordinates[] = [
                     'latitude' => $latitude,
@@ -30,7 +30,8 @@ class MapController extends AbstractController
                     'name' => $name,
                     // Encode url pour pas avoir d'erreur dans le JSON
                     'adresse' => urlencode($adresse),
-                    'ville' => $ville
+                    'ville' => $ville,
+                    'id' => $id
                 ];
             }
         }
