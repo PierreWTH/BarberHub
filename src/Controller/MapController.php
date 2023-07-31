@@ -40,7 +40,8 @@ class MapController extends AbstractController
 
 
         return $this->render('map/index.html.twig', [
-            'coordinates' => $coordinates
+            'coordinates' => $coordinates,
+            'barbershops' => $barbershops
         ]);
     }
 }

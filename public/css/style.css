@@ -370,7 +370,7 @@ a{
 
 .article-card {
     display: grid;
-    grid-template-columns: 285px minmax(200px, 450px);
+    grid-template-columns: 250px minmax(200px, 420px);
     max-width: 730px;
     min-height: 350px;
     border-radius: 10px;
@@ -378,6 +378,14 @@ a{
                 25px 25px 20px hsla(0, 0%, 0%, 0.03),
                 100px 100px 80px hsla(0, 0%, 0%, 0.05);
     transition: 0.5s;
+  }
+
+  .article-card a{
+    color: black;
+  }
+
+  .article-card a:hover{
+    text-decoration: underline;
   }
   
 .article-card:hover{
@@ -1056,13 +1064,125 @@ footer i {
 }
 
 /***************************** MAP ************************************/
+#map-container{
+    display: flex;
+}
+
+#map-details-barber{
+    width: 40%;
+    max-height: 100vh;
+    overflow: auto;
+}
 
 #map-all-barber{
-    width: 90%;
-    margin: auto;
-    border-radius: 20px;
-    min-height: 90vh;
-    
+    width: 60%;
+    height: 100vh;
+}
+
+.map-barbershop-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    align-items: center;
+    background: var(--light-gray);
+    padding: 50px;
+}
+
+.map-barbershop-card {
+    display: grid;
+    grid-template-columns: 200px minmax(200px, 420px);
+    max-width: 730px;
+    max-height: 250px;
+    border-radius: 10px;
+    transition: 0.5s;
+  }
+
+  .map-barbershop-card a{
+    color: black;
+  }
+
+  .article-card a:hover{
+    text-decoration: underline;
+  }
+  
+.map-barbershop-card:hover{
+    box-shadow: 6px 6px 5px hsla(0, 0%, 0%, 0.02),
+                25px 25px 20px hsla(0, 0%, 0%, 0.03),
+                100px 100px 80px hsla(0, 0%, 0%, 0.05);;
+}
+  
+.img-box {
+    border-radius: 10px 0 0 10px;
+    overflow: hidden;
+}
+
+.article-banner {
+    width:  100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: left;
+    transition: all 0.5s ease;
+}
+
+.article-card:hover .article-banner {transform: scale(1.1);}
+
+.article-content{
+    background: var(--white);
+    padding: 32px 40px;
+    border-radius: 0 10px 10px 0;
+}
+
+.article-title {
+    font-size: 20px;
+    color: var(--black);
+    margin-bottom: 12px;
+    line-height: 1.4;
+    transition: 0.5s;
+}
+
+.article-title:hover{
+    color: var(--dark-gray);
+}
+
+.article-text{
+    margin-bottom: 18px;
+    line-height: 1.5;
+}
+
+.author{
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+}
+
+.author i {
+    font-size: 25px;
+    margin-right: 15px;
+
+}
+
+.publish-date{
+    font-size: 13px;
+}
+
+@media screen and (max-width : 768px) {
+
+    .article-card{
+        grid-template-columns: 1fr;
+        max-width: 294px;
+        overflow: hidden;
+    }
+
+    .img-box, .article-content {border-radius: 0;}
+
+    .img-box{ height: 180px;}
+
+    .article-content{padding: 30px 28px 20px;}
+
+    .article-title{font-size: 15px;}
+
+    .article-text{margin-bottom: 30px;}
 }
 
 /************************* ARTICLES **********************************/

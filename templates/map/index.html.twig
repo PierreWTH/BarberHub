@@ -9,9 +9,47 @@
 
 
 
-<h1> Carte des barbiers </h1>
-
-<div id="map-all-barber"></div>
+<div id="map-container">
+    <div id="map-details-barber">
+        <div class="map-barbershop-container">
+        {% for barbershop in barbershops %}
+        {% for pics in barbershop.barbershopPics %}
+            
+        <article class="map-barbershop-card" data-latitude="{{ barbershop.latitude }}" data-longitude="{{ barbershop.longitude }}">
+            <div class="img-box">
+                <a href="">
+                    <img src="{{asset('assets/uploads/barbershopPics/' ~ pics.nom)}}" alt="" class="article-banner"></a>
+                </div>
+                
+                
+                <div class="article-content">
+                    
+                    <a href="">
+                        <h3 class="article-title">{{barbershop.nom}}</h3>
+                    </a>
+                    
+                    <p class="article-text">test</p>
+                    
+                    <div class="acticle-content-footer">
+                        
+                        <div class="author">
+                            <i class="fa-solid fa-location-dot"></i>
+                            
+                            <div class="author-info">
+                                <h4 class="author-name">{{barbershop.adresse}}</h4>
+                                <div class="publish-date">{{barbershop.ville}}</div>
+                            </div>
+                        </div>   
+                    </div>
+                    
+                </div>
+                {% endfor %}
+        </article>
+        {% endfor %}
+        </div>
+    </div>
+    <div id="map-all-barber"></div>
+</div>
 
 
 
@@ -21,7 +59,6 @@
 {# Récupération des infos du barber en array JS #}
 <script>
     const coordinates = JSON.parse('{{ coordinates | json_encode | raw }}');    
-    console.log(coordinates)
 </script>
 {# CDN Leaflet #}
 <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
