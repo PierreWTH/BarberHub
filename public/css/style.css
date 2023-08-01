@@ -1185,17 +1185,38 @@ footer i {
     font-size: 13px;
 }
 
+@media screen and (max-width : 1120px) {
+
+    #map-container{
+        flex-direction: column-reverse;
+        max-height: 100vh;
+        position: relative;
+        
+    }
+    #map-all-barber{
+        min-height: 350px;
+        width: 100%;
+        
+    }
+
+    #map-details-barber{
+        width: 100%;
+    }
+
+}
+
 @media screen and (max-width : 768px) {
 
-    .article-card{
+    .map-barbershop-card{
         grid-template-columns: 1fr;
-        max-width: 294px;
+        width: 300px;
         overflow: hidden;
+        min-height: 290px;
     }
 
     .img-box, .article-content {border-radius: 0;}
 
-    .img-box{ height: 180px;}
+    .img-box{ height: 120px;}
 
     .article-content{padding: 30px 28px 20px;}
 

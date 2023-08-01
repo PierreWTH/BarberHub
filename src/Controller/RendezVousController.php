@@ -34,14 +34,79 @@ class RendezVousController extends AbstractController
     #[Route('/barbershop/rendezvous/{id}/edit', name: 'edit_rendezvous')]
     public function addRdv(ManagerRegistry $doctrine, BarberPrestation $barberPrestation, RendezVous $rendezvous = null, Request $request, RendezVousRepository $rvr, MailerInterface $mailer) : Response
     {   
+        setlocale(LC_TIME, 'fr_FR');
+
         if(!$rendezvous){
             $rendezvous = new RendezVous();
         }
 
         $barbershop = $barberPrestation->getBarbershop();
-        $personnel = $barbershop->getPersonnels();
+        $personnels = $barbershop->getPersonnels();
         $barbershopId = $barbershop->getId();
-        $horaires = $barbershop->getHoraires();
+        $horaires = json_decode($barbershop->getHoraires(), true);
+
+        
+        // On récupère les rendez vous réservés de chaque membre du personnel du barber
+        foreach($personnels as $personnel){
+            
+            $rdvsPersonnel = $personnel->getRendezvouses();
+            
+            $bookedRdvs = [];
+            foreach($rdvsPersonnel as $rdvPersonnel){
+                $bookedRdvs[] = $rdvPersonnel->getDebut();
+            }
+        }
+
+        //Plage de deux semaine pour l'affichage des créneaux
+        $todayDate = new DateTime('now');
+        $endDate = (new DateTime('now'))->modify('+3 days');
+
+        // On génère tous les créneaux de RDV pour le mois à venir
+        $allCreneaux = [];
+        while($todayDate <= $endDate){
+            // On récupère le jour de la semaine
+            $jourDeLaSemaine = strtolower(strftime('%A', $todayDate->getTimestamp()));
+
+            // On récupère les heures d'ouverture et de fermeture du barbier
+            $heureOuvertureBarber = $horaires[$jourDeLaSemaine]['ouverture'];
+            $heureFermetureBarber = $horaires[$jourDeLaSemaine]['fermeture'];
+            
+            // Si le barbier est fermé on n'ajoute rien au tableau de créneau
+            if($heureOuvertureBarber != 'ferme' | $heureFermetureBarber != 'ferme'){
+                $heureOuvertureObj = DateTime::createFromFormat('H:i', $heureOuvertureBarber);
+                $heureFermetureObj = DateTime::createFromFormat('H:i', $heureFermetureBarber);
+                
+                $creneaux = [];
+                while($heureOuvertureObj <= $heureFermetureObj){
+                    
+                    $creneauDateTime = clone $todayDate;
+                    $creneauDateTime->setTime(
+                    $heureOuvertureObj->format('H'),
+                    $heureOuvertureObj->format('i')
+                    );
+
+                    $creneaux[] = $creneauDateTime;
+                    $heureOuvertureObj->modify('+30 minutes');
+                }
+                
+                
+                $allCreneaux[$todayDate->format('Y-m-d')] = $creneaux;
+            }   
+            $todayDate->modify('+1 day');
+        }
+        
+        // On retire du tableau les rendez-vous déja réservés
+        foreach($bookedRdvs as $bookedRdv){
+
+            foreach ($allCreneaux as $date => $dayCreneaux) {
+                // On si il y a une clé ou bookedRdv et DayCreneau sont identiques
+                $key = array_search($bookedRdv, $dayCreneaux);
+                // Si la clé existe, on enleve le créneau
+                if ($key !== false) {
+                    unset($allCreneaux[$date][$key]);
+                } 
+            }
+        }
 
         // Création du form avec envoi de $barbershopId au form builder
         $form = $this->createForm(RendezVousType::class, $rendezvous, ['barbershopId' => $barbershopId]);
@@ -54,13 +119,14 @@ class RendezVousController extends AbstractController
             // Récupération de début
             $debut = $form->get('debut')->getData();
 
+            
             if(!$debut){
                 echo 'Heure du rendez vous invalide.';
                 die();
             }
-
             // Conversion en datetime pour début
             $heureDebut = new DateTimeImmutable($debut);
+            dd($heureDebut);
 
             // Récupération de personnel ID et heure début en string pour requete checkIfRdvExist
             $personnelId = $form->get('personnel')->getData()->getId();
@@ -158,7 +224,8 @@ class RendezVousController extends AbstractController
             'formAddRendezVous' => $form->createView(),
             'barbershop' => $barbershop,
             'prestation' => $barberPrestation,
-            'horaires' => $horaires
+            'horaires' => $horaires,
+            'allCreneaux' =>$allCreneaux
         ]);
     }
 
