@@ -4,17 +4,17 @@
 
 {% block body %}
 
+<section id="add-article-container">
 <h1> Ajouter un article </h1>
-
+<div class="add-article-form">
 {{ form_start(formAddArticle) }}
 {{ form_row(formAddArticle.photo) }}
 {{ form_row(formAddArticle.titre) }}
 {{ form_row(formAddArticle.description) }}
 {{ form_row(formAddArticle.texte) }}
-{{ form_row(formAddArticle.user) }}
+</div>
 {{ form_end(formAddArticle) }}
-
-
+</section>
 
 {% endblock %}
 

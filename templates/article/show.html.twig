@@ -3,12 +3,18 @@
 {% block title %} {{ article.titre }} {% endblock %}
 
 {% block body %}
+<section id="show-article-container">
 
-<h1> {{ article.titre }} </h1>
-
-<p> Par : {{ article.user.pseudo }} </p>
-<img src="{{ article.photo}}" alt="{{article.titre}}">
+<div class="show-article-header">
+    <img src="{{ article.photo}}" alt="{{article.titre}}">
+    <div class="show-article-title">
+        <h1> {{ article.titre }} </h1>
+        <p> {{article.description}} </p>
+        <p> Par : {{ article.user.pseudo }} le {{article.date| format_datetime('short', 'none', locale='fr')}}</p>
+    </div>
+</div>
+<article class="show-article-content">
 {{ article.texte|raw}}
-
-
+</article>
+</section>
 {% endblock %}

@@ -37,12 +37,10 @@ class ArticleType extends AbstractType
                 ],
             ])
 
-            ->add('texte', CKEditorType::class)
-            
-            ->add('user', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'pseudo'
+            ->add('texte', CKEditorType::class, [
+                'label' => false,
             ])
+            
             ->add('submit', SubmitType::class)
         ;
     }

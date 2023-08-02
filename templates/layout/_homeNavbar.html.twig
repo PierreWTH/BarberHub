@@ -1,5 +1,5 @@
 <nav id="home-navbar">
-    <a href="{{path ('app_home')}}"><img src="{{ asset('images/logo.png')}}" class="logo" alt=""></a>
+    <a href="{{path ('app_home')}}"><img src="{{ asset('images/logo.png')}}" class="logo" alt="Logo de Barberhub"></a>
     <ul>
         <li><a href="{{path ('app_home')}}"> ACCUEIL </a></li>
         <li><a href="{{path ('app_barbershop')}}"> BARBIERS </a></li>
@@ -11,10 +11,8 @@
         {% if is_granted('ROLE_ADMIN') %}
         <li><a href="{{path ('control_pannel')}}"> Administration </a></li>
         {% endif %}
-        <li><a href="{{path ('app_myspace')}}"> Mon espace </a></li>
-        <li><a href="{{path ('app_logout')}}"> Se deconnecter </a></li>
-
-        
+        <li><i class="fa-regular fa-user"></i><a href="{{path ('app_myspace')}}"> Mon espace </a></li>
+        <li><i class="fa-solid fa-arrow-right-from-bracket"></i><a href="{{path ('app_logout')}}"> Se deconnecter </a></li>
 
         {% else %}
         <li><a href="{{path ('app_login')}}"> Se connecter </a></li>

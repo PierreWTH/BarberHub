@@ -33,7 +33,7 @@
 <div class="card-container">
     <div class="card">
         <div class="imgBx">
-            <img src="{{asset('assets/uploads/barbershopPics/' ~ pics.nom)}}" alt="">
+            <img src="{{asset('assets/uploads/barbershopPics/' ~ pics.nom)}}" alt="Photo de {{barbershop.nom}}">
         </div>
         <div class="card-content">
             <h3> {{barbershop.nom}}</h3>
@@ -100,7 +100,7 @@
 
     <div class="img-box">
         <a href="{{path ('show_article', {id : article.id })}}">
-      <img src="{{article.photo}}" alt="" class="article-banner"></a>
+      <img src="{{article.photo}}" alt="Photo de {{barbershop.nom}}" class="article-banner"></a>
     </div>
 
 

@@ -45,7 +45,9 @@ class ArticleController extends AbstractController
             
             date_default_timezone_set('Europe/Paris');
             $today = new DateTime();
+            $user = $this->getUser();
             $article->setDate($today);
+            $article->setUser($user);
             $entityManager->persist($article);
             
             $entityManager->flush();

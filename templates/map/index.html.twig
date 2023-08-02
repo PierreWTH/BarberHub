@@ -14,7 +14,7 @@
                 {% for pics in barbershop.barbershopPics %}
                     <article class="map-barbershop-card" data-latitude="{{ barbershop.latitude }}" data-longitude="{{ barbershop.longitude }}" id="barber-card-{{barbershop.id}}">
                         <div class="img-box">
-                            <img src="{{asset('assets/uploads/barbershopPics/' ~ pics.nom)}}" alt="" class="article-banner">
+                            <img src="{{asset('assets/uploads/barbershopPics/' ~ pics.nom)}}" alt="Photo de {{barbershop.nom}}" class="article-banner">
                         </div>
                         <div class="article-content">
                             <h3 class="article-title">{{barbershop.nom}}</h3>

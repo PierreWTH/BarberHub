@@ -50,7 +50,7 @@
 {% for pic in barbershop.barbershopPics %}
 
 <div>
-<img src="{{ asset('assets/uploads/barbershopPics/barbershop/850x310-' ~ pic.nom) }}" alt="">
+<img src="{{ asset('assets/uploads/barbershopPics/barbershop/850x310-' ~ pic.nom) }}" alt="Photo de {{barbershop.nom}}">
 <a href="{{ path('delete_photo', {id : pic.id} )}}" data-delete data-token="{{ csrf_token('delete' ~ pic.id) }}"> Supprimer </a>
 </div>
 
