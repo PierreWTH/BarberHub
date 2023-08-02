@@ -25,22 +25,22 @@ Votre réservation : {{prestation.prestation.nom}} chez {{barbershop.nom}}
 <table>
     <thead>
       <tr>
-        <th>Jour de la semaine</th>
-        <th>Créneaux horaires</th>
+        {% for date, creneaux in allCreneaux %}
+          <th>{{ date|format_datetime('full', 'none', locale='fr')|capitalize }}</th>
+        {% endfor %}
       </tr>
     </thead>
     <tbody>
-      {% for date, creneaux in allCreneaux %}
-        <tr>
-          <td>{{ date|format_datetime('full', 'none', locale='fr')|capitalize }}</td>
-          <td>
+      <tr>
+        {% for date, creneaux in allCreneaux %}
+          <td class="rdv-td">
             {% for creneau in creneaux %}
-            {% set creneauValue = creneau.format('y-m-d H:i:s')  %}
-              <button onclick="selectedCreneau('{{creneauValue}}')">{{ creneau.format('H:i') }}</button>
+              {% set creneauValue = creneau.format('y-m-d H:i:s')  %}
+              <button class="creneau-button" onclick="selectedCreneau(this,'{{creneauValue}}')">{{ creneau.format('H:i') }}</button>
             {% endfor %}
           </td>
-        </tr>
-      {% endfor %}
+        {% endfor %}
+      </tr>
     </tbody>
   </table>
   {{ form_row(formAddRendezVous.submit) }} 
@@ -50,12 +50,20 @@ Votre réservation : {{prestation.prestation.nom}} chez {{barbershop.nom}}
 {% block javascript %}
 
 <script>
-    function selectedCreneau(value) {
+    function selectedCreneau(button, value) {
     event.preventDefault();
       document.getElementById('rendez_vous_debut').value = value;
       console.log( document.getElementById('rendez_vous_debut').value)
+      
+      var allButtons = document.querySelectorAll('button');
+    allButtons.forEach(function(btn) {
+      btn.classList.remove('clicked-button');
+    });
+
+    // Ajouter la classe "clicked-button" au bouton cliqué
+    button.classList.add('clicked-button');
     }
-  </script>
+</script>
   
 {% endblock javascript %}
 {% endblock %}

@@ -12,12 +12,14 @@ use App\Form\RendezVousType;
 use App\Entity\BarberPrestation;
 use Symfony\Component\Mime\Email;
 use App\Repository\UserRepository;
+use App\Repository\PersonnelRepository;
 use App\Repository\RendezVousRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class RendezVousController extends AbstractController
