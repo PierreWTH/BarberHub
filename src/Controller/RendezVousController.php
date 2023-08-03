@@ -6,6 +6,7 @@ use DateTime;
 use DateInterval;
 use DateTimeImmutable;
 use IntlDateFormatter;
+use App\Entity\Personnel;
 use App\Entity\Barbershop;
 use App\Entity\RendezVous;
 use App\Form\RendezVousType;
@@ -14,6 +15,7 @@ use Symfony\Component\Mime\Email;
 use App\Repository\UserRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\RendezVousRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
@@ -32,6 +34,7 @@ class RendezVousController extends AbstractController
         ]);
     }
 
+    // Ajouter un rendez vous
     #[Route('/barbershop/{barberPrestation}/rendezvous/add', name: 'add_rendezvous')]
     #[Route('/barbershop/rendezvous/{id}/edit', name: 'edit_rendezvous')]
     public function addRdv(ManagerRegistry $doctrine, BarberPrestation $barberPrestation, RendezVous $rendezvous = null, Request $request, RendezVousRepository $rvr, MailerInterface $mailer) : Response
@@ -45,7 +48,7 @@ class RendezVousController extends AbstractController
         $barbershop = $barberPrestation->getBarbershop();
         $personnels = $barbershop->getPersonnels();
         $barbershopId = $barbershop->getId();
-        $horaires = json_decode($barbershop->getHoraires(), true);
+        $horaires = $barbershop->getHoraires();
 
         // Création du form avec envoi de $barbershopId au form builder
         $form = $this->createForm(RendezVousType::class, $rendezvous, ['barbershopId' => $barbershopId]);
@@ -65,7 +68,6 @@ class RendezVousController extends AbstractController
             }
             // Conversion en datetime pour début
             $heureDebut = new DateTimeImmutable($debut);
-            dd($heureDebut);
 
             // Récupération de personnel ID et heure début en string pour requete checkIfRdvExist
             $personnelId = $form->get('personnel')->getData()->getId();
@@ -167,23 +169,37 @@ class RendezVousController extends AbstractController
         ]);
     }
 
-    #[Route('/getCreneauxbyPersonnel', name: 'app_rendezvous', methods:'post')]
-    public function getCreneauxByPersonnel(): Response
-    {
-        // On récupère les rendez vous réservés de chaque membre du personnel du barber
-        foreach($personnels as $personnel){
-                
-            $rdvsPersonnel = $personnel->getRendezvouses();
-            
-            $bookedRdvs = [];
-            foreach($rdvsPersonnel as $rdvPersonnel){
-                $bookedRdvs[] = $rdvPersonnel->getDebut();
-            }
-        }
+    // Générer les créneaux en fonction du barbier en AJAX
+    #[Route('/getCreneauxbyPersonnel/{personnelId}', name: 'app_getCreneaux', methods:'post')]
+    public function getCreneauxByPersonnel(EntityManagerInterface $entityManager, Request $request): Response
+    {   
+        setlocale(LC_TIME, 'fr_FR.UTF-8');
 
+        // On récupère les données envoyée par la requete sous forme d'array
+        $data = json_decode($request->getContent(), true);
+        // Dans le tableau data on récupère personnel ID
+        $personnelId = $data['personnel_id'];
+
+        // On récupère l'employé qui corresponds au personnel ID récupéré
+        $repository = $entityManager->getRepository(Personnel::class);
+        $personnel = $repository->find($personnelId);
+
+        // On récupère le barbier et ses horaires
+        $barbershop = $personnel->getBarbershop();
+        $horaires = json_decode($barbershop->getHoraires(), true);
+
+        // On récupère les rendez vous déja résérvés de l'employé
+        $rdvsPersonnel = $personnel->getRendezvouses();
+        
+        // On stocke tous les rdv déja pris dans un tableau
+        $bookedRdvs = [];
+        foreach($rdvsPersonnel as $rdvPersonnel){
+            $bookedRdvs[] = $rdvPersonnel->getDebut();
+        }
+        
         //Plage de deux semaine pour l'affichage des créneaux
         $todayDate = new DateTime('now');
-        $endDate = (new DateTime('now'))->modify('+3 days');
+        $endDate = (new DateTime('now'))->modify('+15 days');
 
         // On génère tous les créneaux de RDV pour le mois à venir
         $allCreneaux = [];
@@ -230,6 +246,7 @@ class RendezVousController extends AbstractController
                 } 
             }
         }
+        return $this->render('rendezvous/_creneauxbyBarber.html.twig', ['allCreneaux' => $allCreneaux]);
     }
 
 

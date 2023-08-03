@@ -10,25 +10,62 @@
     </div>
 {% endfor %}
 
+<section id="add-rdv-container">
+
+
+
 <h1> Votre rendez vous </h1>
 
 Votre réservation : {{prestation.prestation.nom}} chez {{barbershop.nom}}
 
-<p> Choississez un professionnel : </p>
+<h3> Choississez un professionnel : </h3>
 {{ form_start(formAddRendezVous) }}
 
- {{ form_row(formAddRendezVous.personnel) }} 
+  {{ form_row(formAddRendezVous.personnel) }}
 
-
-<h3>Choississez un jour : </h3>
-
-{% include "rendezvous/_creneauxbyBarber.html.twig" %}
+<div id="creneauxContainer"></div>
 
 {{ form_row(formAddRendezVous.submit) }} 
 
+
 {{ form_end(formAddRendezVous) }}
 
+</section>
+
+
 {% block javascript %}
+
+<script>
+
+  $(document).ready(function() {
+
+    $(document).on('change', 'input[type=radio]', function() {
+        if (this.checked) {
+            var personnel_id = $(this).attr('value');
+            var data = {
+                personnel_id: personnel_id
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/getCreneauxbyPersonnel/" + personnel_id,
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                success: function(response) {
+                    console.log(response);
+                    var creneauxContainer = $('#creneauxContainer');
+                    creneauxContainer.empty();
+                    creneauxContainer.append(response);
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        };
+    });
+});
+
+</script>
 
 <script>
     function selectedCreneau(button, value) {
@@ -36,12 +73,14 @@ Votre réservation : {{prestation.prestation.nom}} chez {{barbershop.nom}}
       document.getElementById('rendez_vous_debut').value = value;
       console.log( document.getElementById('rendez_vous_debut').value)
       
-      var allButtons = document.querySelectorAll('button');
+    var allButtons = document.querySelectorAll('button');
     allButtons.forEach(function(btn) {
       btn.classList.remove('clicked-button');
     });
     // Ajouter la classe "clicked-button" au bouton cliqué
+    var reservationButton = document.getElementById('rendez_vous_submit');
     button.classList.add('clicked-button');
+    reservationButton.style.display = 'block';
     }
 </script>
   

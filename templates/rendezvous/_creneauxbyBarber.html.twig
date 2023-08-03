@@ -1,21 +1,14 @@
-<table>
-    <thead>
-      <tr>
-        {% for date, creneaux in allCreneaux %}
-          <th>{{ date|format_datetime('full', 'none', locale='fr')|capitalize }}</th>
-        {% endfor %}
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        {% for date, creneaux in allCreneaux %}
-          <td class="rdv-td">
-            {% for creneau in creneaux %}
-              {% set creneauValue = creneau.format('y-m-d H:i:s')  %}
-              <button class="creneau-button" onclick="selectedCreneau(this,'{{creneauValue}}')">{{ creneau.format('H:i') }}</button>
-            {% endfor %}
-          </td>
-        {% endfor %}
-      </tr>
-    </tbody>
-  </table>
+
+{% for date, creneaux in allCreneaux %}
+<div class="date-creneaux-container">
+  <h3>{{ date|format_datetime('full', 'none', locale='fr')|capitalize }}</h3>
+  <div class="creneaux-container">
+  {% for creneau in creneaux %}
+    {% set creneauValue = creneau.format('y-m-d H:i:s') %}
+    <button class="creneau-button" onclick="selectedCreneau(this,'{{ creneauValue }}')">{{ creneau.format('H:i') }}</button>
+  {% endfor %}
+  </div>
+</div>
+{% endfor %}
+      
+

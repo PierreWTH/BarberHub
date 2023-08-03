@@ -27,6 +27,8 @@ class RendezVousType extends AbstractType
             ])
 
             // N'affiche que le personnel qui travaille dans le barber $barbershopID
+            
+
             ->add('personnel', EntityType::class, [
                 'label' => false,
                 'class' => Personnel::class,
@@ -34,11 +36,13 @@ class RendezVousType extends AbstractType
                     return $er->createQueryBuilder('p')
                         ->where('p.barbershop = :barbershopId')
                         ->setParameter('barbershopId', $barbershopId);
-                }
-                
+                },
+                'multiple' => false, 
+                'expanded' => true, 
             ])
 
-            ->add('submit', SubmitType::class)
+            ->add('submit', SubmitType::class, [
+                'label' => 'Reserver'])
         ;
     }
 
