@@ -1303,16 +1303,12 @@ footer i {
     gap: 2rem;
 }
 
-  #creneauxContainer{
-    display: flex;
-    gap: 2rem;
-  }
 .date-creneaux-container{
     display: flex;
     flex-direction: column;
     align-items: center; 
-    gap: 2rem;
-    margin: 2rem;
+    gap: 1rem;
+    padding: 2rem;
 }
 .creneaux-container {
     display: flex;

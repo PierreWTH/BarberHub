@@ -199,7 +199,7 @@ class RendezVousController extends AbstractController
         
         //Plage de deux semaine pour l'affichage des créneaux
         $todayDate = new DateTime('now');
-        $endDate = (new DateTime('now'))->modify('+15 days');
+        $endDate = (new DateTime('now'))->modify('+1 month');
 
         // On génère tous les créneaux de RDV pour le mois à venir
         $allCreneaux = [];

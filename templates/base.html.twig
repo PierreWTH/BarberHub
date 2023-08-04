@@ -4,19 +4,31 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}Welcome!{% endblock %}</title>
+        {# ICONS #}
         <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('ico/apple-touch-icon.png')}}">
         <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('ico/favicon-32x32.png')}}">
         <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('ico/favicon-16x16.png')}}">
         <link rel="manifest" href="{{ asset('ico/site.webmanifest')}}">
+        {# CSS #}
         <link rel="stylesheet" href="{{ asset('css/style.css')}}">
+        {# FONT AWESOME #}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        {# LINE AWESOME #}
         <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css">
+        {# LEAFLET #}
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+        {# MARKERCLUSTER #}
         <link rel="stylesheet" href="{{ asset('css/MarkerCluster/MarkerCluster.css')}}">
         <link rel="stylesheet" href="{{ asset('css//MarkerCluster/MarkerCluster.Default.css')}}">
+        {# SELECTIZE #}
         <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.default.min.css" integrity="sha512-pTaEn+6gF1IeWv3W1+7X7eM60TFu/agjgoHmYhAfLEU8Phuf6JKiiE8YmsNC0aCgQv4192s4Vai8YZ6VNM6vyQ==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
-        <script src="{{ asset('js/jQuery.min.js')}}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        {# SPLIDE #}
+        <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+        {# JQUERY #}
+        <script src="{{ asset('js/jQuery.min.js')}}"></script>
+        
     </head>
     <body>
 
