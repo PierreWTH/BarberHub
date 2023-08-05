@@ -5,7 +5,9 @@
     // Fonction pour initialiser le slider
     function initSplide() {
         var splide = new Splide('.splide', {
-            perPage: 5,
+            perPage:5,
+            width: "100%",
+            pagination : false,
         });
         splide.mount();
     }
@@ -44,10 +46,9 @@
 //RECUPERATION DU CRENEAUX CHOISI ET RESET STYLE BOUTON
 
 function selectedCreneau(button, value) {
-event.preventDefault();
+    event.preventDefault();
     document.getElementById('rendez_vous_debut').value = value;
-    console.log( document.getElementById('rendez_vous_debut').value)
-    
+
     var allButtons = document.querySelectorAll('button');
     allButtons.forEach(function(btn) {
         btn.classList.remove('clicked-button');
@@ -57,4 +58,7 @@ event.preventDefault();
     var reservationButton = document.getElementById('rendez_vous_submit');
     button.classList.add('clicked-button');
     reservationButton.style.display = 'block';
+
+    submitButton.focus();
 }
+

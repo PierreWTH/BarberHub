@@ -196,6 +196,19 @@ class RendezVousController extends AbstractController
         foreach($rdvsPersonnel as $rdvPersonnel){
             $bookedRdvs[] = $rdvPersonnel->getDebut();
         }
+         // On enlève tous les créneaux avant l'heure actuelle
+         $currentHour = new DateTime('now');
+         $currentDay = strtolower(strftime('%A', $currentHour->getTimestamp()));
+         $startCurrentDayHour = $horaires[$currentDay]['ouverture'];
+         $startHourDateTime = DateTime::createFromFormat('H:i', $startCurrentDayHour);
+         $closeCurrentDayHour = $horaires[$currentDay]['fermeture'];
+         $closeHourDateTime = DateTime::createFromFormat('H:i', $closeCurrentDayHour);
+
+         while($startHourDateTime <= $currentHour && $startHourDateTime <= $closeHourDateTime){
+ 
+            $bookedRdvs[] = clone $startHourDateTime;
+            $startHourDateTime->modify('+30 minutes');
+         }
         
         //Plage de deux semaine pour l'affichage des créneaux
         $todayDate = new DateTime('now');

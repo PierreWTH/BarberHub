@@ -167,6 +167,7 @@ class BarbershopController extends AbstractController
             // Formater la date actuelle en utilisant le formateur de date
             $jourActuel = $dateFormatter->format($dateActuelle);
 
+            $horaires = json_decode($barbershop->getHoraires(), True);
             // Récupération d'un tableau contenant les coordonées
                 $latitude = $barbershop->getLatitude();
                 $longitude = $barbershop->getLongitude();
@@ -175,10 +176,10 @@ class BarbershopController extends AbstractController
                     'latitude' => $latitude,
                     'longitude' => $longitude,
                 ];
-            
+           
             return $this->render('barbershop/show/show.html.twig', [
                 'barbershop' => $barbershop,
-                'horaires' => json_decode($barbershop->getHoraires(), True),
+                'horaires' => $horaires,
                 'jourActuel' => $jourActuel,
                 'coordinates' => $coordinates,
             ]);

@@ -21,19 +21,22 @@ Votre réservation : {{prestation.prestation.nom}} chez {{barbershop.nom}}
 
 {{ form_row(formAddRendezVous.personnel) }}
 
-{{ form_row(formAddRendezVous.submit) }} 
 
 
-{{ form_end(formAddRendezVous) }}
-
-</section>
-
-<section class="splide" aria-label="Splide Basic HTML Example">
+<section id="creneauxContainer">
+<div class="splide" aria-label="Splide Basic HTML Example">
     <div class="splide__track">
           <div class="splide__list">
 
           </div>
     </div>
+</div>
+</section>
+
+{{ form_row(formAddRendezVous.submit) }} 
+
+{{ form_end(formAddRendezVous) }}
+
 </section>
 
 
