@@ -886,7 +886,7 @@ footer i {
 /***************************** BARBERSHOPS LIST ************************************/
 
 .barbershop-cards-container {
-    width: 90%;
+    max-width: 1300px;
     margin: auto;
     display: flex;
     justify-content: center;

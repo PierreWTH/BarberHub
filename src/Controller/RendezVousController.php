@@ -251,14 +251,25 @@ class RendezVousController extends AbstractController
         foreach($bookedRdvs as $bookedRdv){
 
             foreach ($allCreneaux as $date => $dayCreneaux) {
-                // On si il y a une clé ou bookedRdv et DayCreneau sont identiques
+                // On regarde si il y a une clé ou bookedRdv et DayCreneau sont identiques
                 $key = array_search($bookedRdv, $dayCreneaux);
                 // Si la clé existe, on enleve le créneau
                 if ($key !== false) {
                     unset($allCreneaux[$date][$key]);
                 } 
+                
             }
         }
+
+        // Si un tableau de créneaux est vide, on l'enleve
+        foreach ($allCreneaux as $date => $dayCreneaux) {
+
+            if (empty($dayCreneaux)) {
+                        
+                unset($allCreneaux[$date]);
+            }
+        }
+        
         return $this->render('rendezvous/_creneauxbyBarber.html.twig', ['allCreneaux' => $allCreneaux]);
     }
 
