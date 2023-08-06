@@ -191,30 +191,34 @@ class RendezVousController extends AbstractController
         // On récupère les rendez vous déja résérvés de l'employé
         $rdvsPersonnel = $personnel->getRendezvouses();
         
-        // On stocke tous les rdv déja pris dans un tableau
-        $bookedRdvs = [];
+        // On stocke tous les rdv déja pris dans un tableau 
+        $unavailableRdvs = [];
         foreach($rdvsPersonnel as $rdvPersonnel){
-            $bookedRdvs[] = $rdvPersonnel->getDebut();
+            $unavailableRdvs[] = $rdvPersonnel->getDebut();
         }
-         // On enlève tous les créneaux avant l'heure actuelle
+         // On ajoute au tableau des RDV déja pris tous les créneaux avant l'heure actuelle
          $currentHour = new DateTime('now');
          $currentDay = strtolower(strftime('%A', $currentHour->getTimestamp()));
          $startCurrentDayHour = $horaires[$currentDay]['ouverture'];
-         $startHourDateTime = DateTime::createFromFormat('H:i', $startCurrentDayHour);
          $closeCurrentDayHour = $horaires[$currentDay]['fermeture'];
-         $closeHourDateTime = DateTime::createFromFormat('H:i', $closeCurrentDayHour);
 
-         while($startHourDateTime <= $currentHour && $startHourDateTime <= $closeHourDateTime){
- 
-            $bookedRdvs[] = clone $startHourDateTime;
-            $startHourDateTime->modify('+30 minutes');
-         }
+        if($startCurrentDayHour != 'ferme' | $closeCurrentDayHour != 'ferme'){
+
+        $startHourDateTime = DateTime::createFromFormat('H:i', $startCurrentDayHour);
+        $closeHourDateTime = DateTime::createFromFormat('H:i', $closeCurrentDayHour);
         
-        //Plage de deux semaine pour l'affichage des créneaux
+            while($startHourDateTime <= $currentHour && $startHourDateTime <= $closeHourDateTime){
+
+                $unavailableRdvs[] = clone $startHourDateTime;
+                $startHourDateTime->modify('+30 minutes');
+            }
+        }
+        
+        //Plage de temps pour generer les créneaux 
         $todayDate = new DateTime('now');
         $endDate = (new DateTime('now'))->modify('+1 month');
 
-        // On génère tous les créneaux de RDV pour le mois à venir
+        // On génère un tableau avec tous les créneaux de RDV pour le mois à venir
         $allCreneaux = [];
         while($todayDate <= $endDate){
             // On récupère le jour de la semaine
@@ -230,6 +234,7 @@ class RendezVousController extends AbstractController
                 $heureFermetureObj = DateTime::createFromFormat('H:i', $heureFermetureBarber);
                 
                 $creneaux = [];
+                
                 while($heureOuvertureObj <= $heureFermetureObj){
                     
                     $creneauDateTime = clone $todayDate;
@@ -248,11 +253,11 @@ class RendezVousController extends AbstractController
         }
         
         // On retire du tableau les rendez-vous déja réservés
-        foreach($bookedRdvs as $bookedRdv){
+        foreach($unavailableRdvs as $unavailableRdv){
 
             foreach ($allCreneaux as $date => $dayCreneaux) {
-                // On regarde si il y a une clé ou bookedRdv et DayCreneau sont identiques
-                $key = array_search($bookedRdv, $dayCreneaux);
+                // On regarde si il y a une clé ou unavailableRdv et DayCreneau sont identiques
+                $key = array_search($unavailableRdv, $dayCreneaux);
                 // Si la clé existe, on enleve le créneau
                 if ($key !== false) {
                     unset($allCreneaux[$date][$key]);

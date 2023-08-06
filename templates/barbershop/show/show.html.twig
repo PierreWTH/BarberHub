@@ -3,34 +3,49 @@
 {% block title %} {{barbershop.nom}} {% endblock %}
 
 {% block body %}
-
 {# Photo du salon #}
+<section id="show-barbershop-header">
+    <div class="barbershop-image-title-container">
+        <img src="https://www.armandeus.com/wp-content/uploads/2021/10/AdobeStock_231110781.jpeg" alt="">
+        <h1> {{barbershop.nom}} </h1>
+    </div>
+</section>
 
-{% include "components/_like.html.twig" %}
+<section id="show-barbershop-section">
 
-<h1> {{barbershop.nom}} </h1>
+<div class="like-adresse-barber">
+    <div>
+        {% include "components/_like.html.twig" %}
+    </div>
+    <div>
+        <p><i class="fa-solid fa-location-dot"></i> {{barbershop.adresse}} |
+            {{barbershop.cp}} |
+            {{barbershop.ville}}
+        </p>
+    </div>
+</div>
 
-<h2> Informations </h2>
+<section id="show-barber-info-container">
 
-{{barbershop.description}}
-
-<h3> Adresse </h3>
-
-<p>{{barbershop.adresse}}</p>
-<p>{{barbershop.ville}}</p>
-<p>{{barbershop.cp}}</p>
-
-
-<h3> Horaires </h3>
-
-{% include "barbershop/show/_horaires.html.twig" %}
-
-<h3> Réseaux sociaux </h3>
-
-<a href="{{barbershop.facebook}}"><i class="fa-brands fa-square-facebook"></i></a>
-<a href="{{barbershop.instagram}}"><i class="fa-brands fa-instagram"></i></a>
+<div class="show-barbershop-info">
+    <h2> Informations </h2>
+    
+    {{barbershop.description}}
+    
+    <h3> Horaires </h3>
+    
+    {% include "barbershop/show/_horaires.html.twig" %}
+    <div class="barbershop-socials">
+        <h3> Réseaux sociaux </h3>
+        
+        <a href="{{barbershop.facebook}}"><i class="fa-brands fa-square-facebook"></i></a>
+        <a href="{{barbershop.instagram}}"><i class="fa-brands fa-instagram"></i></a>
+    </div>
+</div>
 
 <div id="map-barber"></div>
+
+</section>
 
 <h3> Avis </h3>
 
@@ -43,6 +58,8 @@
 <h3> Boutique </h3>
 
 <h3> Réalisations </h3>
+
+</section>
 
 {# SCRIPTS #}
 

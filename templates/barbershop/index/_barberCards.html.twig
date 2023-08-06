@@ -12,15 +12,14 @@
                     <i class="fa-solid fa-heart {{ app.user in barbershop.likes ? '' : 'hidden' }}" id="heartFilled"></i>
                 </a>
                 {% endif %}
-                <p> {{barbershop.description|slice(0, 250)}}... </p>
+                <p> {{barbershop.description|slice(0, 100)}}... </p>
+                    <a href="{{path ('show_barbershop', {id : barbershop.id })}}" class="barbershop-card-link"> Détails </a>
             </div>
     
             <div class="barbershop-card-img"></div>
-            <a href="{{path ('show_barbershop', {id : barbershop.id })}}" class="barbershop-card-link">
                 <div class="barbershop-card-img-hover">
                     <img src="{{asset('assets/uploads/barbershopPics/' ~ pics.nom)}}" alt="Photo de {{barbershop.nom}}">
                 </div>
-            </a>
             <div class="barbershop-card-info">
                 {# Si les avis ne sont pas vides, calcul de la moyenne #}
                 {% if  barbershop.avis is not empty %}

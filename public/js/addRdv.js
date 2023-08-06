@@ -17,6 +17,7 @@
         if (this.checked) {
             // On récupere la value de personnel ID
             var personnel_id = $(this).attr('value');
+            
             var data = {
                 personnel_id: personnel_id
             };
@@ -34,6 +35,9 @@
                     creneauxContainer.append(response);
                     // Initialisation du slider
                     initSplide()
+                    // On enleve le bouton reservation car aucun créneau selectionné
+                    var reservationButton = document.getElementById('rendez_vous_submit');
+                    reservationButton.style.display = 'none';
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
