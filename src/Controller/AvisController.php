@@ -58,7 +58,7 @@ class AvisController extends AbstractController
     }
 
     // Supprimer un avis
-    #[Route('/barbershop/{id}/avis/{avisId}/delete', name: 'delete_avis')]
+    #[Route('/barbershop/{barbershop}/avis/{avis}/delete', name: 'delete_avis')]
     public function delete(ManagerRegistry $doctrine, Barbershop $barbershop, Avis $avis = null): Response
     {   
         if ($avis){

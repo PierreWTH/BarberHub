@@ -1,35 +1,39 @@
-<section>
-{% if app.user %}
-    
-<p><a href="{{path ('add_avis', {id: barbershop.id}) }}"> Ajouter un commentaire </a></p>
+<section id="barbershop-avis-container">
 
-{% endif %}
+{% if app.user and barbershop.id in userRdvIds and barbershop.id not in userAvisIds %}
 
+    <p><a href="{{path ('add_avis', {id: barbershop.id}) }}"> Ajouter un commentaire </a></p>
+
+{% endif %}        
+ 
 {% for avis in barbershop.avis %}
 
 {% set note = avis.note %}
 
 {# Affichage des étoiles #}
-<div class="barbershop-avis">
+<div class="barbershop-avis">  
     <div class="barber-note-pseudo">
-        {% for i in 1..5 %}
+        <div>
+            {% for i in 1..5 %}
             {% if i <= note %}
-            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star filled"></i>
             {% else %}
-            <i class="fa-regular fa-star"></i>
+            <i class="fa-regular fa-star unfilled"></i>
             {% endif %}
         {% endfor %}
-        <p>Par {{avis.user.pseudo}}</p>
+        </div>
+        
+        <p> {{avis.user.pseudo}}</p>
     </div>
     <div>
         <p>{{avis.texte}}</p>
     </div>
     
     {% if avis.user == app.user %}
-    <p><a href="{{ path('edit_avis', { 'barbershop': barbershop.id, 'avis': avis.id }) }}">Modifier</a></p>
-</div>
+    <p><a href="{{ path('edit_avis', { 'barbershop': barbershop.id, 'avis': avis.id }) }}" class="edit-delete-avis">Modifier</a> | <a href="{{ path('delete_avis', { 'barbershop': barbershop.id, 'avis': avis.id }) }}" class="edit-delete-avis">Supprimer</a></p>
     
     {% endif %}
+</div>
     
     {% endfor %}
 </section>

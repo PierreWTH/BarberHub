@@ -1381,6 +1381,12 @@ footer i {
 }
 
 /************************************ SHOW BARBERSHOP *********************************/
+
+#barbershop-avis-container{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
 #show-barbershop-section{
     width: 100%;
     max-width: 1700px;
@@ -1484,12 +1490,28 @@ footer i {
     color: #E66F64;
 }
 
-.barber-note-pseudo{
-    display: flex;
-}
-
 .barbershop-avis{
     display: flex;
     flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    gap: 1rem;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    padding: 2rem;
+}
+.barber-note-pseudo{
+    display: flex;
+    justify-content: space-between;
+}
 
+.edit-delete-avis{
+    font-size: 14px;
+}
+
+.edit-delete-avis:hover{
+    text-decoration: underline;
+}
+
+.fa-star.filled{
+    color: #F6F69E;
 }

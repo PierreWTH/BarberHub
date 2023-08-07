@@ -176,12 +176,32 @@ class BarbershopController extends AbstractController
                     'latitude' => $latitude,
                     'longitude' => $longitude,
                 ];
-           
+
+            // Empecher apparaition d'ajouter un com si il n'a pas pris RDV
+            $rdvsUser = $this->getUser()->getRendezvouses();
+            $userRdvIds = [];
+            // Tous les ID de barbershop ou l'user a déja pris RDV dans un tableau
+            foreach($rdvsUser as $rdv){
+                foreach($rdv->getBarberPrestation() as $prestation)
+                $userRdvIds[] = $prestation->getBarbershop()->getId();
+            }
+
+            // Empecher appartion d'ajouter un com si déja commenté.
+            $avisUser = $this->getUser()->getAvis();
+            $userAvisIds = [];
+            // Tous les ID de barbershop que l'user a déja commenté dans un tableau
+            foreach($avisUser as $avis){
+                $userAvisIds[] = $avis->getBarbershop()->getId();
+            }
+            
+
             return $this->render('barbershop/show/show.html.twig', [
                 'barbershop' => $barbershop,
                 'horaires' => $horaires,
                 'jourActuel' => $jourActuel,
                 'coordinates' => $coordinates,
+                'userRdvIds' => $userRdvIds,
+                'userAvisIds' => $userAvisIds,
             ]);
         }
         else

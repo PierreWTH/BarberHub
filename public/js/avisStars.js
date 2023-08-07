@@ -7,6 +7,7 @@ window.onload = () => {
     const note = document.querySelector("#avis_note")
 
     const noteValue = note.value;
+    console.log(noteValue)
     resetStars(noteValue);
 
     // Valeur de base a 0
