@@ -178,20 +178,23 @@ class BarbershopController extends AbstractController
                 ];
 
             // Empecher apparaition d'ajouter un com si il n'a pas pris RDV
-            $rdvsUser = $this->getUser()->getRendezvouses();
-            $userRdvIds = [];
-            // Tous les ID de barbershop ou l'user a déja pris RDV dans un tableau
-            foreach($rdvsUser as $rdv){
-                foreach($rdv->getBarberPrestation() as $prestation)
-                $userRdvIds[] = $prestation->getBarbershop()->getId();
-            }
 
-            // Empecher appartion d'ajouter un com si déja commenté.
-            $avisUser = $this->getUser()->getAvis();
-            $userAvisIds = [];
-            // Tous les ID de barbershop que l'user a déja commenté dans un tableau
-            foreach($avisUser as $avis){
-                $userAvisIds[] = $avis->getBarbershop()->getId();
+            if($this->getUser()){
+                $rdvsUser = $this->getUser()->getRendezvouses();
+                $userRdvIds = [];
+                // Tous les ID de barbershop ou l'user a déja pris RDV dans un tableau
+                foreach($rdvsUser as $rdv){
+                    foreach($rdv->getBarberPrestation() as $prestation)
+                    $userRdvIds[] = $prestation->getBarbershop()->getId();
+                }
+
+                // Empecher appartion d'ajouter un com si déja commenté.
+                $avisUser = $this->getUser()->getAvis();
+                $userAvisIds = [];
+                // Tous les ID de barbershop que l'user a déja commenté dans un tableau
+                foreach($avisUser as $avis){
+                    $userAvisIds[] = $avis->getBarbershop()->getId();
+                }
             }
             
 
@@ -200,8 +203,8 @@ class BarbershopController extends AbstractController
                 'horaires' => $horaires,
                 'jourActuel' => $jourActuel,
                 'coordinates' => $coordinates,
-                'userRdvIds' => $userRdvIds,
-                'userAvisIds' => $userAvisIds,
+                'userRdvIds' => $this->getUser() ? $userRdvIds : null,
+                'userAvisIds' => $this->getUser() ? $userAvisIds : null,
             ]);
         }
         else
@@ -232,6 +235,7 @@ class BarbershopController extends AbstractController
 
     // Supprimer un Barbershop
     #[Route('/barbershop/{id}/delete', name: 'delete_barbershop')]
+    #[IsGranted('ROLE_ADMIN')]
     public function delete(ManagerRegistry $doctrine, barbershop $barbershop = null): Response
     {   
         if ($barbershop){

@@ -299,4 +299,17 @@ class RendezVousController extends AbstractController
             'lastRDV' => $lastRDV,
         ]);
     }
+
+    // Supprimer un rendez-vous
+    #[Route('/rendezvous/{id}/delete', name: 'delete_rdv')]
+    public function deleteRdv(ManagerRegistry $doctrine,  RendezVous $rendezVous = null): Response
+    {
+        if ($rendezVous){
+            $entityManager = $doctrine->getManager();
+            $entityManager->remove($rendezVous);
+            $entityManager->flush();
+        }
+        
+        return $this->redirectToRoute('app_myspace');
+    }
 }
