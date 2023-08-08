@@ -15,7 +15,7 @@
         </div>
     </div>
     <div class="register-right">
-        {{ form_start(registrationForm) }}
+        {{ form_start(registrationForm, {'attr': {'id': 'register-form'}}) }}        
         <div class="copy">
             <h2> Inscription </h2>
             <div class="login-container">
@@ -27,10 +27,12 @@
         </div>
         <div class="input-container email">
             {{ form_row(registrationForm.email) }}
+            <small id="email-message"></small>
         </div>
         <div class="input-container password">
             {{ form_row(registrationForm.plainPassword, { label: 'Password'}) }}
             <i class="fa-solid fa-eye-slash"  onclick="showPassword()" id="password-toggle"></i>
+            <small>test</small>
         </div>
         <div class="input-container terms">
             <label class="checkbox-container">
@@ -52,7 +54,31 @@
 </div>
 
 {% block javascript %}
+<script>
+     let form = document.querySelector('#register-form')
+     let inputEmail = document.querySelector('#registration_form_email')
 
+     // On écoute la modification de l'email
+
+     inputEmail.addEventListener('change', function(){
+        validEmail(this)
+     })
+
+     const validEmail = function(mail){
+        // regex pour lemail
+        let emailRegExp = new RegExp('^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$', 'g')
+
+        let testEmail = emailRegExp.test(inputEmail.value)
+        let small = document.querySelector('#email-message');
+
+        if(testEmail){
+            small.innerHTML = "Adresse mail valide. "
+        }
+        else{
+            small.innerHTML = "Adresse non valide. "
+        }
+     }
+</script>
 <script>
     
     function showPassword() {
