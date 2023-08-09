@@ -46,22 +46,22 @@ const validPassword = function(password){
    let valid = false
    // au moins 3 caractère
    if(inputPassword.value.length < 8){
-       msg ='Le mot de passe doit contenir au moins 8 caractères'
+       msg ='Le mot de passe doit contenir au moins 8 caractères.'
    }
    //au moins 1 maj
    else if(!/[A-Z]/.test(inputPassword.value)){
-       msg = 'Le mot de passe doit contenr au moins 1 majuscule'
+       msg = 'Le mot de passe doit contenr au moins 1 majuscule.'
    }
    //au moins 1 min
    else if(!/[a-z]/.test(inputPassword.value)){
-       msg = 'Le mot de passe doit contenr au moins 1 minuscule'
+       msg = 'Le mot de passe doit contenr au moins 1 minuscule.'
    }
    //au moins 1 chiffre
    else if(!/[0-9]/.test(inputPassword.value)){
-       msg = 'Le mot de passe doit contenr au moins 1 chiffre'
+       msg = 'Le mot de passe doit contenr au moins 1 chiffre.'
    }
    else if(!/[#?!@$%^&*-]/.test(inputPassword.value)){
-        msg = 'Le mot de passe doit contenr un caractère spécial'
+        msg = 'Le mot de passe doit contenr un caractère spécial.'
    }
    else{
        valid = true;
