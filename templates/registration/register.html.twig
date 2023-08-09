@@ -27,12 +27,13 @@
         </div>
         <div class="input-container email">
             {{ form_row(registrationForm.email) }}
-            <small id="email-message"></small>
+            <p id="email-message"></p>
         </div>
         <div class="input-container password">
-            {{ form_row(registrationForm.plainPassword, { label: 'Password'}) }}
+            {{ form_row(registrationForm.plainPassword.first, { label: 'Mot de passe' }) }}
             <i class="fa-solid fa-eye-slash"  onclick="showPassword()" id="password-toggle"></i>
-            <small id="password-message"></small>
+            <p id="password-message"></p>
+            {{ form_row(registrationForm.plainPassword.second, { label: 'Confirmation' }) }}
         </div>
         <div class="input-container terms">
             <label class="checkbox-container">

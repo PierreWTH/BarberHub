@@ -1,8 +1,9 @@
+
 let form = document.querySelector('#register-form')
 let inputEmail = document.querySelector('#registration_form_email')
 let inputPassword = document.querySelector('#registration_form_plainPassword_first')
-// On écoute la modification de l'email
 
+// On écoute la modification de l'email
 inputEmail.addEventListener('change', function(){
    validEmail(this)
 })
@@ -10,7 +11,7 @@ inputEmail.addEventListener('change', function(){
 inputPassword.addEventListener('change', function(){
    validPassword(this)
 })
-// On écoute la modificati
+// On écoute l'envoi du formulaire
 form.addEventListener('submit', function(e){
    e.preventDefault();
    if(validEmail(inputEmail) && validPassword(inputPassword)){
@@ -27,16 +28,14 @@ const validEmail = function(mail){
    let smallEmail = document.querySelector('#email-message');
 
    if(emailRegExp.test(inputEmail.value)){
-       smallEmail.innerHTML = "Adresse mail valide. "
-       smallEmail.classList.remove('email-fail')
-       smallEmail.classList.add('email-success')
-
+       smallEmail.innerHTML = ""
+       smallEmail.classList.remove('register-fail')
        return true;
    }
    else{
        smallEmail.innerHTML = "Adresse non valide. "
-       smallEmail.classList.remove('email-success')
-       smallEmail.classList.add('email-fail')
+       smallEmail.classList.remove('register-success')
+       smallEmail.classList.add('register-fail')
 
        return false;
    }
@@ -65,28 +64,26 @@ const validPassword = function(password){
         msg = 'Le mot de passe doit contenr un caractère spécial'
    }
    else{
-       msg = 'Mot de passe valide. '
        valid = true;
    }
 
    let smallPassword = document.querySelector('#password-message');
 
    if(valid){
-       smallPassword.innerHTML = "Mot de passe valid. "
-       smallPassword.classList.remove('email-fail')
-       smallPassword.classList.add('email-success')
+        smallPassword.classList.remove('register-fail')
+        smallPassword.innerHTML = ""
 
-       return true;
+        return true;
    }
    else{
        smallPassword.innerHTML = msg
-       smallPassword.classList.remove('email-success')
-       smallPassword.classList.add('email-fail')
+       smallPassword.classList.remove('register-success')
+       smallPassword.classList.add('register-fail')
        
        return false;
    }
 }
-// SHOW PASSWORD ON CLICK
+/***** Show password on click ****/
 function showPassword() {
     var inputPassword = document.getElementById("registration_form_plainPassword_first");
     var icon = document.getElementById("password-toggle");

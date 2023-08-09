@@ -761,6 +761,9 @@ footer i {
     width: 328px;
 }
 
+#registration_form_plainPassword_second{
+    margin-bottom: 1.25rem;
+}
 .register-splitscreen form input[type="text"],
 .register-splitscreen form input[type="email"], 
 .register-splitscreen form input[type="password"] {
@@ -770,8 +773,16 @@ footer i {
     border-radius: 8px;
     border: 1px solid #c4c4c4;
     padding: 1em;
-    margin-bottom: 1.25rem;
     font-size: 0.875rem;
+ }
+
+ .register-splitscreen form input[type="text"]{
+    margin-bottom: 1.25rem;
+ }
+
+ #email-message, #password-message{
+    margin-bottom: 1.25rem;
+    font-size: 12px;
  }
 
  .register-splitscreen label {
@@ -864,6 +875,13 @@ footer i {
     background: var(--light-gray);
     color: black;
     cursor: pointer;
+}
+
+.register-success {
+    color: #8CD47E;
+}
+.register-fail {
+    color: #E66F64;
 }
 
 @media  screen and (min-width: 900px) {
