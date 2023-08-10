@@ -6,59 +6,79 @@
 {# Photo du salon #}
 <section id="show-barbershop-header">
     <div class="barbershop-image-title-container">
-        <img src="https://www.armandeus.com/wp-content/uploads/2021/10/AdobeStock_231110781.jpeg" alt="">
+        {% for pics in barbershop.barbershopPics %}
+        <img src="{{asset('assets/uploads/barbershopPics/' ~ pics.nom)}}" alt="">
+        {% endfor %}
         <h1> {{barbershop.nom}} </h1>
     </div>
 </section>
 
 <section id="show-barbershop-section">
 
-<div class="like-adresse-barber">
-    <div>
-        {% include "components/_like.html.twig" %}
+    
+    <div class="like-adresse-barber">
+        <div>
+            {% include "components/_like.html.twig" %}
+        </div>
+        <div>
+            <p><i class="fa-solid fa-location-dot"></i> {{barbershop.adresse}} |
+                {{barbershop.cp}} |
+                {{barbershop.ville}}
+            </p>
+        </div>
     </div>
-    <div>
-        <p><i class="fa-solid fa-location-dot"></i> {{barbershop.adresse}} |
-            {{barbershop.cp}} |
-            {{barbershop.ville}}
-        </p>
-    </div>
-</div>
-
 <section id="show-barber-info-container">
 
 <div class="show-barbershop-info">
+    <div>
+        {% if (horaires[jourActuel]['ouverture'] == 'ferme' or horaires[jourActuel]['fermeture'] < 'now'|date('H:i', "Europe/Paris")) %}
+            <i class="fa-solid fa-circle closed"></i> Fermé actuellement
+        {% else %}
+            <i class="fa-solid fa-circle open"></i> Ouvert actuellement
+        {% endif %}
+    </div>
     <h2> Informations </h2>
-    
-    {{barbershop.description}}
-    
-    <h3> Horaires </h3>
-    
-    {% include "barbershop/show/_horaires.html.twig" %}
+    <div class="show-barber-desc">
+        {{barbershop.description}}
+    </div>
+    <h3> Contact </h3>
     <div class="barbershop-socials">
-        <h3> Réseaux sociaux </h3>
         
         <a href="{{barbershop.facebook}}"><i class="fa-brands fa-square-facebook"></i></a>
         <a href="{{barbershop.instagram}}"><i class="fa-brands fa-instagram"></i></a>
+        <a href="tel:{{barbershop.telephone}}"><i class="fa-solid fa-square-phone"></i></a>
     </div>
+    <h3> Prestations </h3>
+    <div class="show-barber-prestation">
+
+        {% include "barbershop/show/_prestations.html.twig" %}
+    </div>
+
+    <h3>Avis</h3>
+
+    {% include "barbershop/show/_avis.html.twig" %}
+
+    <h3> Boutique </h3>
+
+    <h3> Réalisations </h3>
 </div>
 
-<div id="map-barber"></div>
+<div class="show-map-horaires">
+    <div id="map-barber"></div>
+    <div>
+        <h3> Horaires </h3>
+        {% include "barbershop/show/_horaires.html.twig" %}
+    </div>
+</div>
 
 </section>
 
 
-<h3> Prestations </h3>
 
-{% include "barbershop/show/_prestations.html.twig" %}
 
-<h3> Avis </h3>
 
-{% include "barbershop/show/_avis.html.twig" %}
 
-<h3> Boutique </h3>
 
-<h3> Réalisations </h3>
 
 </section>
 

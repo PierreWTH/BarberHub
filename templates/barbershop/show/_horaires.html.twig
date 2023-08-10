@@ -1,30 +1,22 @@
 
-<div>
-
-    {% if (horaires[jourActuel]['ouverture'] == 'ferme' ) %}
-    <i class="fa-solid fa-circle open"></i> Fermé actuellement
-    {% else %}
-    <i class="fa-solid fa-circle closed"></i> Ouvert actuellement
-    {% endif %}
-</div>
 {# Iterer sur les horaires dans un tableau #}
 <table class="barbershop-horaires-table">
     <thead>
         <tr>
-            {% for jour in horaires %}
-            <th> {{ jour['jour']|capitalize }} </th>
-            {% endfor %}
+            <th>Jour</th>
+            <th>Horaires</th>
         </tr>
     </thead>
     <tbody>
+        {% for jour in horaires %}
         <tr>
-            {% for jour in horaires %}
-            {% if jour['ouverture'] == 'ferme' or jour['fermeture'] == 'ferme'%}
-            <td> Fermé </td>
+            <td>{{ jour['jour']|capitalize }}</td>
+            {% if jour['ouverture'] == 'ferme' or jour['fermeture'] == 'ferme' %}
+            <td>Fermé</td>
             {% else %}
             <td>{{ jour['ouverture'] }} - {{ jour['fermeture'] }}</td>
-            {% endif %} 
-            {% endfor %}
+            {% endif %}
         </tr>
+        {% endfor %}
     </tbody>
 </table>

@@ -1,11 +1,14 @@
-<section id="barbershop-avis-container">
-
 {% if app.user and barbershop.id in userRdvIds and barbershop.id not in userAvisIds %}
 
     <p><a href="{{path ('add_avis', {id: barbershop.id}) }}"> Ajouter un commentaire </a></p>
 
-{% endif %}        
+{% endif %}  
+      
+<section id="barbershop-avis-container">
+
  
+{% if barbershop.avis is not empty %}
+    
 {% for avis in barbershop.avis %}
 
 {% set note = avis.note %}
@@ -36,4 +39,9 @@
 </div>
     
     {% endfor %}
+    {% else %}
+    <div class="barbershop-avis"> 
+    <p> Aucun avis pour le moment.  </p>
+    </div>
+    {% endif %}
 </section>

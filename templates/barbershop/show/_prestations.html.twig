@@ -1,13 +1,21 @@
-{% for prestation in barbershop.barberPrestations %}
-
-{{prestation.prestation.nom}}
-{{prestation.prix}} €
-
-{% if app.user %}
+{% if barbershop.barberPrestations is not empty %}
     
-<a href="{{path ('add_rendezvous', { barberPrestation : prestation.id })}}"> Reserver </a>
+
+{% for prestation in barbershop.barberPrestations %}
+        <div class="prestation">
+        {{prestation.prestation.nom}}
+        <p>30min &nbsp;•&nbsp;
+        {{prestation.prix}}€
+        {% if app.user %}
+    
+      <a href="{{path ('add_rendezvous', { barberPrestation : prestation.id })}}" class="book-prestation"> Reserver </a></p>
+
+        {% endif %}
+        </div>
+        <div class="ligne-presta"></div>
+{% endfor %}
+{% else %}
+
+<p>Ce barbier n'as pas encore rempli de prestations. </p>
 
 {% endif %}
-
-
-{% endfor %}

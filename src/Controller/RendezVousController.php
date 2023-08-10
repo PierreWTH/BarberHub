@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use DateTime;
 use DateInterval;
+use DateTimeZone;
 use DateTimeImmutable;
 use IntlDateFormatter;
 use App\Entity\Personnel;
@@ -197,7 +198,8 @@ class RendezVousController extends AbstractController
             $unavailableRdvs[] = $rdvPersonnel->getDebut();
         }
          // On ajoute au tableau des RDV déja pris tous les créneaux avant l'heure actuelle
-         $currentHour = new DateTime('now');
+         $currentHour = new \DateTime('now +2hours');
+
          $currentDay = strtolower(strftime('%A', $currentHour->getTimestamp()));
          $startCurrentDayHour = $horaires[$currentDay]['ouverture'];
          $closeCurrentDayHour = $horaires[$currentDay]['fermeture'];
@@ -206,11 +208,14 @@ class RendezVousController extends AbstractController
 
         $startHourDateTime = DateTime::createFromFormat('H:i', $startCurrentDayHour);
         $closeHourDateTime = DateTime::createFromFormat('H:i', $closeCurrentDayHour);
+
+
         
             while($startHourDateTime <= $currentHour && $startHourDateTime <= $closeHourDateTime){
 
                 $unavailableRdvs[] = clone $startHourDateTime;
                 $startHourDateTime->modify('+30 minutes');
+                
             }
         }
         
