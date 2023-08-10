@@ -21,8 +21,8 @@
             {% include "components/_like.html.twig" %}
         </div>
         <div>
-            <p><i class="fa-solid fa-location-dot"></i> {{barbershop.adresse}} |
-                {{barbershop.cp}} |
+            <p><i class="fa-solid fa-location-dot"></i> {{barbershop.adresse}},
+                {{barbershop.cp}}
                 {{barbershop.ville}}
             </p>
         </div>
@@ -41,13 +41,6 @@
     <div class="show-barber-desc">
         {{barbershop.description}}
     </div>
-    <h3> Contact </h3>
-    <div class="barbershop-socials">
-        
-        <a href="{{barbershop.facebook}}"><i class="fa-brands fa-square-facebook"></i></a>
-        <a href="{{barbershop.instagram}}"><i class="fa-brands fa-instagram"></i></a>
-        <a href="tel:{{barbershop.telephone}}"><i class="fa-solid fa-square-phone"></i></a>
-    </div>
     <h3> Prestations </h3>
     <div class="show-barber-prestation">
 
@@ -57,6 +50,14 @@
     <h3>Avis</h3>
 
     {% include "barbershop/show/_avis.html.twig" %}
+
+    <h3> Contact </h3>
+    <div class="barbershop-socials">
+        
+        <a href="{{barbershop.facebook}}"><i class="fa-brands fa-square-facebook"></i></a>
+        <a href="{{barbershop.instagram}}"><i class="fa-brands fa-instagram"></i></a>
+        <a href="tel:{{barbershop.telephone}}"><i class="fa-solid fa-square-phone"></i></a>
+    </div>
 
     <h3> Boutique </h3>
 

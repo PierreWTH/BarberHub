@@ -67,6 +67,13 @@ a{
     font-size: 50px;
 }
 
+.title-margin {
+    text-align: center;
+    font-family: 'Smythe';
+    font-size: 50px;
+    margin-top: 2rem;
+}
+
 .sub-title {
     text-align: center;
     margin: 5rem 0rem ;
@@ -490,6 +497,7 @@ footer i {
 .footer-socials {
     display: flex;
     gap: 1rem;
+
 }
 
 @media screen and (max-width : 768px) {
@@ -1359,6 +1367,10 @@ footer i {
     border-radius: 10px;
 }
 
+.personnel-radio{
+
+}
+
 #rendez_vous_submit{
     padding: 1rem 1rem;
     background-color: black;
@@ -1455,7 +1467,9 @@ footer i {
 
 .like-adresse-barber{
     display: flex;
+    gap: 1rem;
     justify-content: space-between;
+    flex-wrap: wrap;
     font-size: 17px;
     width: 100%;
     max-width: 1500px;
@@ -1493,11 +1507,13 @@ footer i {
     align-items: center;
     gap: 2rem;
     min-width: 400px;
+    
 }
 
 .show-barber-desc{
     padding: 2rem;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 10px;
 }
 
 #map-barber{
@@ -1520,6 +1536,7 @@ footer i {
     justify-content: center;
     flex-wrap: wrap;
     gap: 2rem;
+    border-radius: 10px;
 }
 
 .prestation{
@@ -1562,6 +1579,7 @@ footer i {
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     font-size: 35px;
     color: black;
+    border-radius: 10px;
 }
 
 .fa-circle.open{
@@ -1584,6 +1602,7 @@ footer i {
     gap: 1rem;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     padding: 2rem;
+    border-radius: 10px;
 }
 .barber-note-pseudo{
     display: flex;
@@ -1615,4 +1634,10 @@ footer i {
     .barbershop-horaires-table{
         width: 350px;
     }
+
+    #barbershop-avis-container{
+        justify-content: center;
+    }
+
+
 }

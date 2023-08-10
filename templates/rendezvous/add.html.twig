@@ -20,10 +20,12 @@ Votre réservation : {{prestation.prestation.nom}} chez {{barbershop.nom}}
 {{ form_start(formAddRendezVous) }}
 
 <div id="personnel-radio-container">
-{% for personnelCheckbox in formAddRendezVous.personnel %}
-        {{ form_row(personnelCheckbox) | raw }}      
-        {% endfor %}
-
+    {% for personnelCheckbox in formAddRendezVous.personnel %}
+    <div class="personnel-radio">
+    {{ form_widget(personnelCheckbox) }}
+    {{ form_label(personnelCheckbox) }}
+    </div>   
+    {% endfor %}
 </div>
 
 
