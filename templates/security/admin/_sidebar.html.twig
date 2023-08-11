@@ -17,14 +17,14 @@
                 <p class="sidebar-title"> Menu</p>
                 <ul>
                     <li>
-                        <a href="#">
+                        <a href="{{path ('control_pannel')}}">
                             <i class="sidebar-icon fa-solid fa-toolbox"></i>
                             <span class="sidebar-text">Dashboard </span>
                         </a>
                     </li>
                     <li>
                         <a href="#">
-                            <i class="sidebar-icon fa-solid fa-scissors"></i>
+                            <i class="sidebar-icon fa-solid fa-store"></i>
                             <span class="sidebar-text">Barbershops </span>
                             <i class="arrow fa-solid fa-chevron-down"></i>
                         </a>
@@ -41,17 +41,24 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="li-active">
-                        <a href="#">
-                            <i class="sidebar-icon fa-solid fa-scissors"></i>
-                            <span class="sidebar-text">Barbiers </span>
-                        </a>
-                    </li>
                     <li>
                         <a href="#">
-                            <i class="sidebar-icon fa-regular fa-calendar"></i>
-                            <span class="sidebar-text">Rdv </span>
+                            <i class="sidebar-icon fa-solid fa-scissors"></i>
+                            <span class="sidebar-text">Prestations </span>
+                            <i class="arrow fa-solid fa-chevron-down"></i>
                         </a>
+                        <ul class="sidebar-sub-menu">
+                            <li>
+                                <a href="{{path ('add_prestation')}}">
+                                    <span class="sidebar-text"> Ajouter </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{path ('app_prestation')}}">
+                                    <span class="sidebar-text"> Liste </span>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li>
                         <a href="#">
@@ -61,13 +68,46 @@
                         </a>
                         <ul class="sidebar-sub-menu">
                             <li>
-                                <a href="">
-                                    <span class="sidebar-text"> Liste </span>
+                                <a href="{{path ('add_article')}}">
+                                    <span class="sidebar-text"> Ajouter </span>
                                 </a>
                             </li>
                             <li>
-                                <a href="">
-                                    <span class="sidebar-text"> Roles </span>
+                                <a href="{{path ('app_article')}}">
+                                    <span class="sidebar-text"> Liste </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="sidebar-icon fa-solid fa-user"></i>
+                            <span class="sidebar-text"> Utilisateurs </span>
+                            <i class="arrow fa-solid fa-chevron-down"></i>
+                        </a>
+                        <ul class="sidebar-sub-menu">
+                            <li>
+                                <a href="{{path ('admin_users')}}">
+                                    <span class="sidebar-text"> Liste </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="sidebar-icon fa-solid fa-user-tie"></i>                            
+                            <span class="sidebar-text"> Employés </span>
+                            <i class="arrow fa-solid fa-chevron-down"></i>
+                        </a>
+                        <ul class="sidebar-sub-menu">
+                            <li>
+                                <a href="{{path ('add_personnel')}}">
+                                    <span class="sidebar-text"> Ajouter </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{path ('app_personnel')}}">
+                                    <span class="sidebar-text"> Liste</span>
                                 </a>
                             </li>
                         </ul>

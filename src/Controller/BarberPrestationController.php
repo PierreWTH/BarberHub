@@ -56,7 +56,7 @@ class BarberPrestationController extends AbstractController
             
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_barbershop');
+            return $this->redirectToRoute('admin_barbershop');
         }
         return $this->render('barberPrestation/add.html.twig', [
             'formAddBarberPrestation' => $form->createView(),

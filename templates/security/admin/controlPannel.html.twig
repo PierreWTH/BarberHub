@@ -3,10 +3,10 @@
 {% block title %} Administration {% endblock %}
 
 {% block body %}
-<section id="admin-pannel">
+<section class="admin-pannel">
 {% include "security/admin/_sidebar.html.twig" %}
 
-<div>
+<div class="admin-pannel-content">
 <h1> Administration </h1>
 
 <h2>Barbershop</h2>
@@ -15,13 +15,10 @@
 
 <h2>Article</h2>
 
-<a href="{{path ('add_article')}}"> Ajouter un article </a>
-<a href="{{path ('app_article')}}"> Voir les articles </a>
-
 <h2>Prestation </h2>
 
-<p><a href="{{path ('add_prestation')}}"> Ajouter une prestation </a></p>
-<p><a href="{{path ('app_prestation')}}"> Voir toutes les prestations </a></p>
+<p><a href=""> Ajouter une prestation </a></p>
+<p><a href=""> Voir toutes les prestations </a></p>
 
 <h2> Utilisateurs </h2>
 
@@ -30,7 +27,7 @@
 <h2> Managers / Employés </h2>
 
 <p><a href="{{path ('add_personnel')}}"> Ajouter un employé/babershop</a></p>
-<p><a href="{{path ('app_personnel')}}"> Voir tous les managers / employés </a></p>
+<p><a href=""> Voir tous les managers / employés </a></p>
 
 <h2> Publier / Retirer un barbershop </h2>
 

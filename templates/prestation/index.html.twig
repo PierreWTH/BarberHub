@@ -3,7 +3,10 @@
 {% block title %}Hello PrestationController!{% endblock %}
 
 {% block body %}
-
+<section class="admin-pannel">
+    {% include "security/admin/_sidebar.html.twig" %}
+    
+<div class="admin-pannel-content">
 {% for prestation in prestations %}
     
 {{prestation.nom}}
@@ -12,5 +15,6 @@
 <br>
 
 {% endfor %}
-
+</div>
+</section>
 {% endblock %}

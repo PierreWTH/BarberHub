@@ -519,7 +519,8 @@ footer i {
     align-items: center;
     justify-content: space-between;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
-    position: relative
+    position: relative;
+    z-index: 10;
 }
 
 #nav .logo{
@@ -1661,7 +1662,6 @@ footer i {
     gap: 20px;
     background-color: white;
     padding: 24px;
-    /* border-radius: 30px; */
     transition: all 0.3s;
 }
 
@@ -1859,10 +1859,12 @@ footer i {
     box-shadow: 0px 10px 8px rgba(0, 0, 0, 0.1) ;
 }
 
-#admin-pannel{
+.admin-pannel{
     display: flex;
 }
 
-#admin-pannel-content{
+.admin-pannel-content{
     padding: 2rem;
+    background-color: var(--light-gray);
+    width: 100%;
 }

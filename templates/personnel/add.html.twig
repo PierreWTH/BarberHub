@@ -4,6 +4,10 @@
 
 {% block body %}
 
+<section class="admin-pannel">
+    {% include "security/admin/_sidebar.html.twig" %}
+    
+<div class="admin-pannel-content">
 
 <h1> Ajouter un Emloyé / Manager </h1>
 
@@ -13,6 +17,7 @@
 {{ form_row(formAddPersonnel.manager) }}
 {{ form_end(formAddPersonnel) }}
 
-
+</div>
+</section>
 
 {% endblock %}
