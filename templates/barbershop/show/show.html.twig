@@ -30,7 +30,7 @@
 <section id="show-barber-info-container">
 
 <div class="show-barbershop-info">
-    <div>
+    <div class="show-open-closed">
         {% if (horaires[jourActuel]['ouverture'] == 'ferme' or horaires[jourActuel]['fermeture'] < 'now'|date('H:i', "Europe/Paris")) %}
             <i class="fa-solid fa-circle closed"></i> Fermé actuellement
         {% else %}

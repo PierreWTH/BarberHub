@@ -1,0 +1,131 @@
+<div class="sidebar-container">
+    <div class="sidebar active">
+        <div class="sidebar-menu-btn">
+            <i class="fa-solid fa-chevron-left"></i>
+        </div>
+        <div class="sidebar-head">
+            <div class="sidebar-img">
+                <img src="https://img.freepik.com/icones-gratuites/utilisateur_318-159711.jpg" alt="">
+            </div>
+            <div class="sidebar-user-details">
+                <p class="sidebar-title">Web developper</p>
+                <p class="user-name">John Doe</p>
+            </div>
+        </div>
+        <div class="sidebar-nav">
+            <div class="sidebar-menu">
+                <p class="sidebar-title"> Menu</p>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <i class="sidebar-icon fa-solid fa-toolbox"></i>
+                            <span class="sidebar-text">Dashboard </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="sidebar-icon fa-solid fa-scissors"></i>
+                            <span class="sidebar-text">Barbershops </span>
+                            <i class="arrow fa-solid fa-chevron-down"></i>
+                        </a>
+                        <ul class="sidebar-sub-menu">
+                            <li>
+                                <a href="{{path ('add_barbershop')}}">
+                                    <span class="sidebar-text"> Ajouter </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{path ('admin_barbershop')}}">
+                                    <span class="sidebar-text"> Liste </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="li-active">
+                        <a href="#">
+                            <i class="sidebar-icon fa-solid fa-scissors"></i>
+                            <span class="sidebar-text">Barbiers </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="sidebar-icon fa-regular fa-calendar"></i>
+                            <span class="sidebar-text">Rdv </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class=" sidebar-icon fa-solid fa-newspaper"></i>
+                            <span class="sidebar-text">Articles </span>
+                            <i class="arrow fa-solid fa-chevron-down"></i>
+                        </a>
+                        <ul class="sidebar-sub-menu">
+                            <li>
+                                <a href="">
+                                    <span class="sidebar-text"> Liste </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <span class="sidebar-text"> Roles </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="sidebar-menu">
+                <p class="sidebar-title"> Réglages </p>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <i class="sidebar-icon fa-solid fa-toolbox"></i>
+                            <span class="sidebar-text">Settings </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="sidebar-menu">
+            <p class="sidebar-title"> Compte </p>
+            <ul>
+                <li>
+                    <a href="#">
+                        <i class="sidebar-icon fa-solid fa-toolbox"></i>
+                        <span class="sidebar-text">Help </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="sidebar-icon fa-solid fa-toolbox"></i>
+                        <span class="sidebar-text">Logout </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% block javascript %}
+
+<script>
+    $(".sidebar-menu > ul > li").click(function (e) {
+        // Remove active if already exist
+        $(this).siblings().removeClass("li-active")
+            // add active
+            $(this).toggleClass("li-active");
+            // toggle slide menu if exist
+            $(this).find("ul").slideToggle()
+            // close others submenu
+            $(this).siblings().find("ul").slideUp()
+            // remove active class of submenu items
+            $(this).siblings().find("ul").find("li").removeClass("li-active")
+    });
+
+    $(".sidebar-menu-btn").click(function () {
+        $(".sidebar").toggleClass("active")
+    })
+
+</script>
+    
+{% endblock %}

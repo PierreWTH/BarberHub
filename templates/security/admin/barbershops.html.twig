@@ -3,7 +3,10 @@
 {% block title %} Administration {% endblock %}
 
 {% block body %}
-
+<section id="admin-pannel">
+    {% include "security/admin/_sidebar.html.twig" %}
+    
+<div>
 {% for barbershop in barbershops %}
     
 <p>{{ barbershop.nom}}</p>
@@ -18,6 +21,7 @@ En attente
 <a href="{{path ('validate_barbershop', {id : barbershop.id })}}"> Publier </a>
 {% endif %}
 {% endfor %}
-
+</div>
+</section>
 
 {% endblock %}
