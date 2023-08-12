@@ -7,32 +7,22 @@
 {% include "security/admin/_sidebar.html.twig" %}
 
 <div class="admin-pannel-content">
-<h1> Administration </h1>
+ <h1> Panneau de controle </h1>
+<div class="admin-stat-container">
+ <div class="admin-stat">
+    <p> <span class="stat-number">{{nbBarbershops}}</span> barbershops </p> 
+ </div>
+ <div class="admin-stat">
+    <p><span class="stat-number">{{nbArticles}}</span> Articles </p> 
+ </div>
+ <div class="admin-stat">
+    <p><span class="stat-number">{{nbPersonnel}}</span> Employés </p> 
+ </div>
+ <div class="admin-stat">
+    <p><span class="stat-number">{{nbUsers}}</span> Utilisateurs </p> 
+ </div>
 
-<h2>Barbershop</h2>
-
-<a href=""> Ajouter un barbier </a>
-
-<h2>Article</h2>
-
-<h2>Prestation </h2>
-
-<p><a href=""> Ajouter une prestation </a></p>
-<p><a href=""> Voir toutes les prestations </a></p>
-
-<h2> Utilisateurs </h2>
-
-<p><a href="{{path ('admin_users')}}">Voir tous les utilisateurs </a></p>
-
-<h2> Managers / Employés </h2>
-
-<p><a href="{{path ('add_personnel')}}"> Ajouter un employé/babershop</a></p>
-<p><a href=""> Voir tous les managers / employés </a></p>
-
-<h2> Publier / Retirer un barbershop </h2>
-
-<p><a href=""> Voir tous les barbershops </a></p>
-
+</div>
 </div>
 </section>
 

@@ -15,7 +15,7 @@
 {% endif %}
 
 {# FORMULAIRE #}
-
+<div class="add-barbershop-form">
 {{ form_start(formAddBarbershop) }}
 {{ form_row(formAddBarbershop.nom) }}
 {{ form_row(formAddBarbershop.description) }}
@@ -24,7 +24,7 @@
 {{ form_row(formAddBarbershop.ville) }}
 
 {# Tableau des horaires #}
-
+<label for=""> Horaires</label>
 <table class="addHorairesTable">
     <thead>
         <tr>
@@ -81,6 +81,7 @@
 {% endfor %}
 
 {% endif %}
+</div>
 </div>
 </section>
 {% block javascripts %}

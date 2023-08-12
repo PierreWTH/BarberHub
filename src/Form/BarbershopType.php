@@ -41,7 +41,7 @@ class BarbershopType extends AbstractType
             
 
             ->add('images', FileType::class, [
-                'label' =>false,
+                'label' =>"Photo",
                 'multiple'=>false,
                 'mapped' =>false,
                 'required' =>false,

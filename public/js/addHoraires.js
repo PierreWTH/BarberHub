@@ -27,7 +27,7 @@ var nbChamps = 0
             const jourActuel = joursSemaine[i]
 
             // Affichage du jour de la semaine
-            newChamps.append('<td>' + jourActuel + '</td>')
+            newChamps.append('<td>' + jourActuel.charAt(0).toUpperCase() + jourActuel.slice(1) + '</td>')
             // Champs caché qui récupère le jour actuel
             newChamps.append('<input type="hidden" id="inputJourActuel" name="jourActuel" value="'+ jourActuel +'" />')
             // Ajout d'un nouveau champs pour les heures d'ouverture

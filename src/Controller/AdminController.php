@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Article;
+use App\Entity\Personnel;
 use App\Entity\Barbershop;
 use App\Form\EditUserType;
 use Doctrine\Persistence\ManagerRegistry;
@@ -16,9 +18,19 @@ class AdminController extends AbstractController
 
     #[Route('/administration', name: 'control_pannel')]
     #[IsGranted('ROLE_ADMIN')]
-    public function controlPannel(): Response
-    {
-        return $this->render('security/admin/controlPannel.html.twig', []);
+    public function controlPannel(ManagerRegistry $doctrine): Response
+    {   
+        $nbBarbershops = count($doctrine->getRepository(Barbershop::Class)->findAll());
+        $nbUsers = count($doctrine->getRepository(User::Class)->findAll());
+        $nbArticles = count($doctrine->getRepository(Article::Class)->findAll());
+        $nbPersonnel = count($doctrine->getRepository(Personnel::Class)->findAll());
+
+        return $this->render('security/admin/controlPannel.html.twig', [
+            'nbBarbershops' => $nbBarbershops,
+            'nbUsers' =>$nbUsers,
+            'nbArticles' => $nbArticles,
+            'nbPersonnel' => $nbPersonnel
+        ]);
     }
 
     #[Route('/administration/barbershops', name: 'admin_barbershop')]
