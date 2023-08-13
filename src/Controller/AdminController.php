@@ -8,6 +8,7 @@ use App\Entity\Personnel;
 use App\Entity\Barbershop;
 use App\Form\EditUserType;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,9 +36,15 @@ class AdminController extends AbstractController
 
     #[Route('/administration/barbershops', name: 'admin_barbershop')]
     #[IsGranted('ROLE_ADMIN')]
-    public function allBarbershopAdmin(ManagerRegistry $doctrine): Response
+    public function allBarbershopAdmin(ManagerRegistry $doctrine, PaginatorInterface $paginator, Request $request): Response
     {
         $barbershops = $doctrine->getRepository(Barbershop::Class)->findBy([], ["creationDate"=>"DESC"]);
+
+        $barbershops = $paginator->paginate(
+            $barbershops, 
+            $request->query->getInt('page', 1), 
+            9
+        );
 
         return $this->render('security/admin/barbershops.html.twig', [
             'barbershops' => $barbershops,

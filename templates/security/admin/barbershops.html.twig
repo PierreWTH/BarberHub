@@ -6,22 +6,47 @@
 <section class="admin-pannel">
     {% include "security/admin/_sidebar.html.twig" %}
     
-<div class="admin-pannel-content">
-{% for barbershop in barbershops %}
-    
-<p>{{ barbershop.nom}}</p>
+<div class="admin-pannel-content-flex">
 
-{% if barbershop.validate %}
+    {% include "security/admin/_adminBarberCards.html.twig" %}
 
-Publié
-<a href="{{path ('validate_barbershop', {id : barbershop.id })}}"> Retirer </a>
-{% else %}
+    {{ knp_pagination_render(barbershops) }}
 
-En attente
-<a href="{{path ('validate_barbershop', {id : barbershop.id })}}"> Publier </a>
-{% endif %}
-{% endfor %}
 </div>
-</section>
 
+
+</section>
+{% block javascript %}
+
+<script>
+    
+    $(document).ready(function() {
+        $('.validate-barber').click(function(e) {
+            e.preventDefault();
+            var barbershopId = $(this).data('barbershop-id'); 
+            var $link = $(this);
+            var $etat = $link.closest('.validate-etat')
+            $.ajax({
+                type: "POST",
+                url: "/barbershop/" + barbershopId + "/validate",
+                contentType: 'application/json',
+                success: function(response) {
+                    console.log(response)
+                    if ($link.text() == 'Publier') {
+                        $link.text('Retirer');
+                    } else {
+                        $link.text('Publier');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+    });
+      
+
+</script>
+    
+{% endblock %}
 {% endblock %}

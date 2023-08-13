@@ -47,13 +47,7 @@
                 {% endif %}
                 <h3 class="barbershop-card-title">{{barbershop.nom}}</h3>
                 <p class="barbershop-card-adress">{{barbershop.adresse}} - {{ barbershop.ville}}</p>
-                
-                {% if is_granted('ROLE_ADMIN') %}
-        
-                <p><a href="{{path ('edit_barbershop', {id : barbershop.id })}}" class="barber-admin-link">Editer</a> | 
-                <a href="{{path ('delete_barbershop', {id : barbershop.id })}}" class="barber-admin-link">Supprimer</a></p>
-    
-                {% endif %}
+
             </div>
         </article>
         

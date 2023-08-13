@@ -214,8 +214,8 @@ class BarbershopController extends AbstractController
         
     }
 
-   // Publier un Barbershop
-   #[Route('/barbershop/{id}/validate', name: 'validate_barbershop')]
+   // Publier/ retirer un Barbershop en AJAX
+   #[Route('/barbershop/{id}/validate', name: 'validate_barbershop', methods:"post")]
    public function validate(ManagerRegistry $doctrine, Barbershop $barbershop): Response
    {   
         if ($barbershop->isValidate())
@@ -230,7 +230,8 @@ class BarbershopController extends AbstractController
         $entityManager = $doctrine->getManager();    
         $entityManager->flush();
         
-        return $this->redirectToRoute('admin_barbershop');
+        return new JsonResponse(['success' => true], 200);
+
    }
 
     // Supprimer un Barbershop
@@ -242,8 +243,8 @@ class BarbershopController extends AbstractController
             $entityManager = $doctrine->getManager();
             $entityManager->remove($barbershop);
             $entityManager->flush();
+
         }
-        
         return $this->redirectToRoute('app_barbershop');
     }
 

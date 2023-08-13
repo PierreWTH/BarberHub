@@ -1,0 +1,37 @@
+<section class="barbershop-cards-container">
+    {% for barbershop in barbershops %}
+    
+    {% for pics in barbershop.barbershopPics %}
+      
+        <article class="barbershop-card-admin card-template">
+            <div class="barbershop-card-img"></div>
+                <div class="barbershop-card-img-hover">
+                    <img src="{{asset('assets/uploads/barbershopPics/' ~ pics.nom)}}" alt="Photo de {{barbershop.nom}}">
+                </div>
+            <div class="barbershop-card-info">
+                <a href="{{path ('show_barbershop', {id : barbershop.id })}}" class="barber-admin-link"> Voir </a>
+
+                <h3 class="barbershop-card-title">{{barbershop.nom}}</h3>
+                {% if is_granted('ROLE_ADMIN') %}
+                
+        
+                <p><a href="{{path ('edit_barbershop', {id : barbershop.id })}}" class="barber-admin-link">Editer</a> | 
+                <a href="{{path ('delete_barbershop', {id : barbershop.id })}}" class="barber-admin-link">Supprimer</a> |
+                {% if barbershop.validate %}
+
+                <a href="" class="barber-admin-link validate-barber" data-barbershop-id="{{ barbershop.id }}">Retirer</a></p>
+
+                {% else %}
+
+                <a href="" class="barber-admin-link validate-barber" data-barbershop-id="{{ barbershop.id }}">Publier</a></p>
+                {% endif %}
+    
+                {% endif %}
+            </div>
+        </article>
+        
+        {% endfor %}
+        {% endfor %}
+        
+    </section>
+    
