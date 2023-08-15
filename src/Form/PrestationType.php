@@ -15,14 +15,18 @@ class PrestationType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class)
-            ->add('submit', SubmitType::class)
-        ;
+            ->add('submit', SubmitType::class, [
+                'label' =>'Ajouter',
+                'attr' => ['class' => 'submit-button-template'] 
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Prestation::class,
+            'attr' => [
+                'id' => 'addPrestationForm']
         ]);
     }
 }

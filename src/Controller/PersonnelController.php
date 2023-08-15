@@ -23,30 +23,32 @@ class PersonnelController extends AbstractController
         ]);
     }
 
-    #[Route('/personnel/add', name: 'add_personnel')]
+
+    #[Route('/personnel/manage', name: 'manage_personnel')]
     #[Route('/personnel/{id}/edit', name: 'edit_personnel')]
     #[IsGranted('ROLE_ADMIN')]
-    public function add(ManagerRegistry $doctrine, Personnel $personnel = null, Request $request) : Response
+    public function manage(ManagerRegistry $doctrine, Personnel $personnel = null, Request $request): Response
     {   
-        if(!$personnel){
+        $personnels = $doctrine->getRepository(Personnel::class)->findAll();
+        
+        if (!$personnel) {
             $personnel = new Personnel();
         }
 
         $form = $this->createForm(PersonnelType::class, $personnel);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $personnel = $form->getData();
             $entityManager = $doctrine->getManager();
             $entityManager->persist($personnel);
-            
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_personnel');
+            return $this->redirectToRoute('manage_personnel');
         }
 
-        return $this->render('personnel/add.html.twig', [
+        return $this->render('personnel/manage.html.twig', [
+            'personnel' => $personnels,
             'formAddPersonnel' => $form->createView(),
         ]);
     }

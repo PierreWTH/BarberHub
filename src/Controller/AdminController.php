@@ -62,6 +62,17 @@ class AdminController extends AbstractController
         ]);
     }
 
+    #[Route('/administration/articles', name: 'admin_articles')]
+    #[IsGranted('ROLE_ADMIN')]
+    public function listArticles(ManagerRegistry $doctrine): Response
+    {
+        $articles = $doctrine->getRepository(Article::Class)->findBy([], ["date"=>"ASC"]);
+
+        return $this->render('security/admin/Articles.html.twig', [
+            'articles' => $articles,
+        ]);
+    }
+
     #[Route('/administration/users/edit/{id}', name: 'admin_edituser')]
     #[IsGranted('ROLE_ADMIN')]
     public function editUsers(User $user, ManagerRegistry $doctrine, Request $request): Response

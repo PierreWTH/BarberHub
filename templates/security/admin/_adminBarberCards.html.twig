@@ -9,22 +9,18 @@
                     <img src="{{asset('assets/uploads/barbershopPics/' ~ pics.nom)}}" alt="Photo de {{barbershop.nom}}">
                 </div>
             <div class="barbershop-card-info">
-                <a href="{{path ('show_barbershop', {id : barbershop.id })}}" class="barber-admin-link"> Voir </a>
+                <a href="{{path ('show_barbershop', {id : barbershop.id })}}" class="barber-admin-show-link">Détails</a>
 
                 <h3 class="barbershop-card-title">{{barbershop.nom}}</h3>
                 {% if is_granted('ROLE_ADMIN') %}
                 
         
-                <p><a href="{{path ('edit_barbershop', {id : barbershop.id })}}" class="barber-admin-link">Editer</a> | 
-                <a href="{{path ('delete_barbershop', {id : barbershop.id })}}" class="barber-admin-link">Supprimer</a> |
-                {% if barbershop.validate %}
+                <p><a href="{{path ('edit_barbershop', {id : barbershop.id })}}" class="barber-admin-link"><i class="fa-regular fa-pen-to-square"></i></a> | 
+                <a href="{{path ('delete_barbershop', {id : barbershop.id })}}" class="barber-admin-link"><i class="fa-solid fa-trash"></i></a> |
 
-                <a href="" class="barber-admin-link validate-barber" data-barbershop-id="{{ barbershop.id }}">Retirer</a></p>
+                <a href="" class="barber-admin-link validate-barber" data-barbershop-id="{{ barbershop.id }}"><i class="fa-{{ barbershop.validate ? 'solid fa-eye' : 'regular fa-eye-slash' }}"></i></a></p>
 
-                {% else %}
 
-                <a href="" class="barber-admin-link validate-barber" data-barbershop-id="{{ barbershop.id }}">Publier</a></p>
-                {% endif %}
     
                 {% endif %}
             </div>

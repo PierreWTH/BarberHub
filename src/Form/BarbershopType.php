@@ -55,7 +55,10 @@ class BarbershopType extends AbstractType
                 'required' =>false,
             ])
             
-            ->add('submit', SubmitType::class)
+            ->add('submit', SubmitType::class, [
+                'label' =>'Ajouter',
+                'attr' => ['class' => 'submit-button-template'] 
+            ])
         ;
     }
 

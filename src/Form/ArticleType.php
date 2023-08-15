@@ -41,7 +41,10 @@ class ArticleType extends AbstractType
                 'label' => false,
             ])
             
-            ->add('submit', SubmitType::class)
+            ->add('submit', SubmitType::class, [
+                'label' => "Ajouter",
+                'attr' => ['class' => 'submit-button-template'] 
+            ])
         ;
     }
 

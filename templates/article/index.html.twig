@@ -32,12 +32,6 @@
           <div class="author-info">
               <h4 class="author-name">{{article.user.pseudo}}</h4>
             <div class="publish-date">{{article.date| format_datetime('short', 'short', locale='fr')}}</div>
-            {% if is_granted('ROLE_ADMIN') %}
-    
-<a href="{{path ('edit_article', {id : article.id })}}"> Editer </a> |
-<a href="{{path ('delete_article', {id : article.id })}}"> Supprimer </a>
-
-{% endif %}
           </div>
         </div>   
       </div>

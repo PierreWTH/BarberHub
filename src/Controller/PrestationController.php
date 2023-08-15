@@ -23,30 +23,31 @@ class PrestationController extends AbstractController
         ]);
     }
 
-    #[Route('/prestation/add', name: 'add_prestation')]
+    #[Route('/prestation/manage', name: 'manage_prestations')]
     #[Route('/prestation/{id}/edit', name: 'edit_prestation')]
     #[IsGranted('ROLE_ADMIN')]
-    public function add(ManagerRegistry $doctrine, Prestation $prestation = null, Request $request) : Response
+    public function manage(ManagerRegistry $doctrine, Prestation $prestation = null, Request $request): Response
     {   
-        if(!$prestation){
+        $prestations = $doctrine->getRepository(Prestation::class)->findBy([], ["nom" => "ASC"]);
+        
+        if (!$prestation) {
             $prestation = new Prestation();
         }
 
         $form = $this->createForm(PrestationType::class, $prestation);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $prestation = $form->getData();
             $entityManager = $doctrine->getManager();
             $entityManager->persist($prestation);
-            
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_prestation');
+            return $this->redirectToRoute('manage_prestations');
         }
 
-        return $this->render('prestation/add.html.twig', [
+        return $this->render('prestation/manage.html.twig', [
+            'prestations' => $prestations,
             'formAddPrestation' => $form->createView(),
         ]);
     }
@@ -61,6 +62,6 @@ class PrestationController extends AbstractController
             $entityManager->flush();
         }
         
-        return $this->redirectToRoute('app_prestation');
+        return $this->redirectToRoute('manage_prestations');
     }
 }

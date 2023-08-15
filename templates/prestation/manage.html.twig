@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Ajouter une prestation {% endblock %}
+
+{% block body %}
+
+<section class="admin-pannel">
+    {% include "security/admin/_sidebar.html.twig" %}
+<div class="admin-pannel-content-prestation">
+        
+<div class="add-prestation-admin-form">
+<h1> Ajouter une prestation </h1>
+
+{{ form_start(formAddPrestation) }}
+{{ form_row(formAddPrestation.nom) }}
+{{ form_end(formAddPrestation) }}
+</div>
+<div class="table-prestation-admin">
+    <h2> Toutes les prestations </h2>
+    <table class="prestation-table">
+        <thead>
+            <tr>
+                <th> Nom </th>
+                <th> Modifier </th>
+                <th>Supprimer</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for prestation in prestations %}
+            <tr>
+        <td>{{prestation.nom}}</td>
+        <td><a href="{{path ('edit_prestation', {id : prestation.id })}}"> Editer </a></td>
+        <td><a href="{{path ('delete_prestation', {id : prestation.id })}}"> Supprimer </a>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+
+</div>
+</div>
+</section>
+
+
+{% endblock %}
