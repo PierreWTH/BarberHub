@@ -17,6 +17,7 @@ class PersonnelType extends AbstractType
         ->add('barbershop')
         ->add('user')
         ->add('manager', CheckboxType::class, [
+            'required' => false,
             'attr' => ['class' => 'sc-gJwTLC ikxBAC'] 
         ])
         ->add('submit', SubmitType::class, [
