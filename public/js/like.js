@@ -27,14 +27,22 @@ class Like {
             if(span){
                 span.innerHTML = nb + ' J\'aime';
             }
-
+            const notyf = new Notyf();
             const heartFilled = this.querySelector('#heartFilled');
             const heartUnfilled = this.querySelector('#heartUnfilled');
+            
 
             if(heartFilled && heartUnfilled){
                 heartFilled.classList.toggle('hidden');
                 heartUnfilled.classList.toggle('hidden');
             }
+            // Notification
+            if (heartFilled.classList.contains('hidden')) {
+                notyf.error('Retiré des favoris');
+            } else {
+                notyf.success('Ajouté aux favoris');
+            }
+
 
             
         })

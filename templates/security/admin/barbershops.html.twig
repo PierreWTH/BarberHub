@@ -20,6 +20,8 @@
 <script>
     
     $(document).ready(function() {
+        
+        const notyf = new Notyf();
         $('.validate-barber').click(function(e) {
             e.preventDefault();
             var barbershopId = $(this).data('barbershop-id'); 
@@ -32,8 +34,10 @@
                 success: function(response) {
                     if (icon.hasClass('fa-eye')) {
                         icon.removeClass('fa-solid fa-eye').addClass('fa-regular fa-eye-slash');
+                         notyf.success("Barbershop caché.");
                     } else {
                         icon.removeClass('fa-regular fa-eye-slash').addClass('fa-solid fa-eye');
+                            notyf.success("Barbershop affiché.");
                     }
                 },
                 error: function(xhr, status, error) {
