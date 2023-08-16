@@ -7,7 +7,7 @@
     {% include "security/admin/_sidebar.html.twig" %}
     <div class="admin-pannel-content">
     <h1>Liste des utilisateurs </h1>
-<table class="admin-user-table">
+<table class="admin-user-table" id="responsive-table">
     <thead>
         <th> Pseudo </th>
         <th> Validé </th>
@@ -17,23 +17,23 @@
     <tbody>
         {% for user in users %}   
             <tr>
-                <td> {{user.pseudo}}</td>
+                <td data-label = "Pseudo"> {{user.pseudo}}</td>
 
                 {% if user.isVerified == 1 %}
 
-                <td> Vérifié </td>
+                <td data-label = "Statut"> Vérifié </td>
 
                 {% else %}
 
-                <td> Non vérifié </td>
+                <td data-label = "Statut"> Non vérifié </td>
                     
                 {% endif %}
-                <td>
+                <td data-label = "Role(s)">
                 {% for role in user.roles %}
                          {{role}}<br>
                 {% endfor %}
                 </td>
-                <td><a href="{{ path( 'admin_edituser', {id : user.id } )}}">Modifier</a></td>
+                <td data-label = "Action"><a href="{{ path( 'admin_edituser', {id : user.id } )}}">Modifier</a></td>
             </tr>
         {% endfor %}
     </tbody>

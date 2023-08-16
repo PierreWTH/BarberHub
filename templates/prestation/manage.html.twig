@@ -17,20 +17,19 @@
 </div>
 <div class="table-prestation-admin">
     <h2> Toutes les prestations </h2>
-    <table class="prestation-table">
+    <table class="prestation-table" id="responsive-table">
         <thead>
             <tr>
                 <th> Nom </th>
-                <th> Modifier </th>
-                <th>Supprimer</th>
+                <th> Action </th>
             </tr>
         </thead>
         <tbody>
             {% for prestation in prestations %}
             <tr>
-        <td>{{prestation.nom}}</td>
-        <td><a href="{{path ('edit_prestation', {id : prestation.id })}}"> Editer </a></td>
-        <td><a href="{{path ('delete_prestation', {id : prestation.id })}}"> Supprimer </a>
+        <td data-label = "Nom">{{prestation.nom}}</td>
+        <td data-label = "Action"><a href="{{path ('edit_prestation', {id : prestation.id })}}"><i class="fa-regular fa-pen-to-square"></i></a>|
+        <a href="{{path ('delete_prestation', {id : prestation.id })}}"><i class="fa-solid fa-trash"></i></a>
         </td>
     </tr>
     {% endfor %}

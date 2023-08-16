@@ -9,7 +9,7 @@
 <div class="admin-pannel-content-prestation">
         
 <div class="add-prestation-admin-form">
-    <h1> Ajouter un Emloyé / Manager </h1>
+    <h1> Ajouter un Employé </h1>
 
     {{ form_start(formAddPersonnel) }}
     {{ form_row(formAddPersonnel.barbershop) }}
@@ -19,9 +19,9 @@
     </div>
     {{ form_end(formAddPersonnel) }}
 </div>
-<div class="table-prestation-admin">
-    <h2> Toutes les Employés </h2>
-    <table class="admin-employee-table">
+<div class="table-prestation-admin" >
+    <h2> Tous les employés </h2>
+    <table class="admin-employee-table" id="responsive-table">
         <thead>
             <tr>
                 <th> Pseudo </th>
@@ -33,14 +33,14 @@
         <tbody>
             {% for personne in personnel %}
             <tr>
-                <td>{{ personne.user}}</td>
-                <td>{{ personne.barbershop.nom}}</td>
+                <td data-label = 'Pseudo'>{{ personne.user}}</td>
+                <td data-label = 'Salon'>{{ personne.barbershop.nom}}</td>
                 {% if personne.isManager == 1 %}
-                    <td> Manager </td>
+                    <td data-label = 'Role'> Manager </td>
                 {% else %}
-                    <td> Employé </td>
+                    <td data-label = 'Role'> Employé </td>
                 {% endif %}
-                <td><a href="{{ path('edit_personnel', {id : personne.id })}}"> Modifier </a></td>
+                <td data-label = 'Action'><a href="{{ path('edit_personnel', {id : personne.id })}}"> Modifier </a></td>
             </tr>
             {% endfor %}
         </tbody>

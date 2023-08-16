@@ -472,6 +472,7 @@ a{
         max-width: 294px;
         height: auto;
         overflow: hidden;
+        width: 100%;
     }
 
     .img-box, .article-content {border-radius: 0;}
@@ -2061,7 +2062,7 @@ footer i {
 @media screen and (max-width : 768px) {
     
     .add-barbershop-form{
-        padding: 0.5rem;
+        padding: 1rem;
     }
 
     .barbershop-card-admin{
@@ -2183,7 +2184,7 @@ footer i {
     }
     .admin-pannel-content-prestation{
         align-items: center;
-        padding: 0.5rem;
+        padding: 1rem;
     }
 
     #addPrestationForm, .prestation-table{
@@ -2192,6 +2193,10 @@ footer i {
 
     .table-prestation-admin, .add-prestation-admin-form{
         width: 100%;
+    }
+
+    .add-article-form{
+        padding: 1rem;
     }
 }
 /******** USER LIST *******/
@@ -2306,3 +2311,26 @@ outline: 0;
 background-color: #8CD47E;
 }
 
+@media (max-width: 768px){
+
+    #responsive-table thead {
+    display: none;
+    }
+    
+    #responsive-table tr{
+    display: block;
+    margin-bottom: 40px;
+    }
+    
+    #responsive-table td {
+    display: block;
+    text-align: right;
+    }
+    
+    #responsive-table td:before {
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    }
+    }
+    
