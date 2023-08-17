@@ -31,11 +31,13 @@
         {# NOTYF #}
         <link rel="stylesheet" href="{{ asset('js/notyf/notyf.min.css')}}">
         <script src="{{ asset('js/notyf/notyf.min.js')}}"></script>
+        
 
 
         
     </head>
     <body>
+        {% include "layout/_responsiveMenu.html.twig" %}
 
         {% if not isHomePage is defined %}
         {% include "layout/_navbar.html.twig" %}

@@ -5,16 +5,15 @@
 {% block body %}
 <section class="admin-pannel">
     {% include "security/admin/_sidebar.html.twig" %}
-<div class="admin-pannel-content">
-    <h1 class="title-margin">Tous les barbiers</h1>
-    <div class="admin-pannel-content-flex">
-        {% include "security/admin/_adminBarberCards.html.twig" %}
+    <div class="admin-pannel-content">
+        <h1 class="title-margin">Tous les barbiers</h1>
+        <div class="admin-pannel-content-flex">
+            {% include "security/admin/_adminBarberCards.html.twig" %}
+        </div>
+        {{ knp_pagination_render(barbershops) }}
     </div>
-{{ knp_pagination_render(barbershops) }}
-</div>
-
-
 </section>
+
 {% block javascript %}
 
 <script>
@@ -34,7 +33,7 @@
                 success: function(response) {
                     if (icon.hasClass('fa-eye')) {
                         icon.removeClass('fa-solid fa-eye').addClass('fa-regular fa-eye-slash');
-                         notyf.success("Barbershop caché.");
+                         notyf.error("Barbershop caché.");
                     } else {
                         icon.removeClass('fa-regular fa-eye-slash').addClass('fa-solid fa-eye');
                             notyf.success("Barbershop affiché.");
