@@ -43,7 +43,6 @@ class PrestationController extends AbstractController
             $entityManager->persist($prestation);
             $entityManager->flush();
 
-            $this->addFlash('success', 'L\'action a été effectuée avec succès.');
 
             return $this->redirectToRoute('manage_prestations');
         }

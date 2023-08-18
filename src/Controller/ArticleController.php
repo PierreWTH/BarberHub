@@ -52,7 +52,7 @@ class ArticleController extends AbstractController
             
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_article');
+            return $this->redirectToRoute('admin_articles');
         }
 
         return $this->render('article/add.html.twig', [
@@ -84,9 +84,11 @@ class ArticleController extends AbstractController
             $entityManager = $doctrine->getManager();
             $entityManager->remove($article);
             $entityManager->flush();
+
+
         }
         
-        return $this->redirectToRoute('app_article');
+        return $this->redirectToRoute('admin_articles');
     }
 
 }
