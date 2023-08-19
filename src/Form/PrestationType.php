@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Prestation;
+use App\Form\Type\HoneyPotType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,7 +19,8 @@ class PrestationType extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' =>'Ajouter',
                 'attr' => ['class' => 'submit-button-template'] 
-            ]);
+            ])
+            ->add('honeypot', HoneyPotType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
