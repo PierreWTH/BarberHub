@@ -12,13 +12,14 @@ when@dev:
                 max_files: 10
                 path: "%kernel.logs_dir%/honeypot/honeypoy.%kernel.environment%.log"
                 channels:
-                    - app
                     - honey_pot
             main:
                 type: stream
                 path: "%kernel.logs_dir%/%kernel.environment%.log"
                 level: debug
-                channels: ["!event"]
+                channels: 
+                    - "!event"
+                    - "!honey_pot"
             # uncomment to get logging in your browser
             # you may have to allow bigger header sizes in your Web server configuration
             #firephp:

@@ -40,8 +40,10 @@ class HoneyPotType extends AbstractType
         return [
         'attr' => [
             'autocomplete' => 'off',
+            'class'        => 'candy',
             'tabindex'     => '-1'
         ],
+        'row_attr' => ['class' => 'candy'],
         //A retirer apres les tests
         'data' => 'fake data :(',
         'mapped' => false,

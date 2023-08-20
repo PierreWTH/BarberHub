@@ -31,10 +31,21 @@
         {# NOTYF #}
         <link rel="stylesheet" href="{{ asset('js/notyf/notyf.min.css')}}">
         <script src="{{ asset('js/notyf/notyf.min.js')}}"></script>
-        
-
-
-        
+        {# CACHER CHAMPS HONEYPOT #}
+        {% block stylesheet %}
+            <style>
+                div.candy
+                {
+                    opacity: 0;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    height: 0;
+                    width: 0;
+                    z-index: -1;
+                }
+            </style>
+        {% endblock stylesheet %}
     </head>
     <body>
         {% include "layout/_responsiveMenu.html.twig" %}

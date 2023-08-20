@@ -39,7 +39,7 @@ class HoneyPotSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $date = $event->getDate();
+        $data = $event->getData();
 
       if(!array_key_exists('phone', $data) || !array_key_exists('mail', $data))
       {
@@ -52,7 +52,7 @@ class HoneyPotSubscriber implements EventSubscriberInterface
       ] = $data;
 
       if($phone !== "" || $mail !== ""){
-        $this->logger->info("Bot spammeur potentiellement detecté. IP : '{$request->getClientIp()}. Le champs phone contenait : '{$phone}' et le champs mail contenait '{$mail}'.");
+        $this->honeyPotLogger->info("Bot spammeur potentiellement detecté. IP : '{$request->getClientIp()}'. Le champs phone contenait : '{$phone}' et le champs mail contenait '{$mail}'.");
 
         throw new HttpException(403, "Les robots ne sont pas les bienvenus ici !");
       }
