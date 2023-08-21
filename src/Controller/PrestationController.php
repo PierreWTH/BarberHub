@@ -30,6 +30,8 @@ class PrestationController extends AbstractController
     {   
         $prestations = $doctrine->getRepository(Prestation::class)->findBy([], ["nom" => "ASC"]);
         
+        $isEditMode = ($prestation !== null);
+
         if (!$prestation) {
             $prestation = new Prestation();
         }
@@ -42,6 +44,12 @@ class PrestationController extends AbstractController
             $entityManager = $doctrine->getManager();
             $entityManager->persist($prestation);
             $entityManager->flush();
+
+            $notificationMessage = ($isEditMode) ? 'Prestation modifiée.' : 'Prestation ajoutée.';
+            notyf()
+                ->position('x', 'right')
+                ->position('y', 'bottom')
+                ->addSuccess($notificationMessage);
 
 
             return $this->redirectToRoute('manage_prestations');
@@ -61,6 +69,11 @@ class PrestationController extends AbstractController
             $entityManager = $doctrine->getManager();
             $entityManager->remove($prestation);
             $entityManager->flush();
+
+            notyf()
+            ->position('x', 'right')
+            ->position('y', 'bottom')
+            ->addError('Prestation supprimée.');
         }
         
         return $this->redirectToRoute('manage_prestations');

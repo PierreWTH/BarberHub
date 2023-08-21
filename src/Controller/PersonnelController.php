@@ -30,7 +30,9 @@ class PersonnelController extends AbstractController
     public function manage(ManagerRegistry $doctrine, Personnel $personnel = null, Request $request): Response
     {   
         $personnels = $doctrine->getRepository(Personnel::class)->findAll();
-        
+
+        $isEditMode = ($personnel !== null);
+
         if (!$personnel) {
             $personnel = new Personnel();
         }
@@ -43,6 +45,12 @@ class PersonnelController extends AbstractController
             $entityManager = $doctrine->getManager();
             $entityManager->persist($personnel);
             $entityManager->flush();
+
+            $notificationMessage = ($isEditMode) ? 'Personnel modifié.' : 'Personnel ajouté.';
+            notyf()
+                ->position('x', 'right')
+                ->position('y', 'bottom')
+                ->addSuccess($notificationMessage);
 
             return $this->redirectToRoute('manage_personnel');
         }

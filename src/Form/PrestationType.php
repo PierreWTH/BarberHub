@@ -19,8 +19,8 @@ class PrestationType extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' =>'Ajouter',
                 'attr' => ['class' => 'submit-button-template'] 
-            ])
-            ->add('honeypot', HoneyPotType::class);
+            ]);
+            
     }
 
     public function configureOptions(OptionsResolver $resolver): void

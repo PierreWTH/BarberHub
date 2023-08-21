@@ -11,6 +11,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AvisController extends AbstractController
@@ -48,6 +49,11 @@ class AvisController extends AbstractController
             
             $entityManager->flush();
 
+            notyf()
+            ->position('x', 'right')
+            ->position('y', 'bottom')
+            ->addSuccess('Avis ajouté.');
+
             return $this->redirectToRoute('show_barbershop',['id' => $barbershop->getId()]);
         }
 
@@ -57,16 +63,20 @@ class AvisController extends AbstractController
         ]);
     }
 
-    // Supprimer un avis
-    #[Route('/barbershop/{barbershop}/avis/{avis}/delete', name: 'delete_avis')]
+    // Supprimer un avis en AJAX
+    #[Route('/barbershop/{barbershop}/avis/{avis}/delete', name: 'delete_avis', methods:"post")]
     public function delete(ManagerRegistry $doctrine, Barbershop $barbershop, Avis $avis = null): Response
     {   
         if ($avis){
             $entityManager = $doctrine->getManager();
             $entityManager->remove($avis);
             $entityManager->flush();
+
+            return new JsonResponse(['success' => true], 200);
+        }
+        else{
+            return new JsonResponse(['error' => 'Erreur de suppression'], 400);
         }
         
-        return $this->redirectToRoute('show_barbershop',['id' => $barbershop->getId()]);
     }
 }

@@ -1,6 +1,7 @@
 {% if app.user and barbershop.id in userRdvIds and barbershop.id not in userAvisIds %}
-
-    <p><a href="{{path ('add_avis', {id: barbershop.id}) }}"> Ajouter un commentaire </a></p>
+<div id="">
+    <p><a href="{{path ('add_avis', {id: barbershop.id})}}" id="add-comment"> Ajouter un commentaire </a></p>
+</div>
 
 {% endif %}  
       
@@ -33,7 +34,7 @@
     </div>
     
     {% if avis.user == app.user %}
-    <p><a href="{{ path('edit_avis', { 'barbershop': barbershop.id, 'avis': avis.id }) }}" class="edit-delete-avis">Modifier</a> | <a href="{{ path('delete_avis', { 'barbershop': barbershop.id, 'avis': avis.id }) }}" class="edit-delete-avis">Supprimer</a></p>
+    <p><a href="{{ path('edit_avis', { 'barbershop': barbershop.id, 'avis': avis.id }) }}" class="edit-delete-avis">Modifier</a> | <a href="" class="edit-delete-avis delete-avis" data-barbershop-id="{{ barbershop.id }}" data-avis-id="{{ avis.id }}">Supprimer</a></p>
     
     {% endif %}
 </div>
@@ -45,3 +46,39 @@
     </div>
     {% endif %}
 </section>
+
+{% block javascript %}
+
+<script>
+    $(document).ready(function() {
+        
+        const notyf = new Notyf();
+
+        $('.delete-avis').click(function(e) {
+            e.preventDefault();
+            var barbershopId = $(this).data('barbershop-id'); 
+            var avisId = $(this).data('avis-id');
+            var commentToDelete = $(this).closest('.barbershop-avis'); // Select the comment element
+            
+            $.ajax({
+                type: "POST",
+                url: "/barbershop/" + barbershopId + "/avis/" + avisId + "/delete",
+                contentType: 'application/json',
+                success: function(response) {
+                    commentToDelete.remove();
+                    notyf.error("Avis supprimé.");
+                    if ($('.barbershop-avis').length === 0) {
+                        
+                        $('#barbershop-avis-container').html('<div class="barbershop-avis"><p> Aucun avis pour le moment.  </p></div>');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock javascript %}
+

@@ -31,9 +31,12 @@ class ArticleController extends AbstractController
     #[IsGranted('ROLE_ADMIN')]
     public function add(ManagerRegistry $doctrine, Article $article = null, Request $request) : Response
     {   
+        $isEditMode = ($article !== null); // Check if in edit mode
+
         if(!$article){
             $article = new Article();
         }
+
 
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
@@ -49,6 +52,12 @@ class ArticleController extends AbstractController
             $article->setDate($today);
             $article->setUser($user);
             $entityManager->persist($article);
+
+            $notificationMessage = ($isEditMode) ? 'Article modifié.' : 'Article ajouté.';
+            notyf()
+                ->position('x', 'right')
+                ->position('y', 'bottom')
+                ->addSuccess($notificationMessage);
             
             $entityManager->flush();
 
@@ -85,6 +94,10 @@ class ArticleController extends AbstractController
             $entityManager->remove($article);
             $entityManager->flush();
 
+            notyf()
+            ->position('x', 'right')
+            ->position('y', 'bottom')
+            ->addError('Article supprimé.');
 
         }
         

@@ -142,6 +142,11 @@ class BarbershopController extends AbstractController
             
             $entityManager->flush();
 
+            notyf()
+            ->position('x', 'right')
+            ->position('y', 'bottom')
+            ->addSuccess('Barbershop ajouté.');
+
             return $this->redirectToRoute('app_barbershop');
         }
 
@@ -245,7 +250,13 @@ class BarbershopController extends AbstractController
             $entityManager->flush();
 
         }
-        return $this->redirectToRoute('app_barbershop');
+
+        notyf()
+            ->position('x', 'right')
+            ->position('y', 'bottom')
+            ->addError('Barbershop supprimé.');
+
+        return $this->redirectToRoute('admin_barbershop');
     }
 
     // Suppression de la photo d'un barbershop
