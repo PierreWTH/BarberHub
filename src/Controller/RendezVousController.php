@@ -36,7 +36,7 @@ class RendezVousController extends AbstractController
     }
 
     // Ajouter un rendez vous
-    #[Route('/barbershop/{barberPrestation}/rendezvous/add', name: 'add_rendezvous')]
+    #[Route('/barbershop/{id}/rendezvous/{barberPrestation}/add', name: 'add_rendezvous')]
     #[Route('/barbershop/rendezvous/{id}/edit', name: 'edit_rendezvous')]
     public function addRdv(ManagerRegistry $doctrine, BarberPrestation $barberPrestation, RendezVous $rendezvous = null, Request $request, RendezVousRepository $rvr, MailerInterface $mailer) : Response
     {   
@@ -64,8 +64,11 @@ class RendezVousController extends AbstractController
 
             
             if(!$debut){
-                echo 'Heure du rendez vous invalide.';
-                die();
+                notyf()
+                ->position('x', 'right')
+                ->position('y', 'bottom')
+                ->addSuccess('Heure de début invalide.');
+                return $this->redirectToRoute('add_rendezvous',['id' => $barbershopId, 'barberPrestation' => $barberPrestation->getId()]);
             }
             // Conversion en datetime pour début
             $heureDebut = new DateTimeImmutable($debut);
@@ -79,8 +82,12 @@ class RendezVousController extends AbstractController
             $today = new DateTime();
 
             if($heureDebut->getTimestamp() <= $today->getTimestamp()){
-                echo 'Le rendez vous ne peux pas être pris avant le jour actuel';
-                die();
+                notyf()
+                ->position('x', 'right')
+                ->position('y', 'bottom')
+                ->addError('Le rendez vous ne peux pas être prix avant le jour ou l\'heure actuelle.');
+    
+                return $this->redirectToRoute('add_rendezvous',['id' => $barbershopId, 'barberPrestation' => $barberPrestation->getId()]);
             }
 
             // VERIF SI RDV PRIS UN JOUR DE FERMETURE
@@ -92,8 +99,11 @@ class RendezVousController extends AbstractController
 
             
             if($horairesArray[$jour]['ouverture'] == 'ferme' || $horairesArray[$jour]['fermeture'] == 'ferme' ){
-                echo 'Le barbershop est fermé ce jour la.';
-                die();
+                notyf()
+                ->position('x', 'right')
+                ->position('y', 'bottom')
+                ->addError('Le barbershop est fermé ce jour la.');
+                return $this->redirectToRoute('add_rendezvous',['id' => $barbershopId, 'barberPrestation' => $barberPrestation->getId()]);
             }
 
             // VERIF SI LE RDV EST BIEN PRIS PENDANT LES HEURES D'OUVERTURE
@@ -102,8 +112,11 @@ class RendezVousController extends AbstractController
 
             if($heureDebut->format('H:i:s')  < $ouvertureBS->format('H:i:s')  || $heureDebut->format('H:i:s')  > $fermetureBS->format('H:i:s') )
             {
-                echo 'Vous ne pouvez pas prendre rendez-vous en dehors des heures d\'ouverture.';
-                die();
+                notyf()
+                ->position('x', 'right')
+                ->position('y', 'bottom')
+                ->addError('Vous ne pouvez pas prendre rendez vous en dehors des heures d\'ouverture.');
+                return $this->redirectToRoute('add_rendezvous',['id' => $barbershopId, 'barberPrestation' => $barberPrestation->getId()]);
             }
             
             // VERIF SI LE RDV EXISTE DEJA 
@@ -111,8 +124,11 @@ class RendezVousController extends AbstractController
 
             // Message d'erreur si le RDV existe déja 
             if($alreadyExist){
-                echo 'Ce créneaux a déja été reservé';
-               die();
+                notyf()
+                ->position('x', 'right')
+                ->position('y', 'bottom')
+                ->addError('Ce créneaux est indisponible.');
+                return $this->redirectToRoute('add_rendezvous',['id' => $barbershopId, 'barberPrestation' => $barberPrestation->getId()]);
             }
     
             // Rajout de 30min pour heure de fin
@@ -158,6 +174,11 @@ class RendezVousController extends AbstractController
 
             // Jeton de session pour indiquer que le user vient de prendre un RDV ( pour page confirm ) 
             $_SESSION['justBookedRdv'] = true;
+
+            notyf()
+            ->position('x', 'right')
+            ->position('y', 'bottom')
+            ->addSuccess('Rendez-Vous ajouté.');
 
             return $this->redirectToRoute('app_rendezvous_confirm');
         }        
