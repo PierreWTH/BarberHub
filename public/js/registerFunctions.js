@@ -45,8 +45,8 @@ const validPassword = function(password){
    let msg;
    let valid = false
    // au moins 3 caractère
-   if(inputPassword.value.length < 8){
-       msg ='Le mot de passe doit contenir au moins 8 caractères.'
+   if(inputPassword.value.length < 12){
+       msg ='Le mot de passe doit contenir au moins 12 caractères.'
    }
    //au moins 1 maj
    else if(!/[A-Z]/.test(inputPassword.value)){

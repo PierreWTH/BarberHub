@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Barbershop;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -45,6 +46,13 @@ class BarbershopType extends AbstractType
                 'multiple'=>false,
                 'mapped' =>false,
                 'required' =>false,
+                'constraints' => [
+                    new Image([
+                        'maxSize' => '8M',
+                        'maxSizeMessage' => 'L\'image est trop grande',
+                        'mimeTypesMessage' => 'Le fichier n\'est pas une image valide'
+                    ])
+                ]
             ])
 
             ->add('instagram', UrlType::class, [

@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use Exception;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
@@ -20,16 +21,16 @@ class PictureService
         $fichier = md5(uniqid(rand(), true)) . '.webp';
 
         // On récupère les infos de l'image (largeur, hauteur, ect...)
-        $pciture_infos = getimagesize($picture);
+        $picture_infos = getimagesize($picture);
 
         // Si il y a un probleme dans le get image size
-        if($pciture_infos === false)
+        if($picture_infos === false)
         {
             throw new Exception('Format d\'image incorrect');
         }
 
         // On vérifie le format de l'image
-        switch($pciture_infos['mime'])
+        switch($picture_infos['mime'])
         {
             case 'image/png':
                 // On récupere l'image dans une variable pour pouvoir la manipuler
@@ -50,8 +51,8 @@ class PictureService
         // On recadre l'image
 
         // On récupere les dimensions
-        $imageWidth = $pciture_infos[0];
-        $imageHeight = $pciture_infos[1];
+        $imageWidth = $picture_infos[0];
+        $imageHeight = $picture_infos[1];
 
         // On vérifie l'orientation de l'image
         if ($imageWidth > $imageHeight) {

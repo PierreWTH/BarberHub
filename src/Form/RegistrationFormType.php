@@ -51,7 +51,7 @@ class RegistrationFormType extends HoneyPotType
 
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
-                    new Regex('/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/', "Le mot de passe doit contenir 8 caractères avec une majuscule, une minuscule, un chiffre et un caractère spécial.")
+                    new Regex('/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{12,}$/', "Le mot de passe doit contenir 12 caractères avec une majuscule, une minuscule, un chiffre et un caractère spécial.")
                 ],
             ])
         ;

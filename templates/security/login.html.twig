@@ -17,7 +17,7 @@
         <div class="login-copy">
             <h2> Connexion </h2>
             <div class="login-container">
-                <p>Pas de compte ? <a href=""> <strong>S'inscrire</strong></a></p>
+                <p>Pas de compte ? <a href="{{ path('app_register') }}"> <strong>S'inscrire</strong></a></p>
             </div>
         </div>
         <div class="login-input-container email">
@@ -27,9 +27,9 @@
         <div class="login-input-container password">
             <label for="inputPassword">Mot de passe </label>
             <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-                    <input type="hidden" name="_csrf_token"
-                        value="{{ csrf_token('authenticate') }}"
-                    >
+
+                    <input type="hidden" name="_csrf_token"value="{{ csrf_token('authenticate') }}">
+
                 <i class="fa-solid fa-eye-slash"  onclick="showPassword()" id="password-toggle"></i>
         </div>
         <div class="forget-password">
