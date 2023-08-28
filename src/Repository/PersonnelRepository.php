@@ -42,15 +42,11 @@ class PersonnelRepository extends ServiceEntityRepository
     public function getUpcomingRendezVous($personnel)
     {
         $em = $this->getEntityManager();
-
         $qb = $em->createQueryBuilder();
     
         $query = 
-            // On selectionne les barbershops b
             $qb->select('r')
-            // Depuis l'entité barbershop, on donne l'alias b
             ->from('App\Entity\RendezVous', 'r')
-            // Ou user id est égal au user passé en paramètre
             ->where('r.debut > :currentdate')
             ->andWhere('r.personnel = :personnel')
             ->setParameter('currentdate', new \DateTime())

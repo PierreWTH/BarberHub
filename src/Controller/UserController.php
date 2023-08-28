@@ -67,7 +67,7 @@ class UserController extends AbstractController
             ];
             }
         }
-        // On le met en JSOn et on l'envoie a la vue
+        // On le met en JSON et on l'envoie a la vue
         $data = json_encode($rdvs);
 
         return $this->render('user/rdv.html.twig', compact('data'));        

@@ -4,17 +4,13 @@
 
 {% block body %}
 
-    <h1> Bienvenue, {{app.user.pseudo}} </h1>
-
-    <h2> Mes barbershops préférés </h2>
+    <h1 class="title-margin"> Bienvenue, {{app.user.pseudo}} </h1>
+<section id="myspace">
+    <h2 class=""> Mes barbershops préférés </h2>
 
     {% if likes is not empty %}
         
-        {% for barbershop in likes %}
-
-            {{barbershop.nom}}
-
-        {% endfor %}
+            {% include "user/_userBarberCards.html.twig" %}
 
     {% else %}
 
@@ -29,48 +25,51 @@
     <p> Vous n'avez pas encore de rendez-vous </p>
 
     {% endif %}
-
     {% if upcomingRdvs is not empty %}
+    <h3> Mes rendez-vous à venir </h3>
+    <div class="rdv-container">
+    
+    {% for rdv in upcomingRdvs %}
+    <div class="myspace-rdv">
 
-        <h3> Mes rendez-vous à venir </h3>
-
-        {% for rdv in upcomingRdvs %}
-
-            Le {{rdv.debut | format_datetime('full', 'short', locale='fr')}} <br>
-            Avec {{rdv.personnel}}<br>
-            Chez {{rdv.personnel.barbershop}}<br>
+        <p class="rdv-hour"><i class="fa-regular fa-calendar"></i> {{rdv.debut | format_datetime('medium', 'short', locale='fr') | capitalize}}</p> <br>
+        <i class="fa-regular fa-user"></i> Barbier : {{rdv.personnel}}<br>
+        <i class="fa-solid fa-shop"></i> Salon : {{rdv.personnel.barbershop}}<br>
 
             {% for barberPrestation in rdv.barberPrestation %}
 
-                Votre prestation : {{barberPrestation.prestation.nom}}<br>
-                Prix : {{barberPrestation.prix}}€
+            <i class="fa-solid fa-scissors"></i> Prestation : {{barberPrestation.prestation.nom}}<br>
+            <i class="fa-solid fa-money-bill"></i> Prix : {{barberPrestation.prix}}€
             
             {% endfor %}
             <br><br>
-            <a href="{{path ('delete_rdv', {id : rdv.id })}}"> Annuler </a>
+                <a href="{{path ('delete_rdv', {id : rdv.id })}}" class="delete-rdv-button"> Annuler </a>
+        </div>
         {% endfor %}
 
     {% endif %}
-
+</div>
     {% if pastRdvs is not empty %}
 
         <h3> Mes rendez-vous passés </h3>
+        <div class="rdv-container">
 
         {% for rdv in pastRdvs %}
-
-        Le {{rdv.debut | format_datetime('full', 'short', locale='fr')}} <br>
-        Avec {{rdv.personnel}}<br>
-        Chez {{rdv.personnel.barbershop}}<br>
+        <div class="myspace-rdv">
+        <p class="rdv-hour"><i class="fa-regular fa-calendar"></i> {{rdv.debut | format_datetime('medium', 'short', locale='fr')}} </p><br>
+        <i class="fa-regular fa-user"></i> Barbier :  {{rdv.personnel}}<br>
+        <i class="fa-solid fa-shop"></i> Salon : {{rdv.personnel.barbershop}}<br>
 
             {% for barberPrestation in rdv.barberPrestation %}
 
-            Votre prestation : {{barberPrestation.prestation.nom}}<br>
-            Prix : {{barberPrestation.prix}}€
+            <i class="fa-solid fa-scissors"></i> Votre prestation : {{barberPrestation.prestation.nom}}<br>
+            <i class="fa-solid fa-money-bill"></i> Prix : {{barberPrestation.prix}}€
                 
             {% endfor %}
             <br><br>
+        </div>
         {% endfor %}
-
+</div>
     {% endif %}
 
     {% if app.user.personnel %}
@@ -86,10 +85,12 @@
         {% endif %}
 
         <p><a href="{{path ('app_myrdv')}}"> Voir mon planning </a></p>
-            
-        
-
-
     {% endif %}
+</section>
 
+{% block javascripts %}
+
+<script src="{{ asset('js/like.js')}}"></script>
+
+{% endblock javascripts %}
 {% endblock %}

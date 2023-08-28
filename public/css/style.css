@@ -2347,7 +2347,54 @@ background-color: #8CD47E;
     font-weight: bold;
     }
     }
+
+    /******************* MY SPACE **********************/
     
+#myspace {
+    margin: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.rdv-container{
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+
+}
+.myspace-rdv{
+    padding: 1rem;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    max-width: 300px;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.delete-rdv-button{
+
+    border: 1px solid black;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    color: black;
+    transition: 0.3s;
+}
+
+.delete-rdv-button:hover{
+    background-color: black;
+    color: white;
+}
+
+.rdv-hour {
+    font-size: 30px;
+    margin-bottom: 0.2rem;
+    font-family: 'Smythe';
+}
+
+.rdv-hour i {
+    color: var(--dark-gray);
+}
+
+
     /****************************************************/
     /***************** BURGER MENU **********************/
     /****************************************************/

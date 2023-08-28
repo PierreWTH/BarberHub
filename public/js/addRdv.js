@@ -62,7 +62,5 @@ function selectedCreneau(button, value) {
     var reservationButton = document.getElementById('rendez_vous_submit');
     button.classList.add('clicked-button');
     reservationButton.style.display = 'block';
-
-    submitButton.focus();
 }
 
