@@ -6,7 +6,13 @@
 
 <h1 class="title-margin"> Tous les barbiers </h1>
 
-{# Barre de recherche #}
+<div id="barbershop-searchbar">
+{{ form_start(form) }}
+{{form_widget(form.q)}}
+{{form_widget(form.sortBy)}}
+<button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+{{ form_end(form) }}
+</div>
 
 {% include "barbershop/index/_barberCards.html.twig" %}
 

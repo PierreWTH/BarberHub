@@ -1,4 +1,7 @@
 <section class="barbershop-cards-container">
+
+    {% if allBarbershops|length > 0 %}
+
     {% for barbershop in allBarbershops %}
     
     {% for pics in barbershop.barbershopPics %}
@@ -53,6 +56,11 @@
         
         {% endfor %}
         {% endfor %}
+        {% else %}
+
+        <p>Aucun résultat trouvé.</p>
+        
+        {% endif %}
         
     </section>
     

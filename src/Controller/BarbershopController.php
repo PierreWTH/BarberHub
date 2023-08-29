@@ -4,11 +4,14 @@ namespace App\Controller;
 
 use DateTime;
 use IntlDateFormatter;
+use App\Form\SearchType;
+use App\Model\SearchData;
 use App\Entity\Barbershop;
 use App\Form\BarbershopType;
 use App\Entity\BarbershopPics;
 use App\Service\PictureService;
 use App\HttpClient\NominatimHttpClient;
+use App\Repository\BarbershopRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
@@ -24,9 +27,24 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class BarbershopController extends AbstractController
 {
     #[Route('/barbershops', name: 'app_barbershop')]
-    public function index(ManagerRegistry $doctrine, PaginatorInterface $paginator, Request $request): Response
+    public function index(ManagerRegistry $doctrine, PaginatorInterface $paginator, Request $request, BarbershopRepository $br): Response
     {
         // Récuperer tous les barbiers de la BDD
+
+        $searchData = new SearchData();
+        $form = $this->createForm(SearchType::class, $searchData);
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+
+            $searchData->page = $request->query->getInt('page', 1);
+            $searchedBarbershops = $br->findBySearch($searchData);
+
+            return $this->render('barbershop/index/index.html.twig', [
+                'form' => $form->createView(),
+                'allBarbershops' => $searchedBarbershops
+            ]);
+        }
 
         $allBarbershops = $doctrine->getRepository(Barbershop::Class)->getAllValidBarbershop();
         
@@ -38,6 +56,7 @@ class BarbershopController extends AbstractController
         );
         
         return $this->render('barbershop/index/index.html.twig', [
+            'form' => $form->createView(),
             'allBarbershops' => $allBarbershops,
         ]);
     }

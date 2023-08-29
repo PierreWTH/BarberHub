@@ -934,7 +934,63 @@ footer i {
     
 }
 
-/***************************** BARBERSHOPS LIST ************************************/
+/***************************** BARBERSHOPS LIST ALL BARBER ************************************/
+
+#barbershop-searchbar{
+    margin: 2rem 0rem;
+    padding: 1.5rem;
+    background-color: var(--light-gray);
+}
+
+#barbershop-searchbar form{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+#barbershop-searchbar i{
+    font-size: 17px;
+}
+
+
+#barbershop-searchbar button {
+    display: block;
+    width: 70px;
+    background: var(--dark-gray);
+    color: white;
+    font-weight: var(--regular);
+    border: none;
+    text-transform: uppercase;
+    padding: 0.8rem;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    transition: .5s;
+    cursor: pointer;
+}
+
+#search_q{
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    border: 1px solid #c4c4c4;
+    padding: 0.8em;
+    font-size: 0.875rem;
+}
+
+#search_sortBy{
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    background-color: white;
+    border: 1px solid #c4c4c4;
+    padding: 0.8em;
+    font-size: 0.875rem;
+}
 
 .barbershop-cards-container {
     max-width: 1600px;

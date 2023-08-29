@@ -2,9 +2,12 @@
 
 namespace App\Repository;
 
+use App\Model\SearchData;
 use App\Entity\Barbershop;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Barbershop>
@@ -16,7 +19,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class BarbershopRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private PaginatorInterface $paginatorInterface)
     {
         parent::__construct($registry, Barbershop::class);
     }
@@ -66,6 +69,41 @@ class BarbershopRepository extends ServiceEntityRepository
                 ->getQuery();
     
             return $query->getResult();
+    }
+
+    public function findBySearch( SearchData $searchData): PaginationInterface {
+
+        //On selectionne la table barbier, et on cible les barbiers validés
+        $data = $this->createQueryBuilder('b')
+            ->where('b.validate = 1');
+
+        // Si il y a une recherche
+        if (!empty($searchData->q)) {
+            $data = $data
+                ->andWhere('b.nom LIKE :q')
+                ->setParameter('q', "%{$searchData->q}%");
+        }
+
+        // Si un filtre est appliqué 
+        if (!empty($searchData->sortBy)) {
+            if ($searchData->sortBy === 'likes') {
+                $data = $data->leftJoin('b.likes', 'l')
+                ->addGroupBy('b.id')
+                ->addOrderBy('COUNT(l.id)', 'DESC');
+            } elseif ($searchData->sortBy === 'comments') {
+                $data = $data->leftJoin('b.avis', 'a')
+                ->addGroupBy('b.id')
+                ->addOrderBy('COUNT(a.id)', 'DESC');           
+            }
+        }
+
+        $data = $data
+            ->getQuery()
+            ->getResult();
+
+        $barbershops = $this->paginatorInterface->paginate($data, $searchData->page, 9);
+
+        return $barbershops;
     }
 
 //    /**
