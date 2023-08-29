@@ -1470,13 +1470,27 @@ footer i {
    margin-bottom: 2rem ;
 }
 
+.personnel-radio:hover {
+    background-color: var(--light-gray);
+}
+
+.personnel-radio label, input {
+    cursor: pointer;
+}
+
+.personnel-radio.clicked {
+    background-color: var(--light-gray);
+}
+
 #personnel-radio-container div{
     display: flex;
     flex-direction: row-reverse;
     gap: 1rem;
     border: 1px solid #c4c4c4;
-    padding: 2rem;
+    padding: 1.5rem 2rem;
     border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
 

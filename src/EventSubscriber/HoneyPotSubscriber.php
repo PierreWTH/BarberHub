@@ -57,5 +57,5 @@ class HoneyPotSubscriber implements EventSubscriberInterface
         throw new HttpException(403, "Les robots ne sont pas les bienvenus ici !");
       }
     }
-    
+     
 }

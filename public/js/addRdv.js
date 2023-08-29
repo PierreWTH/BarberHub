@@ -1,6 +1,14 @@
 // RECUPERATION DES CRENEAUX ET INITIALISATION DU SLIDER
-
+    
   $(document).ready(function() {
+
+    $(document).on('click', '.personnel-radio', function() {
+        var radio = $(this).find('input[type="radio"]');
+
+        radio.prop('checked', true).trigger('change');
+        $(this).addClass('clicked');
+        $('.personnel-radio').not(this).removeClass('clicked');
+    });
 
     // Fonction pour initialiser le slider
     function initSplide() {
