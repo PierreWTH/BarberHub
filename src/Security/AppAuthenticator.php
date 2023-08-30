@@ -34,8 +34,11 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
         $user = $this->userRepository->findOneBy(['email' => $email]);
 
         $request->getSession()->set(Security::LAST_USERNAME, $email);
+        if(!$user){
+            throw new CustomUserMessageAuthenticationException('Cette adresse e-mail n\'existe pas.');
 
-        if (!$user || !$user->isVerified()) {
+        }
+        if (!$user->isVerified()) {
             throw new CustomUserMessageAuthenticationException('Merci de vérifier votre adresse mail pour vous connecter.');
         }
 

@@ -87,7 +87,7 @@
         <p><a href="{{path ('app_myrdv')}}"> Voir mon planning </a></p>
     {% endif %}
 
-    <p><a href="{{path ('delete_account')}}"> Supprimer mon compte </a></p>
+    <p><a href="{{path ('delete_account')}}" id="delete-account-link"> Supprimer mon compte </a></p>
 
 </section>
 
@@ -95,5 +95,39 @@
 
 <script src="{{ asset('js/like.js')}}"></script>
 
+<script>
+
+    $('#delete-account-link').click(function() {
+    event.preventDefault()
+    Swal.fire({
+        title: "Êtes-vous sûr ?",
+        color: "#000000",
+        text: "Vous ne pourrez pas revenir en arrière.",
+        icon: 'warning',
+        iconColor: '#E66F64',
+        showCancelButton: true,
+        confirmButtonColor: '#F5F3F2',
+        cancelButtonColor: '#000000',
+        cancelButtonText: '<span style="color: white;">Annuler</span>',
+        confirmButtonText: '<span style="color: black;">Confirm</span>',
+      }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Supprimé !',
+                text: 'Votre compte à bien été supprimé.',
+                icon: 'success',
+                showConfirmButton: false,
+                
+            });
+          setTimeout(function() {
+            window.location.href = $('#delete-account-link').attr('href');
+        }, 2000);
+        }
+      })
+    });
+    
+</script>
+
 {% endblock javascripts %}
 {% endblock %}
+

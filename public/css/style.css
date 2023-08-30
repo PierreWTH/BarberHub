@@ -2464,7 +2464,19 @@ background-color: #8CD47E;
     color: var(--dark-gray);
 }
 
+/**** ALERT ***/
 
+.alert-danger{
+    background-color: #E66F64;
+    padding: 1rem;
+    color: white;
+}
+
+/******* SWEET ALTER 2*******/
+
+.alert-confirm-button{
+    color: black;
+}
     /****************************************************/
     /***************** BURGER MENU **********************/
     /****************************************************/
