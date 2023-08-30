@@ -87,6 +87,7 @@ class ArticleController extends AbstractController
 
     // Supprimer un article
     #[Route('administration/article/{id}/delete', name: 'delete_article')]
+    #[IsGranted('ROLE_ADMIN')]
     public function delete(ManagerRegistry $doctrine, Article $article = null): Response
     {   
         if ($article){

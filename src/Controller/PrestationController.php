@@ -10,22 +10,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+#[IsGranted('ROLE_ADMIN')]
+#[Route('/administration')]
 class PrestationController extends AbstractController
 {
-    #[Route('/prestations', name: 'app_prestation')]
-    #[IsGranted('ROLE_ADMIN')]
-    public function index(ManagerRegistry $doctrine): Response
-    {
 
-        $prestations = $doctrine->getRepository(Prestation::Class)->findBy([], ["nom"=>"ASC"]);
-        return $this->render('prestation/index.html.twig', [
-            'prestations' => $prestations,
-        ]);
-    }
-
-    #[Route('administration/prestation/manage', name: 'manage_prestations')]
-    #[Route('administration/prestation/{id}/edit', name: 'edit_prestation')]
-    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/prestation/manage', name: 'manage_prestations')]
+    #[Route('/prestation/{id}/edit', name: 'edit_prestation')]
     public function manage(ManagerRegistry $doctrine, Prestation $prestation = null, Request $request): Response
     {   
         $prestations = $doctrine->getRepository(Prestation::class)->findBy([], ["nom" => "ASC"]);
@@ -62,7 +53,7 @@ class PrestationController extends AbstractController
     }
 
     // Supprimer un prestation
-    #[Route('admin/prestation/{id}/delete', name: 'delete_prestation')]
+    #[Route('/prestation/{id}/delete', name: 'delete_prestation')]
     public function delete(ManagerRegistry $doctrine, Prestation $prestation = null): Response
     {   
         if ($prestation){

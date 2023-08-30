@@ -12,9 +12,11 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/administration')]
+#[IsGranted('ROLE_ADMIN')]
 class AdminController extends AbstractController
 {
 
@@ -36,7 +38,6 @@ class AdminController extends AbstractController
     }
 
     #[Route('/barbershops', name: 'admin_barbershop')]
-    #[IsGranted('ROLE_ADMIN')]
     public function allBarbershopAdmin(ManagerRegistry $doctrine, PaginatorInterface $paginator, Request $request): Response
     {
         $barbershops = $doctrine->getRepository(Barbershop::Class)->findBy([], ["creationDate"=>"DESC"]);
@@ -53,7 +54,6 @@ class AdminController extends AbstractController
     }
 
     #[Route('/users', name: 'admin_users')]
-    #[IsGranted('ROLE_ADMIN')]
     public function listUsers(ManagerRegistry $doctrine): Response
     {
         $users = $doctrine->getRepository(User::Class)->findBy([], ["pseudo"=>"ASC"]);
@@ -64,7 +64,6 @@ class AdminController extends AbstractController
     }
 
     #[Route('/articles', name: 'admin_articles')]
-    #[IsGranted('ROLE_ADMIN')]
     public function listArticles(ManagerRegistry $doctrine): Response
     {
         $articles = $doctrine->getRepository(Article::Class)->findBy([], ["date"=>"ASC"]);
@@ -75,7 +74,6 @@ class AdminController extends AbstractController
     }
 
     #[Route('/users/edit/{id}', name: 'admin_edituser')]
-    #[IsGranted('ROLE_ADMIN')]
     public function editUsers(User $user, ManagerRegistry $doctrine, Request $request): Response
     {
         $form = $this->createForm(EditUserType::class, $user);

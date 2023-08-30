@@ -8,10 +8,7 @@ window.onload = () => {
 
     const noteValue = note.value;
     console.log(noteValue)
-    resetStars(noteValue);
-
-    // Valeur de base a 0
-    note.value = 0
+    resetStars(noteValue);    
 
     // On boucle sur les étoiles pour ajouter des ecouteur d'evenement
 

@@ -43,7 +43,6 @@ class AvisController extends AbstractController
             //SET BARBERSHOP
             $avis->setBarbershop($barbershop);
 
-
             $entityManager = $doctrine->getManager();
             $entityManager->persist($avis);
             

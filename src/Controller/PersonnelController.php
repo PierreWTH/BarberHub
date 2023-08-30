@@ -10,11 +10,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+#[IsGranted('ROLE_ADMIN')]
 class PersonnelController extends AbstractController
 {
     #[Route('administration/personnel/manage', name: 'manage_personnel')]
     #[Route('administration/personnel/{id}/edit', name: 'edit_personnel')]
-    #[IsGranted('ROLE_ADMIN')]
     public function manage(ManagerRegistry $doctrine, Personnel $personnel = null, Request $request): Response
     {   
         $personnels = $doctrine->getRepository(Personnel::class)->findAll();

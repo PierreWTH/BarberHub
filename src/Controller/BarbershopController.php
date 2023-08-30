@@ -20,9 +20,11 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
 
 class BarbershopController extends AbstractController
 {
@@ -243,6 +245,7 @@ class BarbershopController extends AbstractController
 
    // Publier/ retirer un Barbershop en AJAX
    #[Route('administration/barbershop/{id}/validate', name: 'validate_barbershop', methods:"post")]
+   #[IsGranted('ROLE_ADMIN')]
    public function validate(ManagerRegistry $doctrine, Barbershop $barbershop): Response
    {   
         if ($barbershop->isValidate())

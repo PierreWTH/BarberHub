@@ -25,6 +25,7 @@ class BarberPrestationController extends AbstractController
 
     #[Route('barbershop/{id}/barberprestation/add', name: 'add_barberPrestation')]
     #[Route('barbershop/{barbershop}/barberprestation/{barberprestation}/edit', name: 'edit_barberPrestation')]
+    #[IsGranted('ROLE_BARBER')]
     public function add(ManagerRegistry $doctrine, Security $security, Barbershop $barbershop, BarberPrestation $barberPrestation = null, Request $request) : Response
     {   
         if(!$barberPrestation){
