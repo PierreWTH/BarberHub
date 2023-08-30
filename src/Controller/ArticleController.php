@@ -26,8 +26,8 @@ class ArticleController extends AbstractController
     }
 
     // Ajouter ou éditer un article
-    #[Route('/article/add', name: 'add_article')]
-    #[Route('/article/{id}/edit', name: 'edit_article')]
+    #[Route('administration/article/add', name: 'add_article')]
+    #[Route('administration/article/{id}/edit', name: 'edit_article')]
     #[IsGranted('ROLE_ADMIN')]
     public function add(ManagerRegistry $doctrine, Article $article = null, Request $request) : Response
     {   
@@ -86,7 +86,7 @@ class ArticleController extends AbstractController
     }
 
     // Supprimer un article
-    #[Route('admin/article/{id}/delete', name: 'delete_article')]
+    #[Route('administration/article/{id}/delete', name: 'delete_article')]
     public function delete(ManagerRegistry $doctrine, Article $article = null): Response
     {   
         if ($article){

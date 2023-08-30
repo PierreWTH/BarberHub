@@ -71,7 +71,7 @@ class BarbershopRepository extends ServiceEntityRepository
             return $query->getResult();
     }
 
-    public function findBySearch( SearchData $searchData): PaginationInterface {
+    public function findBySearch( SearchData $searchData): Array {
 
         //On selectionne la table barbier, et on cible les barbiers validés
         $data = $this->createQueryBuilder('b')
@@ -101,7 +101,7 @@ class BarbershopRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
 
-        $barbershops = $this->paginatorInterface->paginate($data, $searchData->page, 9);
+        $barbershops = $data;
 
         return $barbershops;
     }

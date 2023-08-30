@@ -30,7 +30,7 @@
         <i class="fa-regular fa-circle-user"></i>
 
           <div class="author-info">
-              <h4 class="author-name">{{article.user.pseudo}}</h4>
+              <h4 class="author-name">{{ article.user is not null ? article.user.pseudo : 'Supprimé' }}</h4>
             <div class="publish-date">{{article.date| format_datetime('short', 'short', locale='fr')}}</div>
           </div>
         </div>   

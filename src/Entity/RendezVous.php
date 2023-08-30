@@ -27,7 +27,7 @@ class RendezVous
     #[ORM\ManyToMany(targetEntity: BarberPrestation::class, inversedBy: 'rendezVouses')]
     private Collection $barberprestation;
 
-    #[ORM\ManyToOne(inversedBy: 'rendezVouses')]
+    #[ORM\ManyToOne(inversedBy: 'rendezVouses', cascade:['persist', 'remove'])]
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'rendezvouses')]

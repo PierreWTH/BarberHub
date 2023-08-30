@@ -35,13 +35,16 @@ class BarbershopController extends AbstractController
         $form = $this->createForm(SearchType::class, $searchData);
 
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()) {
 
+        if ($request->isXmlHttpRequest()) { 
+            $searchData = new SearchData();
             $searchData->page = $request->query->getInt('page', 1);
-            $searchedBarbershops = $br->findBySearch($searchData);
+            $searchData->q = $request->query->get('search');
+            $searchData->sortBy = $request->query->get('sort');
 
-            return $this->render('barbershop/index/index.html.twig', [
-                'form' => $form->createView(),
+            $searchedBarbershops = $br->findBySearch($searchData);
+    
+            return $this->render('barbershop/index/_barberCards.html.twig', [
                 'allBarbershops' => $searchedBarbershops
             ]);
         }
@@ -61,7 +64,7 @@ class BarbershopController extends AbstractController
         ]);
     }
     
-    #[Route('/barbershop/add', name: 'add_barbershop')]
+    #[Route('administration/barbershop/add', name: 'add_barbershop')]
     #[Route('/barbershop/{id}/edit', name: 'edit_barbershop')]
     public function add(ManagerRegistry $doctrine, Barbershop $barbershop = null, Request $request, PictureService $pictureService, NominatimHttpClient $nominatim, Security $security, $id = null ) : Response
     {
@@ -239,7 +242,7 @@ class BarbershopController extends AbstractController
     }
 
    // Publier/ retirer un Barbershop en AJAX
-   #[Route('/barbershop/{id}/validate', name: 'validate_barbershop', methods:"post")]
+   #[Route('administration/barbershop/{id}/validate', name: 'validate_barbershop', methods:"post")]
    public function validate(ManagerRegistry $doctrine, Barbershop $barbershop): Response
    {   
         if ($barbershop->isValidate())
@@ -259,7 +262,7 @@ class BarbershopController extends AbstractController
    }
 
     // Supprimer un Barbershop
-    #[Route('/barbershop/{id}/delete', name: 'delete_barbershop')]
+    #[Route('administration/barbershop/{id}/delete', name: 'delete_barbershop')]
     #[IsGranted('ROLE_ADMIN')]
     public function delete(ManagerRegistry $doctrine, barbershop $barbershop = null): Response
     {   
@@ -279,7 +282,7 @@ class BarbershopController extends AbstractController
     }
 
     // Suppression de la photo d'un barbershop
-    #[Route('/barbershop/photo/{id}/delete', name: 'delete_photo', methods: ["DELETE"])]
+    #[Route('administration/barbershop/photo/{id}/delete', name: 'delete_photo', methods: ["DELETE"])]
     public function deletePhoto(BarbershopPics $image, Request $request, EntityManagerInterface $em, PictureService $pictureService): JsonResponse
     {   
         // On récupere le contenu de la requete 

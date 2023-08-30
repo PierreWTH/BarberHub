@@ -12,20 +12,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PersonnelController extends AbstractController
 {
-    #[Route('/personnel', name: 'app_personnel')]
-    #[IsGranted('ROLE_ADMIN')]
-    public function index(ManagerRegistry $doctrine): Response
-    {
-        $personnel = $doctrine->getRepository(Personnel::Class)->findAll();
-
-        return $this->render('personnel/index.html.twig', [
-            'personnel' => $personnel,
-        ]);
-    }
-
-
-    #[Route('/personnel/manage', name: 'manage_personnel')]
-    #[Route('/personnel/{id}/edit', name: 'edit_personnel')]
+    #[Route('administration/personnel/manage', name: 'manage_personnel')]
+    #[Route('administration/personnel/{id}/edit', name: 'edit_personnel')]
     #[IsGranted('ROLE_ADMIN')]
     public function manage(ManagerRegistry $doctrine, Personnel $personnel = null, Request $request): Response
     {   

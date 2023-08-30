@@ -2808,14 +2808,14 @@ background-color: #8CD47E;
   }
  
 
-  @media screen and (max-width : 1220px) {
-   #burger-section{
-    display: block;
-   }
-}
-
-@media screen and (max-width : 768px) {
-    #responsive-nav{
-     max-width: 350px;
+    @media screen and (max-width : 1220px) {
+        #burger-section{
+        display: block;
+        }
     }
- }
+
+    @media screen and (max-width : 768px) {
+        #responsive-nav{
+            max-width: 350px;
+        }
+    }

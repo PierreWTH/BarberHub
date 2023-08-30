@@ -46,7 +46,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Avis::class)]
     private Collection $avis;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: RendezVous::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: RendezVous::class, cascade:['persist', 'remove'])]
     private Collection $rendezVouses;
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]

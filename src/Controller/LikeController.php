@@ -9,11 +9,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
-
+#[IsGranted('ROLE_USER')]
+#[IsGranted('ROLE_ADMIN')]
 class LikeController extends AbstractController
 {   
     #[Route('/like/barbershop/{id}', name: 'like_barbershop', methods :['GET'])]
-    #[IsGranted('ROLE_USER')]
     public function like(Barbershop $barbershop, EntityManagerInterface $manager): Response
     {
         $user = $this->getUser();

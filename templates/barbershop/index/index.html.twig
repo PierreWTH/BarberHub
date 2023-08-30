@@ -9,17 +9,45 @@
 {{ form_start(form) }}
 {{form_widget(form.q)}}
 {{form_widget(form.sortBy)}}
-<button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 {{ form_end(form) }}
 </div>
-
+<div id="searchResults">
 {% include "barbershop/index/_barberCards.html.twig" %}
-
+</div>
 {{ knp_pagination_render(allBarbershops) }}
 
 {% block javascripts %}
 
 <script src="{{ asset('js/like.js')}}"></script>
+
+<script>
+    // Selection des inputs de la barre de recherche 
+    $(document).ready(function() {
+        $('#search_q, #search_sortBy').on('input change', function() {
+            const searchText = $('#search_q').val();
+            const selectedOption = $('#search_sortBy').val();
+            search(searchText, selectedOption);
+        });
+    });
+    // Requete ajax pour effectuer la recherche
+    function search(searchText, selectedOption) {
+        $.ajax({
+            url: '/barbershops',    
+            type: 'GET',
+            data: { search: searchText,
+                    sort : selectedOption 
+            },
+            success: function(response) {
+                $('#searchResults').html('');
+                $('#searchResults').html(response);
+                console.log(response)
+            },
+            error: function(xhr, status, error) {
+                console.log(error)
+            }
+        });
+    }
+</script>
 
 {% endblock javascripts %}
 

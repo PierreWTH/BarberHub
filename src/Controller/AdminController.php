@@ -14,11 +14,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+#[Route('/administration')]
 class AdminController extends AbstractController
 {
 
-    #[Route('/administration', name: 'control_pannel')]
-    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/', name: 'control_pannel')]
+    
     public function controlPannel(ManagerRegistry $doctrine): Response
     {   
         $nbBarbershops = count($doctrine->getRepository(Barbershop::Class)->findAll());
@@ -34,7 +35,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/administration/barbershops', name: 'admin_barbershop')]
+    #[Route('/barbershops', name: 'admin_barbershop')]
     #[IsGranted('ROLE_ADMIN')]
     public function allBarbershopAdmin(ManagerRegistry $doctrine, PaginatorInterface $paginator, Request $request): Response
     {
@@ -51,7 +52,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/administration/users', name: 'admin_users')]
+    #[Route('/users', name: 'admin_users')]
     #[IsGranted('ROLE_ADMIN')]
     public function listUsers(ManagerRegistry $doctrine): Response
     {
@@ -62,7 +63,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/administration/articles', name: 'admin_articles')]
+    #[Route('/articles', name: 'admin_articles')]
     #[IsGranted('ROLE_ADMIN')]
     public function listArticles(ManagerRegistry $doctrine): Response
     {
@@ -73,7 +74,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/administration/users/edit/{id}', name: 'admin_edituser')]
+    #[Route('/users/edit/{id}', name: 'admin_edituser')]
     #[IsGranted('ROLE_ADMIN')]
     public function editUsers(User $user, ManagerRegistry $doctrine, Request $request): Response
     {

@@ -23,8 +23,8 @@ class PrestationController extends AbstractController
         ]);
     }
 
-    #[Route('/prestation/manage', name: 'manage_prestations')]
-    #[Route('/prestation/{id}/edit', name: 'edit_prestation')]
+    #[Route('administration/prestation/manage', name: 'manage_prestations')]
+    #[Route('administration/prestation/{id}/edit', name: 'edit_prestation')]
     #[IsGranted('ROLE_ADMIN')]
     public function manage(ManagerRegistry $doctrine, Prestation $prestation = null, Request $request): Response
     {   

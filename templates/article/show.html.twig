@@ -10,7 +10,7 @@
     <div class="show-article-title">
         <h1> {{ article.titre }} </h1>
         <p> {{article.description}} </p>
-        <p> Par : {{ article.user.pseudo }} le {{article.date| format_datetime('short', 'none', locale='fr')}}</p>
+        <p> <i class="fa-solid fa-user"></i> Par {{ article.user is not null ? article.user.pseudo : 'Supprimé' }} le {{article.date| format_datetime('short', 'none', locale='fr')}}</p>
     </div>
 </div>
 <article class="show-article-content">

@@ -27,7 +27,7 @@
         {% endfor %}
         </div>
         
-        <p> {{avis.user.pseudo}}</p>
+        <p> <i class="fa-solid fa-user"></i> {{ avis.user is not null ? avis.user.pseudo : 'Supprimé' }}</p>
     </div>
     <div>
         <p>{{avis.texte}}</p>
