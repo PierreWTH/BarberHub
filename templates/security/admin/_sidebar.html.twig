@@ -16,8 +16,10 @@
         <div class="sidebar-nav">
             <div class="sidebar-menu">
                 <p class="sidebar-title"> Menu</p>
+                {% if is_granted('ROLE_ADMIN') %}
                 <ul>
                     <li>
+                            
                         <a href="{{path ('control_pannel')}}">
                             <i class="sidebar-icon fa-solid fa-toolbox"></i>
                             <span class="sidebar-text">Dashboard </span>
@@ -80,6 +82,29 @@
                         </a>
                     </li>
                 </ul>
+                {% endif %}
+                {% if is_granted('ROLE_BARBER') %}
+                <ul>
+                    <li>
+                        <a href="{{path ('manage_barbershop')}}">
+                            <i class="sidebar-icon fa-solid fa-toolbox"></i>                            
+                            <span class="sidebar-text"> Acceuil </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{path ('edit_barbershop', {id : app.user.personnel.barbershop.id })}}">
+                            <i class="sidebar-icon fa-solid fa-store"></i>                            
+                            <span class="sidebar-text"> Modifier salon </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{path ('app_myrdv')}}">
+                            <i class="sidebar-icon fa-regular fa-calendar"></i>                            
+                            <span class="sidebar-text"> Planning </span>
+                        </a>
+                    </li>
+                </ul>
+                {% endif %}
             </div>
             <div class="sidebar-menu">
                 <p class="sidebar-title"> Réglages </p>

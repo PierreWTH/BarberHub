@@ -4,19 +4,26 @@
 
 {% block body %}
 
-<h1> Mes rendez-vous </h1>
+<section class="admin-pannel">
+{% if app.user.personnel.isManager == true %}
+  
+{% include "security/admin/_sidebar.html.twig" %}
 
-<form method="POST" action="{{ path('app_myrdv') }}" id="displayRDV">
-    <input type="hidden" value="upcoming" name="displayType">
-    <button type="submit">A venir</button>
-</form>
-<form method="POST" action="{{ path('app_myrdv') }}" id="displayRDV">
-    <input type="hidden" value="all" name="displayType">
-    <button type="submit">Tous</button>
-</form>
+{% endif %}
+
+<div class="admin-pannel-content">
+
+<h1> Mes rendez-vous </h1>
+<div class="rdv-button">
+  <button class="rdv-button" value="all">Tous les RDV</button>
+  <button class="rdv-button" value="upcoming">RDV à venir</button>
+  
+</div>
 
 <div id='calendar'></div>
 
+</div>
+</section>
 {% block javascripts %}
 
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
@@ -43,17 +50,27 @@
 			
 			const start = new Date(info.event.start).toISOString().substr(11, 5)
 			const end = new Date(info.event.end).toISOString().substr(11, 5)
-
 			const alertMessage = info.event.title + '\n' +
 								'Début : ' + start + '\n' +
 								'Fin : ' + end
 
-			alert(alertMessage);
+          Swal.fire({
+            title: info.event.title,
+            text: 'Début : ' + start + '\n' + 'Fin : ' + end,
+            confirmButtonColor: '#000000',
+            footer: '<a href=""> Editer une facture </a> '
+          })
         },
+        
       });
 
+      
+
       calendar.render();
+
     };
+
+    
 
 </script>
 

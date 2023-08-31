@@ -72,20 +72,24 @@
 </div>
     {% endif %}
 
-    {% if app.user.personnel %}
+    {% if app.user.personnel and  app.user.personnel.isManager == false %}
 
         <h2> Mon salon </h2> 
 
         {{ app.user.personnel.barbershop.nom }}
 
-        {% if app.user.personnel.isManager == true %}
-
-        <p><a href="{{path ('edit_barbershop', {id : app.user.personnel.barbershop.id })}}"> Gerer les informations du salon  </a></p>
-            
-        {% endif %}
-
         <p><a href="{{path ('app_myrdv')}}"> Voir mon planning </a></p>
     {% endif %}
+
+    {% if app.user.personnel.isManager == true %}
+
+        <h2> Mon salon </h2> 
+
+        {{ app.user.personnel.barbershop.nom }}
+
+        <p><a href="{{path ('manage_barbershop')}}"> Gerer les informations du salon  </a></p>
+            
+        {% endif %}
 
     <p><a href="{{path ('delete_account')}}" id="delete-account-link"> Supprimer mon compte </a></p>
 

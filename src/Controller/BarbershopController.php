@@ -15,12 +15,11 @@ use App\Repository\BarbershopRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -69,7 +68,10 @@ class BarbershopController extends AbstractController
     #[Route('administration/barbershop/add', name: 'add_barbershop')]
     #[Route('/barbershop/{id}/edit', name: 'edit_barbershop')]
     public function add(ManagerRegistry $doctrine, Barbershop $barbershop = null, Request $request, PictureService $pictureService, NominatimHttpClient $nominatim, Security $security, $id = null ) : Response
-    {
+    {   
+
+        $isEditMode = ($barbershop !== null);
+
         if ($id !== null) {
             $entityManager = $doctrine->getManager();
             $barbershop = $entityManager->getRepository(Barbershop::class)->find($id);
@@ -82,13 +84,20 @@ class BarbershopController extends AbstractController
             $barbershop = new Barbershop();
         }
 
-        $personnel = $barbershop->getPersonnels();
-        $user = $this->getUser();
+        $personnels = $barbershop->getPersonnels();
 
-        // Si l'user n'a pas le role admin
-        if(!$security->isGranted('ROLE_ADMIN')){
-        // et que personnel est vide ou que l'user ne travaille pas dans le barbershop
-            if($personnel->isEmpty() || $personnel[0]->getUser()->getId() !== $user->getId() || $personnel[0]->isManager() === false)
+        // Tableaux avec tous le personnel
+        $allPersonnel = [];
+        foreach($personnels as $personnel){
+            $persUser = $personnel->getUser()->getId();
+            $allPersonnel[] = $persUser;
+        }
+        $user = $this->getUser();
+        
+        // Si on est en mode edit 
+        if($isEditMode){
+            // On verifie que l'utilisateur est bien manager et travaille bien dans le barber
+            if($personnels->isEmpty() || !in_array($user->getId(), $allPersonnel, true) || $user->getPersonnel()->isManager() === false)
             {
                 throw new AccessDeniedException("Vous n'avez pas les droits nécessaires pour effectuer cette action.");
             }
@@ -138,14 +147,17 @@ class BarbershopController extends AbstractController
             // RECUPERER LES IMAGES
             $image = $form->get('images')->getData();
 
-            // On définit le dossier de destination
-            $folder = 'barbershopPics';
-            // On appelle le service d'ajout 
-            $fichier = $pictureService->add($image, $folder, 850, 310);
+            if($image){
 
-            $img = new BarbershopPics();
-            $img->setNom($fichier);
-            $barbershop->addBarbershopPic($img);
+                // On définit le dossier de destination
+                $folder = 'barbershopPics';
+                // On appelle le service d'ajout 
+                $fichier = $pictureService->add($image, $folder, 850, 310);
+
+                $img = new BarbershopPics();
+                $img->setNom($fichier);
+                $barbershop->addBarbershopPic($img);
+            }
             
             // RECUPERER LES HORAIRES
             $horaires = $form->get('horaires')->getData();
@@ -166,12 +178,19 @@ class BarbershopController extends AbstractController
             
             $entityManager->flush();
 
+            $notificationMessage = ($isEditMode) ? 'Barbershop modifié.' : 'Barbershop ajouté.';
             notyf()
-            ->position('x', 'right')
-            ->position('y', 'bottom')
-            ->addSuccess('Barbershop ajouté.');
+                ->position('x', 'right')
+                ->position('y', 'bottom')
+                ->addSuccess($notificationMessage);
 
-            return $this->redirectToRoute('app_barbershop');
+            if($security->isGranted('ROLE_BARBER')){
+                return $this->redirectToRoute('app_myspace');
+            }
+            else{
+                return $this->redirectToRoute('admin_barbershop');
+            }
+
         }
 
         return $this->render('barbershop/add.html.twig', [
@@ -244,7 +263,7 @@ class BarbershopController extends AbstractController
     }
 
    // Publier/ retirer un Barbershop en AJAX
-   #[Route('administration/barbershop/{id}/validate', name: 'validate_barbershop', methods:"post")]
+   #[Route('/barbershop/{id}/validate', name: 'validate_barbershop', methods:"post")]
    #[IsGranted('ROLE_ADMIN')]
    public function validate(ManagerRegistry $doctrine, Barbershop $barbershop): Response
    {   

@@ -2418,6 +2418,55 @@ background-color: #8CD47E;
     }
     }
 
+    /******** Planning *******/
+
+    .rdv-button{
+        display: flex;
+        gap: 1rem;
+    }
+
+    .rdv-button button{
+    background-color: var(--light-gray);
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: var();
+    }
+
+/**************** ADD PRESTATION ******************/
+
+#addBarberPrestationForm{
+    width: 100%;
+    max-width: 1000px;
+    padding: 2rem;
+    
+}
+
+#addBarberPrestationForm label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: var(--medium);
+}
+
+#barber_prestation_prix, #barber_prestation_prestation{
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 8px;
+    background-color: white;
+    border: 1px solid #c4c4c4;
+    padding: 1em;
+    font-size: 0.875rem;
+    margin-bottom: 1.25rem;
+}
+
+
+
+
+
+
     /******************* MY SPACE **********************/
     
 #myspace {

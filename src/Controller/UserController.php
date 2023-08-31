@@ -11,7 +11,6 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\ExpressionLanguage\Expression;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")'))]
@@ -37,17 +36,55 @@ class UserController extends AbstractController
         
     }
 
+    #[Route('/manage', name: 'manage_barbershop')]
+    public function indexBarber(UserRepository $ur): Response
+    {
+        return $this->render('user/manageBarbershop.html.twig', [
+        ]);
+        
+    }
+
+
     #[Route('/monespace/rdv', name: 'app_myrdv')]
     public function displayRendezVous(UserRepository $ur, PersonnelRepository $pr, Request $request): Response
     {
         $user = $this->getUser();
         $personnel = $user->getPersonnel();
         // affichage des rendez vous a venir par défaut
-        $display = 'upcoming'; 
+        
+        $events = $pr->getUpcomingRendezVous($personnel);
+       
+        $rdvs = [];        
+        // Boucle sur chaque rdv
+        foreach($events as $event){
+             $prestations = $event->getBarberPrestation();
 
-        if ($request->isMethod('POST')) {
-            $display = $request->request->get('displayType');
+            // Boucle sur chaque collection de prestation
+            foreach($prestations as $prestation){
+                // tableau avec toutes les infos
+            $rdvs[] = [
+                'id'=> $event->getId(),
+                'start' => $event->getDebut()->format('Y-m-d H:i:s'),
+                'end' => $event->getFin()->format('Y-m-d H:i:s'),
+                'title' => $event->getUser()->getPseudo() . " - " .$prestation->getPrestation()->getNom(),
+
+            ];
+            }
         }
+        // On le met en JSON et on l'envoie a la vue
+        $data = json_encode($rdvs);
+
+        return $this->render('user/rdv.html.twig', compact('data'));        
+
+    }
+    #[Route('/monespace/getrdv', name: 'app_getmyrdv')]
+    public function getRendezVous(UserRepository $ur, PersonnelRepository $pr, Request $request): Response
+    {
+        $user = $this->getUser();
+        $personnel = $user->getPersonnel();
+        // affichage des rendez vous a venir par défaut
+        $display = $request->getContent(); 
+        dump($display);
 
         if ($display === 'upcoming') {
             $events = $pr->getUpcomingRendezVous($personnel);
@@ -75,7 +112,7 @@ class UserController extends AbstractController
         // On le met en JSON et on l'envoie a la vue
         $data = json_encode($rdvs);
 
-        return $this->render('user/rdv.html.twig', compact('data'));        
+        return $this->json($rdvs);
     }
 
     #[Route('monespace/delete', name: 'delete_account')]

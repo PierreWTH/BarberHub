@@ -15,7 +15,10 @@ class BarberPrestationType extends AbstractType
         $builder
             ->add('prix')
             ->add('prestation')
-            ->add('submit', SubmitType::class)
+            ->add('submit', SubmitType::class, [
+                'label' =>'Ajouter',
+                'attr' => ['class' => 'submit-button-template'] 
+            ]);
         ;
     }
 
@@ -23,6 +26,8 @@ class BarberPrestationType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => BarberPrestation::class,
+            'attr' => [
+                'id' => 'addBarberPrestationForm']
         ]);
     }
 }
