@@ -37,14 +37,14 @@ class BarbershopController extends AbstractController
 
         $form->handleRequest($request);
 
+        // recherche
         if ($request->isXmlHttpRequest()) { 
             $searchData = new SearchData();
-            $searchData->page = $request->query->getInt('page', 1);
             $searchData->q = $request->query->get('search');
             $searchData->sortBy = $request->query->get('sort');
 
             $searchedBarbershops = $br->findBySearch($searchData);
-    
+
             return $this->render('barbershop/index/_barberCards.html.twig', [
                 'allBarbershops' => $searchedBarbershops
             ]);

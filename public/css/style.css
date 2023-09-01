@@ -999,6 +999,7 @@ footer i {
     justify-content: center;
     flex-wrap: wrap;
     gap: 3rem;
+    padding-bottom: 4rem;
 }
 
 .barbershop-card-img-hover img{
@@ -2442,7 +2443,6 @@ background-color: #8CD47E;
         color: white;
     }
 
-    
 
 /**************** ADD PRESTATION ******************/
 

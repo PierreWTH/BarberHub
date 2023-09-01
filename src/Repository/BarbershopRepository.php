@@ -101,9 +101,7 @@ class BarbershopRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
 
-        $barbershops = $data;
-
-        return $barbershops;
+        return $data;
     }
 
 //    /**
