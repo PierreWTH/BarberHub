@@ -14,10 +14,9 @@
 <div class="admin-pannel-content">
 
 <h1> Mes rendez-vous </h1>
-<div class="rdv-button">
+<div class="rdv-button-div">
   <button class="rdv-button" value="all">Tous les RDV</button>
   <button class="rdv-button" value="upcoming">RDV à venir</button>
-  
 </div>
 
 <div id='calendar'></div>
@@ -31,9 +30,13 @@
 <script>
 	
 
-  const data = JSON.parse('{{ data|raw }}')
+  
 
     window.onload = () => {
+
+      const data = JSON.parse('{{ data|raw }}')
+    console.log(data)
+    
       let calendarEl = document.querySelector('#calendar');
       let calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
@@ -64,13 +67,31 @@
         
       });
 
-      
-
       calendar.render();
 
-    };
-
-    
+      $('.rdv-button').click(function(e) {
+        e.preventDefault();
+        $('.rdv-button').removeClass('active');
+        $(this).addClass('active');
+      
+        var displayType = this.value
+        console.log(displayType)
+        $.ajax({
+            type: "POST",
+            url: "/monespace/getrdv",
+            contentType: 'application/json',
+            data: displayType, 
+            success: function(response) {
+                console.log(response)
+                calendar.removeAllEvents()
+                calendar.addEventSource(response); 
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+  };
 
 </script>
 

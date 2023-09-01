@@ -77,7 +77,7 @@ class UserController extends AbstractController
         return $this->render('user/rdv.html.twig', compact('data'));        
 
     }
-    #[Route('/monespace/getrdv', name: 'app_getmyrdv')]
+    #[Route('/monespace/getrdv', name: 'app_getmyrdv', methods: "POST")]
     public function getRendezVous(UserRepository $ur, PersonnelRepository $pr, Request $request): Response
     {
         $user = $this->getUser();
@@ -109,9 +109,6 @@ class UserController extends AbstractController
             ];
             }
         }
-        // On le met en JSON et on l'envoie a la vue
-        $data = json_encode($rdvs);
-
         return $this->json($rdvs);
     }
 

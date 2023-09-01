@@ -2420,19 +2420,29 @@ background-color: #8CD47E;
 
     /******** Planning *******/
 
-    .rdv-button{
+    .rdv-button-div{
         display: flex;
         gap: 1rem;
     }
 
-    .rdv-button button{
+    .rdv-button{
     background-color: var(--light-gray);
     padding: 0.5rem 1rem;
     border-radius: 10px;
-    border: 2px solid black;
+    border: 0px solid black;
     border-radius: 10px;
-    background-color: var();
+    background-color: var(--white);
+    cursor: pointer;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    transition: 0.3s;
     }
+
+    .rdv-button:hover, .rdv-button.active{
+        background-color: black;
+        color: white;
+    }
+
+    
 
 /**************** ADD PRESTATION ******************/
 

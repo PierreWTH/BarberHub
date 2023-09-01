@@ -51,7 +51,7 @@ class BarbershopController extends AbstractController
         }
 
         $allBarbershops = $doctrine->getRepository(Barbershop::Class)->getAllValidBarbershop();
-        
+      
         // Pagination
         $allBarbershops = $paginator->paginate(
             $allBarbershops, 
