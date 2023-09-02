@@ -70,7 +70,7 @@ class ArticleController extends AbstractController
     }
 
     // Afficher les details d'un article
-    #[Route('/article/{id}', name: 'show_article')]
+    #[Route('/article/{slug}', name: 'show_article')]
     public function detail(ManagerRegistry $doctrine, Article $article = null): Response
     {   
         if ($article)

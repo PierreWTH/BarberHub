@@ -66,7 +66,7 @@ class BarbershopController extends AbstractController
     }
     
     #[Route('administration/barbershop/add', name: 'add_barbershop')]
-    #[Route('/barbershop/{id}/edit', name: 'edit_barbershop')]
+    #[Route('/barbershop/{slug}/edit', name: 'edit_barbershop')]
     public function add(ManagerRegistry $doctrine, Barbershop $barbershop = null, Request $request, PictureService $pictureService, NominatimHttpClient $nominatim, Security $security, $id = null ) : Response
     {   
 
@@ -133,8 +133,11 @@ class BarbershopController extends AbstractController
             // Si coordinates est vide : message d'erreur 
             if (empty($coordinates)) {
                 // Les coordonnées sont vides, on ajoute un message d'erreur dans les messages flash
-                echo "erreur";
-                die();
+                notyf()
+                ->position('x', 'right')
+                ->position('y', 'bottom')
+                ->addSuccess("Adresse invalide. ");
+                return $this->redirectToRoute('edit_barbershop', ["slug" => $barbershop->getSlug()]);
             }
 
             // On set la latitude et la longitude du barbershop
@@ -202,9 +205,9 @@ class BarbershopController extends AbstractController
         ]);
     }
 
-    #[Route('/barbershop/{id}', name: 'show_barbershop')]
+    #[Route('/barbershop/{slug}', name: 'show_barbershop')]
     public function show(Barbershop $barbershop = null) : Response
-    {
+    {   
         if ($barbershop && $barbershop->isValidate())
         {
             $dateActuelle = new DateTime();

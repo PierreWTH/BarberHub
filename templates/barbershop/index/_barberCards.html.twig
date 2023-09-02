@@ -16,7 +16,7 @@
                 </a>
                 {% endif %}
                 <p> {{barbershop.description|slice(0, 100)}}... </p>
-                    <a href="{{path ('show_barbershop', {id : barbershop.id })}}" class="barbershop-card-link"> Détails </a>
+                    <a href="{{path ('show_barbershop', {slug : barbershop.slug })}}" class="barbershop-card-link"> Détails </a>
             </div>
     
             <div class="barbershop-card-img"></div>

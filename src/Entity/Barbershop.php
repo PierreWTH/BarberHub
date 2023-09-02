@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\User;
+use Cocur\Slugify\Slugify;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\BarbershopRepository;
@@ -11,6 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BarbershopRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Barbershop
 {
     #[ORM\Id]
@@ -82,6 +84,9 @@ class Barbershop
     #[ORM\OneToMany(mappedBy: 'barbershop', targetEntity: Personnel::class)]
     private Collection $personnels;
 
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
     public function __construct()
     {
         $this->barbershopPics = new ArrayCollection();
@@ -90,6 +95,14 @@ class Barbershop
         $this->barberPrestations = new ArrayCollection();
         $this->personnels = new ArrayCollection();
     }
+
+    // Générer le slug à chaque ajout de barbier
+    #[ORM\PrePersist]
+    public function prePersist()
+    {
+        $this->slug = (new Slugify())->slugify($this->nom);
+    }
+
 
     public function getId(): ?int
     {
@@ -416,6 +429,18 @@ class Barbershop
                 $personnel->setBarbershop(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

@@ -36,7 +36,7 @@
                     <div class="card-content">
                         <h3> {{barbershop.nom}}</h3>
                         <p>{{barbershop.description|slice(0, 160)}}</p>
-                        <a href="{{path ('show_barbershop', {id : barbershop.id })}}">Découvrir</a>
+                        <a href="{{path ('show_barbershop', {slug : barbershop.slug })}}">Découvrir</a>
                     </div>
                 </div>
             </div>
@@ -96,18 +96,18 @@
 <article class="article-card">
 
     <div class="img-box">
-        <a href="{{path ('show_article', {id : article.id })}}">
+        <a href="{{path ('show_article', {slug : article.slug })}}">
       <img src="{{article.photo}}" alt="Photo de {{article.titre}}" class="article-banner"></a>
     </div>
 
 
     <div class="article-content">
 
-      <a href="{{path ('show_article', {id : article.id })}}">
+      <a href="{{path ('show_article', {slug : article.slug })}}">
         <h3 class="article-title">{{article.titre}}</h3>
       </a>
 
-      <p class="article-text"> {{article.description}}<br><br> <a href="{{path ('show_article', {id : article.id })}}"> Lire l'article... </a> </p>
+      <p class="article-text"> {{article.description}}<br><br> <a href="{{path ('show_article', {slug : article.slug })}}"> Lire l'article... </a> </p>
 
       <div class="acticle-content-footer">
 

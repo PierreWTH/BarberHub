@@ -53,7 +53,7 @@ class AvisController extends AbstractController
             ->position('y', 'bottom')
             ->addSuccess('Avis ajouté.');
 
-            return $this->redirectToRoute('show_barbershop',['id' => $barbershop->getId()]);
+            return $this->redirectToRoute('show_barbershop',['slug' => $barbershop->getSlug()]);
         }
 
         return $this->render('avis/add.html.twig', [
