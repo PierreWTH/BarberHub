@@ -2,53 +2,64 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Ignore;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
-{
+{   
+    #[Ignore]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Ignore]
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\NotBlank(message: "L'email ne peut pas être vide. ")]
     private ?string $email = null;
 
+    #[Ignore]
     #[ORM\Column]
     private array $roles = [];
 
+    #[Ignore]
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
     private ?string $password = null;
 
+    #[Ignore]
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
+    #[Ignore]
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank(message: "Le pseudo ne peut pas être vide. ")]
     private ?string $pseudo = null;
 
+    #[Ignore]
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Article::class)]
     private Collection $articles;
 
+    #[Ignore]
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Avis::class)]
     private Collection $avis;
 
+    #[Ignore]
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: RendezVous::class, cascade:['persist', 'remove'])]
     private Collection $rendezVouses;
 
+    #[Ignore]
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?Personnel $personnel = null;
 

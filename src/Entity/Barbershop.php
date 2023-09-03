@@ -4,13 +4,17 @@ namespace App\Entity;
 
 use App\Entity\User;
 use Cocur\Slugify\Slugify;
+use ApiPlatform\Metadata\Get;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\BarbershopRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 
+#[ApiResource]
 #[ORM\Entity(repositoryClass: BarbershopRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class Barbershop
@@ -62,25 +66,31 @@ class Barbershop
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $facebook = null;
 
+    #[Ignore]
     #[ORM\Column (type: 'boolean', nullable: true, options: ['default' => false])]
     private ?bool $validate = null;
 
+    #[Ignore]
     #[ORM\OneToMany(mappedBy: 'barbershop', targetEntity: BarbershopPics::class, orphanRemoval: true, cascade:['persist', 'remove'])]
     private Collection $barbershopPics;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, options:["default"=> "CURRENT_TIMESTAMP"])]
     private ?\DateTimeInterface $creationDate = null;
 
+    #[Ignore]
     #[ORM\ManyToMany(targetEntity: User::class)]
     #[ORM\JoinTable(name: 'user_barbershop_like')]
     private Collection $likes;
 
+    #[Ignore]
     #[ORM\OneToMany(mappedBy: 'barbershop', targetEntity: Avis::class)]
     private Collection $avis;
 
+    #[Ignore]
     #[ORM\OneToMany(mappedBy: 'barbershop', targetEntity: BarberPrestation::class)]
     private Collection $barberPrestations;
 
+    #[Ignore]
     #[ORM\OneToMany(mappedBy: 'barbershop', targetEntity: Personnel::class)]
     private Collection $personnels;
 

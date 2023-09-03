@@ -2,32 +2,38 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
 use App\Repository\BarberPrestationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BarberPrestationRepository::class)]
 class BarberPrestation
-{
+{   
+    #[Ignore]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Ignore]
     #[ORM\Column]
     #[Assert\NotBlank(message: "Le prix ne peut pas être vide. ")]
     private ?float $prix = null;
 
+    #[Ignore]
     #[ORM\ManyToOne(inversedBy: 'barberPrestations')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Barbershop $barbershop = null;
 
+    #[Ignore]
     #[ORM\ManyToOne(inversedBy: 'barberPrestations')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Prestation $prestation = null;
 
+    #[Ignore]
     #[ORM\ManyToMany(targetEntity: RendezVous::class, mappedBy: 'barberprestation')]
     private Collection $rendezVouses;
 
