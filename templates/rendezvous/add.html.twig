@@ -14,10 +14,25 @@
 
 <h1> Votre rendez vous </h1>
 
-Votre réservation : {{prestation.prestation.nom}} chez {{barbershop.nom}}
+<p><span class="rdv-salon">{{barbershop.nom}} </span> &nbsp;•&nbsp; <i class="fa-solid fa-location-dot"></i> {{barbershop.adresse}}, {{barbershop.ville}}&nbsp;•&nbsp; </p>
+
+<h3> Votre prestation </h3>
+
+{{barberPrestation.prestation.nom}} &nbsp;•&nbsp; 30min &nbsp;•&nbsp; {{barberPrestation.prix}}€ 
+
+{{ form_start(formAddRendezVous) }}
+{% if not app.user.telephone %}
+<h3> Vos informations : </h3>
+
+    <div class="add-rdv-info">
+        {{ form_row(formAddRendezVous.nom) }} 
+        {{ form_row(formAddRendezVous.prenom) }} 
+        {{ form_row(formAddRendezVous.telephone) }} 
+    </div>
+
+{% endif %}
 
 <h3> Choississez un professionnel : </h3>
-{{ form_start(formAddRendezVous) }}
 
 <div id="personnel-radio-container">
     {% for personnelCheckbox in formAddRendezVous.personnel %}

@@ -4,12 +4,6 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i');
 
 
-
-
-
-
-
-
 #image-preview {
     max-height: 300px;
     width: auto;
@@ -1436,12 +1430,40 @@ footer i {
     gap: 2rem;
 }
 
+#rendez_vous_nom, #rendez_vous_prenom, #rendez_vous_telephone{
+    display: block;
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    border: 1px solid #c4c4c4;
+    padding: 1em;
+    font-size: 0.875rem;
+    margin-bottom: 1.25rem;
+}
+
+.add-rdv-info label{
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: var(--medium);
+}
+
+.add-rdv-info{
+    margin: 2rem 0rem;
+}
+
 #creneauxContainer{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
+
+.rdv-salon{
+    font-size: 20px;
+}
+
 
 #splide01{
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
@@ -1468,6 +1490,7 @@ footer i {
 #personnel-radio-container{
    display: flex;
    gap: 2rem;
+   margin-top: 2rem;
    margin-bottom: 2rem ;
 }
 

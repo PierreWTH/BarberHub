@@ -48,7 +48,14 @@ class RendezVousController extends AbstractController
         $horaires = $barbershop->getHoraires();
 
         // Création du form avec envoi de $barbershopId au form builder
+
+        
         $form = $this->createForm(RendezVousType::class, $rendezvous, ['barbershopId' => $barbershopId]);
+        if($this->getUser()->getTelephone()){
+            $form->remove('nom');
+            $form->remove('prenom');
+            $form->remove('telephone');
+        }
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
@@ -141,6 +148,16 @@ class RendezVousController extends AbstractController
             $user = $this->getUser();
             $rendezvous->setUser($user);
 
+            if(!$user->getNom() && !$user->getPrenom() && !$user->getTelephone()){
+            $nom = $form->get('nom')->getData();
+            $prenom = $form->get('prenom')->getData();
+            $telephone = $form->get('telephone')->getData();
+
+            $user->setPrenom($prenom);
+            $user->setNom($nom);
+            $user->setTelephone($telephone);
+            }
+
             $entityManager = $doctrine->getManager();
             $entityManager->persist($rendezvous);
             
@@ -182,7 +199,7 @@ class RendezVousController extends AbstractController
         return $this->render('rendezvous/add.html.twig', [
             'formAddRendezVous' => $form->createView(),
             'barbershop' => $barbershop,
-            'prestation' => $barberPrestation,
+            'barberPrestation' => $barberPrestation,
             'horaires' => $horaires,
         ]);
     }

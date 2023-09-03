@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -26,9 +27,31 @@ class RendezVousType extends AbstractType
                 'mapped' => false,
             ])
 
+            ->add('nom', TextType::class, [
+                'mapped' => false,
+                'attr' => [
+                'placeholder' => "Votre nom"
+                ],
+            ])
+            ->add('prenom', TextType::class, [
+                'mapped' => false,
+                'attr' => [
+                    'placeholder' => "Votre prénom"
+                    ],
+            ])
+
+            ->add('telephone', TextType::class, [
+                'mapped' => false,
+                'required' => true,
+                'label' => 'Telephone *',
+                'attr' => [
+                    'placeholder' => "Votre numéro"
+                    ],
+            ])
+
+
             // N'affiche que le personnel qui travaille dans le barber $barbershopID
             
-
             ->add('personnel', EntityType::class, [
                 'label' => false,
                 'class' => Personnel::class,
@@ -51,6 +74,8 @@ class RendezVousType extends AbstractType
         $resolver->setDefaults([
             'data_class' => RendezVous::class,
             'barbershopId' => false,
+            'attr' => [
+                'id' => 'addRdvForm']
             
         ]);
     }
