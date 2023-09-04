@@ -974,7 +974,7 @@ footer i {
     font-size: 0.875rem;
 }
 
-#search_sortBy{
+#search_sortBy, #search_city{
     display: block;
     width: 100%;
     max-width: 200px;

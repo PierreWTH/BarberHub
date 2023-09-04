@@ -41,6 +41,7 @@ class BarbershopController extends AbstractController
         if ($request->isXmlHttpRequest()) { 
             $searchData = new SearchData();
             $searchData->q = $request->query->get('search');
+            $searchData->city = $request->query->get('city');
             $searchData->sortBy = $request->query->get('sort');
 
             $searchedBarbershops = $br->findBySearch($searchData);

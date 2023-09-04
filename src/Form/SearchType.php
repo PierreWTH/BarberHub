@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Model\SearchData;
+use App\Entity\Barbershop;
 use App\Entity\Post\Category;
+use App\Repository\BarbershopRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -13,6 +15,13 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class SearchType extends AbstractType
 {
+    private $barbershopRepository;
+
+    public function __construct(BarbershopRepository $barbershopRepository)
+    {
+        $this->barbershopRepository = $barbershopRepository;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -24,13 +33,22 @@ class SearchType extends AbstractType
             ])
 
             ->add('sortBy', ChoiceType::class, [
-                'label' => 'Trier par',
                 'choices' => [
                     'Les plus likés' => 'likes',        
                     'Les plus commentés' => 'comments',
                 ],
                 'required' => false,
                 'placeholder' => 'Tous',
+            ])
+
+            ->add('city', ChoiceType::class, [
+                'choices' => array_combine(
+                    $this->barbershopRepository->getAllCities(),
+                    $this->barbershopRepository->getAllCities()
+                ),
+                'label' => false,
+                'required' => false,
+                'placeholder' => 'Toutes les villes',
             ]);
 
     }

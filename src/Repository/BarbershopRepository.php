@@ -71,6 +71,29 @@ class BarbershopRepository extends ServiceEntityRepository
             return $query->getResult();
     }
 
+    public function getAllCities()
+    {
+        $em = $this->getEntityManager();
+            $qb = $em->createQueryBuilder();
+            $query = 
+                $qb->select('DISTINCT b.ville')
+                ->from('App\Entity\Barbershop', 'b')
+                ->where('b.validate = true')
+                ->orderBy('b.ville', 'ASC')
+                ->getQuery();
+        
+                
+
+            $cities = [];
+            foreach ($query->getResult() as $row) {
+                $cities[] = $row['ville'];
+            }
+
+        return $cities;
+    }
+
+    
+
     public function findBySearch( SearchData $searchData): Array {
 
         //On selectionne la table barbier, et on cible les barbiers validés
@@ -95,6 +118,12 @@ class BarbershopRepository extends ServiceEntityRepository
                 ->addGroupBy('b.id')
                 ->addOrderBy('COUNT(a.id)', 'DESC');           
             }
+        }
+
+        if (!empty($searchData->city)) {
+            $data = $data
+                ->andWhere('b.ville LIKE :city')
+                ->setParameter('city', "%{$searchData->city}%");
         }
 
         $data = $data

@@ -18,37 +18,11 @@
 
 {% block javascripts %}
 
+{# Système de like #}
 <script src="{{ asset('js/like.js')}}"></script>
 
-<script>
-    // Selection des inputs de la barre de recherche 
-    $(document).ready(function() {
-        $('#search_q, #search_sortBy').on('input change', function() {
-            const searchText = $('#search_q').val();
-            const selectedOption = $('#search_sortBy').val();
-            search(searchText, selectedOption);
-        });
-    });
-    // Requete ajax pour effectuer la recherche
-    function search(searchText, selectedOption) {
-        $.ajax({
-            url: '/barbershops',    
-            type: 'GET',
-            data: { search: searchText,
-                    sort : selectedOption,
-            },
-            success: function(response) {
-                $('#searchResults').html('');
-                $('#searchResults').html(response);
-                $('.pagination').hide();
-                console.log(response)
-            },
-            error: function(xhr, status, error) {
-                console.log(error)
-            }
-        });
-    }
-</script>
+{# Barre de recherche #}
+<script src="{{ asset('js/searchHome.js')}}"></script>
 
 {% endblock javascripts %}
 
