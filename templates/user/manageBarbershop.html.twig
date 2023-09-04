@@ -7,14 +7,41 @@
 
 
 <section class="admin-pannel">
-
     {% include "security/admin/_sidebar.html.twig" %}
     
     <div class="admin-pannel-content">
-        <h1> Hello </h1>
-    </div>
+     <h1> Gerer mon salon </h1>
+    <div class="admin-stat-container">
+     <div class="admin-stat">
+        <p> <span class="stat-number">{{personnels|length}}</span> Employés </p> 
+     </div>
+     <div class="admin-stat">
+        <p><span class="stat-number">{{rdvs|length}}</span> Rendez-vous </p> 
+     </div>
+     <div class="admin-stat">
+        <p><span class="stat-number">{{avis|length}}</span> Avis </p> 
+     </div>
+     <div class="admin-stat">
+        {% if  barbershop.avis is not empty %}
+        <p>
+            {% set sommeNote = 0 %}
 
-</section>
+            {% for avis in barbershop.avis %}
+               {% set sommeNote = sommeNote + avis.note %}
+            {% endfor %}
+            <span class="stat-number">{{sommeNote // barbershop.avis|length}}</span>
+               Etoiles / 5            
+         </p>
+                  
+                    
+                    {% else %}
+                    <p> Pas d'avis </p>
+                  {% endif %}
+     </div>
+    
+    </div>
+    </div>
+    </section>
 
 {% endblock %}
 

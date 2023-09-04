@@ -5,13 +5,41 @@
 {% block body %}
 
 
-<h1> Ajouter une prestation </h1>
+<section class="admin-pannel">
+    {% include "security/admin/_sidebar.html.twig" %}
+        <div class="admin-pannel-content-prestation">
+            <div class="add-prestation-admin-form">
+                <h1> Ajouter une prestation </h1>
 
-{{ form_start(formAddBarberPrestation) }}
-{{ form_row(formAddBarberPrestation.prix) }}
-{{ form_row(formAddBarberPrestation.prestation) }}
-{{ form_end(formAddBarberPrestation) }}
-
-
+                {{ form_start(formAddBarberPrestation) }}
+                {{ form_row(formAddBarberPrestation.prix) }}
+                {{ form_row(formAddBarberPrestation.prestation) }}
+                {{ form_end(formAddBarberPrestation) }}
+            </div>
+            <div class="table-prestation-admin">
+                <h2> Toutes les prestations </h2>
+                <table class="prestation-table" id="responsive-table">
+                    <thead>
+                        <tr>
+                            <th> Nom </th>
+                            <th> Prix </th>
+                            <th> Action </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for prestation in barberPrestations %}
+                            <tr>
+                                <td data-label = "Nom">{{prestation.prestation.nom}}</td>
+                                <td data-label = "Prix">{{prestation.prix}} €</td>
+                                <td data-label = "Action"><a href="{{path ('edit_barberPrestation', {barbershop : prestation.barbershop.id, id : prestation.id, })}}"><i class="fa-regular fa-pen-to-square"></i></a>|
+                                <a href="{{path ('delete_barberprestation', {id : prestation.id })}}"><i class="fa-solid fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+</section>
 
 {% endblock %}

@@ -103,6 +103,12 @@
                             <span class="sidebar-text"> Planning </span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{path ('manage_barberPrestation', {id : app.user.personnel.barbershop.id})}}">
+                            <i class="sidebar-icon fa-solid fa-scissors"></i>                           
+                            <span class="sidebar-text"> Prestations </span>
+                        </a>
+                    </li>
                 </ul>
                 {% endif %}
             </div>

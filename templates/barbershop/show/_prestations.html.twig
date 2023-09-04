@@ -12,7 +12,9 @@
 
         {% endif %}
         </div>
+        {% if barbershop.barberPrestations|length > 1 %}
         <div class="ligne-presta"></div>
+        {% endif %}
 {% endfor %}
 {% else %}
 

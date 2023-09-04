@@ -68,21 +68,13 @@ class BarbershopController extends AbstractController
     
     #[Route('administration/barbershop/add', name: 'add_barbershop')]
     #[Route('/barbershop/{slug}/edit', name: 'edit_barbershop')]
-    public function add(ManagerRegistry $doctrine, Barbershop $barbershop = null, Request $request, PictureService $pictureService, NominatimHttpClient $nominatim, Security $security, $id = null ) : Response
+    public function add(ManagerRegistry $doctrine, Barbershop $barbershop = null, Request $request, PictureService $pictureService, NominatimHttpClient $nominatim, Security $security ) : Response
     {   
 
         $isEditMode = ($barbershop !== null);
 
-        if ($id !== null) {
-            $entityManager = $doctrine->getManager();
-            $barbershop = $entityManager->getRepository(Barbershop::class)->find($id);
-            // Vérifier si le Barbershop existe
-            if (!$barbershop) {
-                throw $this->createNotFoundException('Barbershop introuvable.');
-            }
-        } else {
-            // Créer un nouvel objet Barbershop pour le mode ajout
-            $barbershop = new Barbershop();
+        if(!$barbershop){
+            $barbershop = new RendezVous();
         }
 
         $personnels = $barbershop->getPersonnels();
@@ -189,7 +181,7 @@ class BarbershopController extends AbstractController
                 ->addSuccess($notificationMessage);
 
             if($security->isGranted('ROLE_BARBER')){
-                return $this->redirectToRoute('app_myspace');
+                return $this->redirectToRoute('manage_barbershop');
             }
             else{
                 return $this->redirectToRoute('admin_barbershop');

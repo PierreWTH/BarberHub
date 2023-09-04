@@ -17,21 +17,16 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class BarberPrestationController extends AbstractController
 {
-    #[Route('/barberprestation', name: 'app_barber_prestation')]
-    public function index(): Response
-    {
-        return $this->render('barberPrestation/index.html.twig', [
-            'controller_name' => 'BarberPrestationController',
-        ]);
-    }
 
-    #[Route('barbershop/{id}/barberprestation/add', name: 'add_barberPrestation')]
-    #[Route('barbershop/{barbershop}/barberprestation/{barberprestation}/edit', name: 'edit_barberPrestation')]
-    #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")'))]
+    #[Route('barbershop/{id}/barberprestation/manage', name: 'manage_barberPrestation')]
+    #[Route('barbershop/{barbershop}/barberprestation/{id}/edit', name: 'edit_barberPrestation')]
+    #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_BARBER")'))]
     public function add(ManagerRegistry $doctrine, Security $security, Barbershop $barbershop, BarberPrestation $barberPrestation = null, Request $request) : Response
     {   
-        $barberPrestations = $doctrine->getRepository(BarberPrestation::class)->findAll();
-
+        $isEditMode = ($barberPrestation !== null);
+        
+        $barberPrestations = $doctrine->getRepository(BarberPrestation::class)->findPrestationByBarber($barbershop);
+        
         if(!$barberPrestation){
             $barberPrestation = new BarberPrestation();
         }
@@ -65,11 +60,45 @@ class BarberPrestationController extends AbstractController
             
             $entityManager->flush();
 
-            return $this->redirectToRoute('admin_barbershop');
+            $notificationMessage = ($isEditMode) ? 'Prestation modifiée.' : 'Prestation ajoutée.';
+            notyf()
+                ->position('x', 'right')
+                ->position('y', 'bottom')
+                ->addSuccess($notificationMessage);
+
+            if($security->isGranted('ROLE_BARBER')){
+                return $this->redirectToRoute('manage_barberPrestation', ['id' => $barbershop->getId()]);
+            }
+            else{
+                return $this->redirectToRoute('admin_barbershop');
+            }
         }
         return $this->render('barberPrestation/add.html.twig', [
             'formAddBarberPrestation' => $form->createView(),
+            'barberPrestations' => $barberPrestations
         ]);
+    }
+
+
+    // Supprimer une barber prestation
+    #[Route('/barberprestation/{id}/delete', name: 'delete_barberprestation')]
+    public function delete(ManagerRegistry $doctrine, BarberPrestation $barberPrestation = null): Response
+    {   
+        
+        if ($barberPrestation){
+            $barbershop = $barberPrestation->getBarbershop();
+            $entityManager = $doctrine->getManager();
+            $entityManager->remove($barberPrestation);
+            $entityManager->flush();
+
+
+            notyf()
+            ->position('x', 'right')
+            ->position('y', 'bottom')
+            ->addError('Prestation supprimée.');
+        }
+        
+        return $this->redirectToRoute('manage_barberPrestation', ['id' => $barbershop->getId()]);
     }
 }
 

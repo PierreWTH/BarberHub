@@ -38,8 +38,24 @@ class UserController extends AbstractController
 
     #[Route('/manage', name: 'manage_barbershop')]
     public function indexBarber(UserRepository $ur): Response
-    {
+    {   
+
+        $user = $this->getUser();
+        $barbershop = $user->getPersonnel()->getBarbershop();
+        $avis = $barbershop->getAvis();
+        $personnels = $barbershop->getPersonnels();
+        $personnel = $user->getPersonnel();
+        $rdvs = $personnel->getRendezVouses();
+
+
+
         return $this->render('user/manageBarbershop.html.twig', [
+            "personnels" => $personnels,
+            "rdvs" => $rdvs,
+            "avis" => $avis,
+            "barbershop" => $barbershop
+            
+
         ]);
         
     }

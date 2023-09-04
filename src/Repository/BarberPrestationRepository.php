@@ -39,6 +39,20 @@ class BarberPrestationRepository extends ServiceEntityRepository
         }
     }
 
+    public function findPrestationByBarber($barbershop) : Array
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $query = 
+            $qb->select('b')
+            ->from('App\Entity\BarberPrestation', 'b')
+            ->where('b.barbershop = :barbershop')
+            ->setParameter('barbershop', $barbershop)
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
 //    /**
 //     * @return BarberPrestation[] Returns an array of BarberPrestation objects
 //     */
