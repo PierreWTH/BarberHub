@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Barbershop;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\All;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
@@ -39,18 +40,25 @@ class BarbershopType extends AbstractType
             ->add('email', TextType::class, [
                 'required' =>false,
             ])
-            
+            ->add('photo', UrlType::class, [
+                'label' => "Photo du salon",
+                'attr' => [
+                    'placeholder' => "URL de la photo"
+                ]
+            ])
 
-            ->add('images', FileType::class, [
-                'label' =>"Photo",
-                'multiple'=>false,
+            ->add('realisations', FileType::class, [
+                'label' =>"Réalisations",
+                'multiple'=>true,
                 'mapped' =>false,
                 'required' =>false,
                 'constraints' => [
+                    new All([
                     new Image([
                         'maxSize' => '8M',
                         'maxSizeMessage' => 'L\'image est trop grande',
                         'mimeTypesMessage' => 'Le fichier n\'est pas une image valide'
+                    ])
                     ])
                 ]
             ])

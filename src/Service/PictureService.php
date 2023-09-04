@@ -55,32 +55,34 @@ class PictureService
         $imageHeight = $picture_infos[1];
 
         // On vérifie l'orientation de l'image
-        if ($imageWidth > $imageHeight) {
-            // Paysage
-            $resizedWidth = $width;
-            $resizedHeight = $imageHeight * ($width / $imageWidth);
-            $src_x = 0;
-            $src_y = 0;
-        } elseif ($imageWidth < $imageHeight) {
-            // Portrait
-            $resizedWidth = $width;
-            $resizedHeight = $height;
-            $src_x = 0;
-            $src_y = 0;
-            $imageHeight = $imageWidth;
-        } else {
-            // Carré
-            $resizedWidth = $width;
-            $resizedHeight = $height;
-            $src_x = 0;
-            $src_y = 0;
-        }
+        switch($imageWidth <=> $imageHeight) 
+        {
+            case -1: // portait
+                // On découpe l'image 
+                $squareSize = $imageWidth;
+                $src_x = 0;
+                $src_y = ($imageHeight - $squareSize) / 2;
+                break;
 
-        // On crée une nouvelle image vierge
-        $resized_picture = imagecreatetruecolor($resizedWidth, $resizedHeight);
+            case 0: // carré
+                // Pas besoin de découpe
+                $squareSize = $imageWidth;
+                $src_x = 0;
+                $src_y = 0;
+                break;
 
-        imagecopyresampled($resized_picture, $picture_source, 0, 0, $src_x, $src_y, $resizedWidth, $resizedHeight, $imageWidth, $imageHeight);
+            case 1: // paysage
+                // On découpe l'image 
+                $squareSize = $imageWidth;
+                $src_x = ($imageWidth - $squareSize) / 2;
+                $src_y = 0;
+                break;
+        } 
 
+       // On crée une nouvelle image vierge
+       $resized_picture = imagecreatetruecolor($width, $height);
+
+       imagecopyresampled($resized_picture, $picture_source, 0, 0, $src_x, $src_y, $width, $height, $squareSize, $squareSize);
 
         $path = $this->params->get('images_directory') .$folder;
 

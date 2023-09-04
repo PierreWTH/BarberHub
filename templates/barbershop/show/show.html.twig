@@ -6,9 +6,7 @@
 {# Photo du salon #}
 <section id="show-barbershop-header">
     <div class="barbershop-image-title-container">
-        {% for pics in barbershop.barbershopPics %}
-        <img src="{{asset('assets/uploads/barbershopPics/' ~ pics.nom)}}" alt="">
-        {% endfor %}
+        <img src="{{barbershop.photo}}" alt="{{barbershop.nom}}">
         <h1> {{barbershop.nom}} </h1>
     </div>
 </section>
@@ -62,6 +60,20 @@
     <h3> Boutique </h3>
 
     <h3> Réalisations </h3>
+
+    
+        <section class="splide" aria-label="Splide Basic HTML Example">
+            <div class="splide__track">
+                <ul class="splide__list">
+                  {% for pics in barbershop.barbershopPics %}
+                  <li class="splide__slide"><img src="{{asset('assets/uploads/barbershopPics/' ~ pics.nom)}}" alt="" class="realisation-img"></li>
+                  {% endfor %}
+              </ul>
+        </div>
+      </section>
+        
+
+
 </div>
 
 <div class="show-map-horaires">
@@ -73,13 +85,6 @@
 </div>
 
 </section>
-
-
-
-
-
-
-
 
 </section>
 
@@ -95,6 +100,16 @@
 <script src="{{ asset('js/MarkerCluster.js')}}"></script>
 {# Script affichage leaflet + markercluster #}
 <script src="{{ asset('js/mapShowBarber.js')}}"></script>
+
+<script>
+    document.addEventListener( 'DOMContentLoaded', function() {
+      var splide = new Splide( '.splide', {
+        perPage:3,
+        width: "100%",
+      });
+      splide.mount();
+    } );
+  </script>
 
 {% endblock %}
 

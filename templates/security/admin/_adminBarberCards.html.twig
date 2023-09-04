@@ -1,12 +1,10 @@
 <section class="barbershop-cards-container">
     {% for barbershop in barbershops %}
-    
-    {% for pics in barbershop.barbershopPics %}
       
         <article class="barbershop-card-admin card-template">
             <div class="barbershop-card-img"></div>
                 <div class="barbershop-card-img-hover">
-                    <img src="{{asset('assets/uploads/barbershopPics/' ~ pics.nom)}}" alt="Photo de {{barbershop.nom}}">
+                    <img src="{{barbershop.photo}}" alt="Photo de {{barbershop.nom}}">
                 </div>
             <div class="barbershop-card-info">
                 <a href="{{path ('show_barbershop', {slug : barbershop.slug })}}" class="barber-admin-show-link">Détails</a>
@@ -26,7 +24,6 @@
             </div>
         </article>
         
-        {% endfor %}
         {% endfor %}
         
     </section>

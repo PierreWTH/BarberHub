@@ -1,7 +1,5 @@
 <section class="barbershop-cards-container">
     {% for barbershop in likes %}
-    
-    {% for pics in barbershop.barbershopPics %}
       
         <article class="barbershop-card card-template">
             <div class="card-info-hover">
@@ -18,7 +16,7 @@
     
             <div class="barbershop-card-img"></div>
                 <div class="barbershop-card-img-hover">
-                    <img src="{{asset('assets/uploads/barbershopPics/' ~ pics.nom)}}" alt="Photo de {{barbershop.nom}}">
+                    <img src="{{barbershop.photo}}" alt="Photo de {{barbershop.nom}}">
                 </div>
             <div class="barbershop-card-info">
                 {# Si les avis ne sont pas vides, calcul de la moyenne #}
@@ -50,8 +48,6 @@
 
             </div>
         </article>
-        
-        {% endfor %}
         {% endfor %}
         
     </section>

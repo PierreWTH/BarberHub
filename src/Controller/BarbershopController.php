@@ -74,7 +74,7 @@ class BarbershopController extends AbstractController
         $isEditMode = ($barbershop !== null);
 
         if(!$barbershop){
-            $barbershop = new RendezVous();
+            $barbershop = new Barbershop();
         }
 
         $personnels = $barbershop->getPersonnels();
@@ -140,21 +140,23 @@ class BarbershopController extends AbstractController
             // On set l'adresse modifiée
             $barbershop->setAdresse($adresseShorted);
 
-            // RECUPERER LES IMAGES
-            $image = $form->get('images')->getData();
+            // RECUPERER L'IMAGE DU SALON 
+            $images = $form->get('realisations')->getData();
 
-            if($image){
+            if($images){
 
+                foreach($images as $image){
                 // On définit le dossier de destination
                 $folder = 'barbershopPics';
                 // On appelle le service d'ajout 
-                $fichier = $pictureService->add($image, $folder, 850, 310);
+                $fichier = $pictureService->add($image, $folder, 300, 300);
 
                 $img = new BarbershopPics();
                 $img->setNom($fichier);
                 $barbershop->addBarbershopPic($img);
+                }
             }
-            
+
             // RECUPERER LES HORAIRES
             $horaires = $form->get('horaires')->getData();
             // Enregistre en tant que tableau PHP

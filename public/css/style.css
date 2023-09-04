@@ -1769,6 +1769,13 @@ footer i {
     color: #F6F69E;
 }
 
+.realisation-img{
+   width: 300px;
+   height: 300px;
+   object-fit: cover;
+   display: block;
+}
+
 @media screen and (max-width : 768px) {
     .show-barbershop-info{
         min-width: 300px;
@@ -2078,7 +2085,7 @@ footer i {
 
 /******* ADD BARBERSHOP ********/
 
-#barbershop_nom, #barbershop_telephone, #barbershop_email, #barbershop_instagram, #barbershop_facebook {
+#barbershop_nom, #barbershop_telephone, #barbershop_email, #barbershop_instagram, #barbershop_facebook, #barbershop_photo {
     display: block;
     width: 100%;
     box-sizing: border-box;
@@ -2090,7 +2097,7 @@ footer i {
 
  }
 
- #barbershop_images{
+ #barbershop_realisations{
     display: block;
     width: 100%;
     box-sizing: border-box;
@@ -2116,6 +2123,14 @@ footer i {
 
  #image-preview{
     max-width: 100%;
+ }
+
+ input::file-selector-button {
+    padding: 0.8rem 1.3rem;
+    background-color: var(--light-gray);
+    border: 0px;
+    color: black;
+    border-radius: 8px;
  }
 
  .add-barbershop-form{
