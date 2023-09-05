@@ -27,11 +27,10 @@
 {% if lastBarbershops %}
 
     {% for barbershop in lastBarbershops %}
-        {% for pics in barbershop.barbershopPics %}
             <div class="card-container">
                 <div class="card">
                     <div class="imgBx">
-                        <img src="{{asset('assets/uploads/barbershopPics/' ~ pics.nom)}}" alt="Photo de {{barbershop.nom}}">
+                        <img src="{{barbershop.photo}}" alt="Photo de {{barbershop.nom}}">
                     </div>
                     <div class="card-content">
                         <h3> {{barbershop.nom}}</h3>
@@ -40,7 +39,6 @@
                     </div>
                 </div>
             </div>
-        {% endfor %}
     {% endfor %}
 
 {% else %}

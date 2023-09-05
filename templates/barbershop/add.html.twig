@@ -40,11 +40,11 @@
 </table>
 {{ form_row(formAddBarbershop.horaires) }}
 {{ form_row(formAddBarbershop.telephone) }}
+{{ form_row(formAddBarbershop.photo) }}
 
 {# Aperçu de l'image #}
 
-<div>
-<img id="image-preview" src="#" alt="Aperçu de l'image choisie" style="display: none;">
+<div id="image-preview">
 </div>
 
 {# Affichage de l'image en mode edit #}
@@ -54,14 +54,13 @@
 {% for pic in barbershop.barbershopPics %}
 
 <div>
-<img src="{{ asset('assets/uploads/barbershopPics/barbershop/850x310-' ~ pic.nom) }}" alt="Photo de {{barbershop.nom}}">
+<img src="{{ asset('assets/uploads/barbershopPics/barbershop/300x300-' ~ pic.nom) }}" alt="Photo de {{barbershop.nom}}">
 <a href="{{ path('delete_photo', {id : pic.id} )}}" data-delete data-token="{{ csrf_token('delete' ~ pic.id) }}"> Supprimer </a>
 </div>
 
 {% endfor %}
 
 {% endif %}
-{{ form_row(formAddBarbershop.photo) }}
 {{ form_row(formAddBarbershop.realisations) }}
 {{ form_row(formAddBarbershop.email) }}
 {{ form_row(formAddBarbershop.instagram) }}
