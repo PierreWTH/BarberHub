@@ -6,97 +6,125 @@ use App\Entity\User;
 use Cocur\Slugify\Slugify;
 use ApiPlatform\Metadata\Get;
 use Doctrine\DBAL\Types\Types;
+use ApiPlatform\Metadata\ApiFilter;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\BarbershopRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Serializer\Annotation\Ignore;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ApiResource]
+// On autorise seulement GET
+#[ApiResource(
+    operations: [
+        new Get(),
+        new GetCollection()
+    ], 
+    // On affiche que les données en groups read lors d'une requete GET
+    normalizationContext: ['groups' => ['read']],
+    denormalizationContext: ['groups' => ['write']],
+)]
+#[ApiFilter(SearchFilter::class, properties: ['nom' => 'partial', 'ville' => 'partial'])]
 #[ORM\Entity(repositoryClass: BarbershopRepository::class)]
+// Pour prePersist
 #[ORM\HasLifecycleCallbacks]
 class Barbershop
-{
+{   
+    #[Groups('read')]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups('read')]
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank(message: "Le nom ne peut pas être vide. ")]
     private ?string $nom = null;
 
+    #[Groups('read')]
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message: "La description ne peut pas être vide. ")]
     private ?string $description = null;
 
+    #[Groups('read')]
     #[ORM\Column(length: 150)]
     #[Assert\NotBlank(message: "L'adresse ne peut pas être vide. ")]
     private ?string $adresse = null;
 
+    #[Groups('read')]
     #[ORM\Column(length: 15)]
     #[Assert\NotBlank(message: "Le code postal ne peut pas être vide. ")]
     private ?string $cp = null;
 
+    #[Groups('read')]
     #[ORM\Column(length: 45)]
     #[Assert\NotBlank(message: "La ville ne peut pas être vide. ")]
     private ?string $ville = null;
 
+    #[Groups('read')]
     #[ORM\Column(type: Types::TEXT)]
     private ?string $horaires = null;
 
+    #[Groups('read')]
     #[ORM\Column]
     private ?float $latitude = null;
 
+    #[Groups('read')]
     #[ORM\Column]
     private ?float $longitude = null;
 
+    #[Groups('read')]
     #[ORM\Column(length: 16)]
     #[Assert\NotBlank(message: "La téléphone ne peut pas être vide. ")]
     private ?string $telephone = null;
 
+    #[Groups('read')]
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $email = null;
 
+    #[Groups('read')]
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $instagram = null;
 
+    #[Groups('read')]
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $facebook = null;
 
-    #[Ignore]
+   
     #[ORM\Column (type: 'boolean', nullable: true, options: ['default' => false])]
     private ?bool $validate = null;
 
-    #[Ignore]
+  
     #[ORM\OneToMany(mappedBy: 'barbershop', targetEntity: BarbershopPics::class, orphanRemoval: true, cascade:['persist', 'remove'])]
     private Collection $barbershopPics;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, options:["default"=> "CURRENT_TIMESTAMP"])]
     private ?\DateTimeInterface $creationDate = null;
 
-    #[Ignore]
+   
     #[ORM\ManyToMany(targetEntity: User::class)]
     #[ORM\JoinTable(name: 'user_barbershop_like')]
     private Collection $likes;
 
-    #[Ignore]
+    
     #[ORM\OneToMany(mappedBy: 'barbershop', targetEntity: Avis::class)]
     private Collection $avis;
 
-    #[Ignore]
+
     #[ORM\OneToMany(mappedBy: 'barbershop', targetEntity: BarberPrestation::class)]
     private Collection $barberPrestations;
 
-    #[Ignore]
+  
     #[ORM\OneToMany(mappedBy: 'barbershop', targetEntity: Personnel::class)]
     private Collection $personnels;
 
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
+    #[Groups('read')]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
 

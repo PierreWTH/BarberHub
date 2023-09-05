@@ -12,27 +12,22 @@ use Symfony\Component\Serializer\Annotation\Ignore;
 #[ORM\Entity(repositoryClass: PersonnelRepository::class)]
 class Personnel
 {   
-    #[Ignore]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[Ignore]
     #[ORM\Column]
     private ?bool $manager = null;
 
-    #[Ignore]
     #[ORM\ManyToOne(inversedBy: 'personnels')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Barbershop $barbershop = null;
 
-    #[Ignore]
     #[ORM\OneToOne(inversedBy: 'personnel', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[Ignore]
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: RendezVous::class)]
     private Collection $rendezvouses;
 
