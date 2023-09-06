@@ -11,10 +11,9 @@
         <div class="map-barbershop-container">
             <h1> Explorez les salons </h1>
             {% for barbershop in barbershops %}
-                {% for pics in barbershop.barbershopPics %}
                     <article class="map-barbershop-card" data-latitude="{{ barbershop.latitude }}" data-longitude="{{ barbershop.longitude }}" id="barber-card-{{barbershop.id}}">
                         <div class="img-box">
-                            <img src="{{asset('assets/uploads/barbershopPics/' ~ pics.nom)}}" alt="Photo de {{barbershop.nom}}" class="article-banner">
+                            <img src="{{barbershop.photo}}" alt="Photo de {{barbershop.nom}}" class="article-banner">
                         </div>
                         <div class="article-content">
                             <h3 class="article-title">{{barbershop.nom}}</h3>
@@ -30,7 +29,6 @@
                             </div>
                         </div>
                     </article>
-                {% endfor %}
             {% endfor %}
         </div>
     </div>
@@ -39,18 +37,13 @@
                     
 </div>
                     
-                    
-
-
-
-
-
-
 {% block javascripts %}
 
 {# Récupération des infos du barber en array JS #}
 <script>
-    const coordinates = JSON.parse('{{ coordinates | json_encode | raw }}');    
+    const coordinates = JSON.parse('{{ coordinates | json_encode | raw }}'); 
+    
+    console.log(coordinates)
 </script>
 {# CDN Leaflet #}
 <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>

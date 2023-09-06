@@ -41,6 +41,14 @@ a{
     text-decoration: none;
 }
 
+.uppercase {
+    text-transform: uppercase;
+    font-family: 'Poppins';
+    letter-spacing: -1px;
+    font-size: 18px;
+    font-weight: var(--medium);
+}
+
 /****** Variables *******/
 
 :root {
@@ -1248,7 +1256,7 @@ footer i {
     display: grid;
     grid-template-columns: 200px minmax(200px, 420px);
     max-width: 730px;
-    max-height: 250px;
+    max-height: 182px;
     border-radius: 10px;
     transition: 0.5s;
     cursor: pointer;
@@ -1557,6 +1565,75 @@ footer i {
     color: white;
 }
 
+/************************************ CONFIRM RDV *************************************/
+
+#confirm-rdv-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+.confirm-rdv {
+    max-width: 700px;
+    width: 100%;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    padding: 2rem;
+}
+
+.confirm-rdv h2 {
+    font-family: 'Smythe';
+    font-size: 30px;
+}
+
+
+.recap-rdv {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 2rem 0rem;
+}
+
+.confirm-text h2{
+    margin-bottom: 1rem;
+}
+
+.rdv-back-to-home{
+    display: block;
+    background-color: white;
+    border: 2px solid var(--dark-gray);
+    padding: 1rem 1.5rem;
+    max-width: 350px;
+    width: 100%;
+    text-align: center;
+    color: black;
+    transition: 0.2s;
+}
+
+.rdv-back-to-home.grey {
+    background-color: var(--dark-gray);
+    border: 0px;
+    color: white;
+}
+
+
+.confirm-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.rdv-back-to-home:hover{
+    background-color: black;
+    color: white;
+}
+
+@media screen and (max-width : 450px) {
+    .confirm-links{
+        flex-wrap: wrap;
+    }
+}
+
+
 /************************************ SHOW BARBERSHOP *********************************/
 
 #show-barbershop-section{
@@ -1742,6 +1819,15 @@ footer i {
     flex-wrap: wrap;
     gap: 2rem;
 }
+
+.admin-avis-container{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
 .barbershop-avis{
     display: flex;
     flex-direction: column;
@@ -1751,11 +1837,14 @@ footer i {
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     padding: 2rem;
     border-radius: 10px;
+    background-color: white;
 }
 .barber-note-pseudo{
     display: flex;
     justify-content: space-between;
 }
+
+/***************** AVIS *******************/
 
 .edit-delete-avis{
     font-size: 14px;
@@ -1767,6 +1856,36 @@ footer i {
 
 .fa-star.filled{
     color: #F6F69E;
+}
+
+.add-avis-container{
+    width: 100%;
+    max-width: 800px;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    margin: auto;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+#avis_texte{
+    margin-top: 1.25rem;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 8px;
+    border: 1px solid #c4c4c4;
+    padding: 1em;
+    min-height: 10rem;
+    font-size: 0.875rem;
+    margin-bottom: 1.25rem;
+    font-family: "Poppins";
+
+}
+
+.add-avis-container i {
+
+    font-size: 30px;
 }
 
 .realisation-img{
@@ -2119,6 +2238,7 @@ footer i {
     min-height: 10rem;
     font-size: 0.875rem;
     margin-bottom: 1.25rem;
+    font-family: "Poppins";
  }
 
  #image-preview{
@@ -2154,7 +2274,6 @@ footer i {
     text-align: center;
     border-collapse: collapse;
 
-
     
 }
 
@@ -2174,6 +2293,7 @@ footer i {
     padding: 0.5rem;
     border-radius: 7px;
     border: 1px solid #c4c4c4;
+    font-family: "Poppins";
 
 }
 
@@ -2927,4 +3047,36 @@ background-color: #8CD47E;
         #responsive-nav{
             max-width: 350px;
         }
+    }
+
+    /*************** MOT DE PASSE OUBLIE ****************/
+
+    .forget-password-container{
+        width: 100%;
+        max-width: 1000px;
+        background-color: white;
+        padding: 2rem;
+        border-radius: 10px;
+        margin: auto;
+    }
+
+    .forget-password-container label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    #reset_password_request_form_email{
+        display: block;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 8px;
+    border: 1px solid #c4c4c4;
+    padding: 1em;
+    font-size: 0.875rem;
+    margin-bottom: 1.25rem;
+    }
+
+    #reset_password_request_form_submit{
+        margin-top: 1.25rem;
     }

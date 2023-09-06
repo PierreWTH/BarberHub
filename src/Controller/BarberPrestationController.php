@@ -40,13 +40,14 @@ class BarberPrestationController extends AbstractController
             $allPersonnel[] = $persUser;
         }
 
-        // et que personnel est vide ou que l'user ne travaille pas dans le barbershop
-        if($personnels->isEmpty() || !in_array($user->getId(), $allPersonnel, true) || $user->getPersonnel()->isManager() === false)
-        {
-            throw new AccessDeniedException("Vous n'avez pas les droits nécessaires pour effectuer cette action.");
+        if(!$security->isGranted("ROLE_ADMIN")){
+            // et que personnel est vide ou que l'user ne travaille pas dans le barbershop
+            if($personnels->isEmpty() || !in_array($user->getId(), $allPersonnel, true) || $user->getPersonnel()->isManager() === false)
+            {
+                throw new AccessDeniedException("Vous n'avez pas les droits nécessaires pour effectuer cette action.");
+            }
         }
         
-
         $form = $this->createForm(BarberPrestationType::class, $barberPrestation);
         $form->handleRequest($request);
 

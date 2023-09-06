@@ -89,9 +89,14 @@ class BarbershopController extends AbstractController
         
         // Si on est en mode edit 
         if($isEditMode){
+            // Si l'user n'est pas ADMIN
+            if(!$security->isGranted("ROLE_ADMIN")){
             // On verifie que l'utilisateur est bien manager et travaille bien dans le barber
-            if($personnels->isEmpty() || !in_array($user->getId(), $allPersonnel, true) || $user->getPersonnel()->isManager() === false)
-            {
+                if($personnels->isEmpty() || !in_array($user->getId(), $allPersonnel, true) || $user->getPersonnel()->isManager() === false)
+                {
+                    throw new AccessDeniedException("Vous n'avez pas les droits nécessaires pour effectuer cette action.");
+                }
+                
                 throw new AccessDeniedException("Vous n'avez pas les droits nécessaires pour effectuer cette action.");
             }
         }

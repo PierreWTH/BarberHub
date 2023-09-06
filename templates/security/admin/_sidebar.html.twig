@@ -81,6 +81,12 @@
                             <span class="sidebar-text"> Employés </span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{path ('admin_avis')}}">
+                            <i class="sidebar-icon fa-regular fa-message"></i>                            
+                            <span class="sidebar-text"> Avis </span>
+                        </a>
+                    </li>
                 </ul>
                 {% endif %}
                 {% if is_granted('ROLE_BARBER') %}

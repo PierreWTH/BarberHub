@@ -332,7 +332,7 @@ class RendezVousController extends AbstractController
         $lastRDV = $ur->getLastRendezVous($user);
 
         // Une fois la page consultée on repasse le jeton a true
-        $_SESSION['justBookedRdv'] = false;
+        //$_SESSION['justBookedRdv'] = false;
         
         return $this->render('rendezvous/confirm.html.twig', [
             'lastRDV' => $lastRDV,

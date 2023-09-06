@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Gerer les avis {% endblock %}
+
+{% block body %}
+<section class="admin-pannel">
+    {% include "security/admin/_sidebar.html.twig" %}
+    
+<div class="admin-pannel-content">
+
+<div class="admin-avis-container">
+    {% for avis in allAvis %}
+    {% set note = avis.note %}
+
+    {# Affichage des étoiles #}
+    <div class="barbershop-avis">  
+        <p>{{avis.barbershop.nom}} - {{avis.date|date("d/m/Y")}}</p>
+        <div class="barber-note-pseudo">
+            <div>
+                {% for i in 1..5 %}
+                {% if i <= note %}
+                <i class="fa-solid fa-star filled"></i>
+                {% else %}
+                <i class="fa-regular fa-star unfilled"></i>
+                {% endif %}
+            {% endfor %}
+            </div>
+            
+            <p> <i class="fa-solid fa-user"></i> {{ avis.user is not null ? avis.user.pseudo : 'Supprimé' }}</p>
+        </div>
+        <div>
+            <p>{{avis.texte}}</p>
+        </div>
+        
+        {% if avis.user == app.user %}
+        <p><a href="{{ path('edit_avis', { 'barbershop': avis.barbershop.id, 'avis': avis.id }) }}" class="edit-delete-avis">Modifier</a> | <a href="" class="edit-delete-avis delete-avis" data-barbershop-id="{{ avis.barbershop.id }}" data-avis-id="{{ avis.id }}">Supprimer</a></p>
+        
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+</div>
+</section>
+
+{% block javascript %}
+
+<script src="{{ asset('js/deleteAvis.js')}}"></script>
+    
+{% endblock javascript %}
+{% endblock %}

@@ -18,9 +18,16 @@ class AvisType extends AbstractType
     {
         $builder
         ->add('note', HiddenType::class)
-        ->add('texte', TextareaType::class)
-        ->add('submit', SubmitType::class)
-        ;
+        ->add('texte', TextareaType::class, [
+            "label" => false,
+            "attr" => [
+            "placeholder" => 'Donnez nous votre ressenti sur l\'acceuil, la prestation, ou encore l\'ésthétique du salon.'
+            ]
+        ])
+        ->add('submit', SubmitType::class, [
+            'attr' => ['class' => 'submit-button-template'],
+            'label' => 'Envoyer',
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

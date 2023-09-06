@@ -4,28 +4,31 @@
 
 {% block body %}
 
-{% for message in app.flashes('notice') %}
-    <div class="flash-notice">
-        {{ message }}
+<section id="confirm-rdv-container">
+    <div class="confirm-rdv">
+        
+        <div class="confirm-text">
+            <h2> Merci ! 💈 </h2>
+            <p>Votre rendez-vous à bien été pris en compte. Vous allez recevoir un email de confirmation. 
+            Vous pourrez retrouver les détails de votre rendez-vous dans votre espace. </p>
+        </div>
+        <div class="recap-rdv">
+            <h2>Votre rendez vous chez {{ lastRDV.personnel.barbershop.nom}} :</h2>
+
+            <p><span class="uppercase">Date</span> : {{lastRDV.debut|date("d/m/Y")}}</p>
+            <p><span class="uppercase">Heure</span> : {{lastRDV.debut|date("H:i")}} - {{lastRDV.fin | date("H:i")}}</p>
+            {% for prestation in lastRDV.barberprestation %}
+                <p><span class="uppercase">Prestation</span> : {{prestation.prestation.nom}} • {{prestation.prix}}€</p>
+            {% endfor %}
+
+            <p><span class="uppercase">Avec</span> : {{lastRDV.personnel.user.pseudo}}</p>
+
+        </div>
+        <div class="confirm-links">
+        <a href="{{path('app_home')}}" class="rdv-back-to-home">Revenir a l'acceuil</a> <a href="{{path('app_myspace')}} " class="rdv-back-to-home grey">Voir mes rendez-vous</a>
+        </div>
     </div>
-{% endfor %}
 
-<h1> Merci ! </h1>
-<p>Votre rendez-vous à bien été pris en compte. Vous allez recevoir un email de confirmation. 
-Vous pourrez retrouver les détails de votre rendez-vous dans votre espace. </p>
-
-<h2>Votre rendez vous : </h2>
-
-Date : {{lastRDV.debut|date("d/m/Y")}} <br />
-Heure : {{lastRDV.debut|date("H:i")}} - {{lastRDV.fin | date("H:i")}} <br />
-{% for prestation in lastRDV.barberprestation %}
-    Prestation : {{prestation.prestation.nom}} {{prestation.prix}}€ <br />
-{% endfor %}
-
-Avec : {{lastRDV.personnel.user.pseudo}}
-
-
-<p><a href="{{path('app_home')}}">Revenir a l'acceuil</a> - <a href="{{path('app_myspace')}}">Voir mes rendez-vous</a></p>
-
+</section>
 
 {% endblock %}

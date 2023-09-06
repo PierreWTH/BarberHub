@@ -3,17 +3,20 @@
 {% block title %}Hello AvisController!{% endblock %}
 
 {% block body %}
+<h1 class="title-margin"> Ajouter un avis </h1>
 
-<div class="rating-stars">
-    <i class="fa-regular fa-star" data-value="1"></i><i class="fa-regular fa-star" data-value="2"></i><i class="fa-regular fa-star" data-value="3"></i><i class="fa-regular fa-star" data-value="4"></i><i class="fa-regular fa-star" data-value="5"></i>
+<div class="add-avis-container">
+    <div class="rating-stars">
+        <i class="fa-regular fa-star" data-value="1"></i><i class="fa-regular fa-star" data-value="2"></i><i class="fa-regular fa-star" data-value="3"></i><i class="fa-regular fa-star" data-value="4"></i><i class="fa-regular fa-star" data-value="5"></i>
+    </div>
+
+
+    {{form_start(formAddAvis)}}
+    {{form_row(formAddAvis.note)}}
+    {{form_widget(formAddAvis.texte)}}
+    {{form_end(formAddAvis)}}
+
 </div>
-
-
-{{form_start(formAddAvis)}}
-{{form_row(formAddAvis.note)}}
-{{form_row(formAddAvis.texte)}}
-{{form_end(formAddAvis)}}
-
 
 {% block javascripts %}
     
