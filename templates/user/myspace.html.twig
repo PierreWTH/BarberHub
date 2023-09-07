@@ -81,7 +81,7 @@
         <p><a href="{{path ('app_myrdv')}}"> Voir mon planning </a></p>
     {% endif %}
 
-    {% if app.user.personnel.isManager == true %}
+    {% if app.user.personnel and app.user.personnel.isManager == true %}
 
         <h2> Mon salon </h2> 
 
@@ -91,6 +91,10 @@
             
         {% endif %}
 
+        <h2> Gerer mon compte </h2>
+
+    <p><a href=""> Modifier mes informations </a></p>
+
     <p><a href="{{path ('delete_account')}}" id="delete-account-link"> Supprimer mon compte </a></p>
 
 </section>
@@ -98,6 +102,8 @@
 {% block javascripts %}
 
 <script src="{{ asset('js/like.js')}}"></script>
+
+{# AFFICHER UNE ALERTE A LA SUPPRESION DU COMPTE #}
 
 <script>
 

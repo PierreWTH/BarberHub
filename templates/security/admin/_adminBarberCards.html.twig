@@ -13,10 +13,12 @@
                 {% if is_granted('ROLE_ADMIN') %}
                 
         
-                <p><a href="{{path ('edit_barbershop', {slug : barbershop.slug })}}" class="barber-admin-link"><i class="fa-regular fa-pen-to-square"></i></a> | 
-                <a href="{{path ('delete_barbershop', {id : barbershop.id })}}" class="barber-admin-link"><i class="fa-solid fa-trash"></i></a> |
+                <p><a href="{{path ('edit_barbershop', {slug : barbershop.slug })}}" class="barber-admin-link" title="Modifier"><i class="fa-regular fa-pen-to-square"></i></a> | 
+                <a href="{{path ('delete_barbershop', {id : barbershop.id })}}" class="barber-admin-link" title="Supprimer" id="delete-barbershop-link"><i class="fa-solid fa-trash"></i></a> |
 
-                <a href="" class="barber-admin-link validate-barber" data-barbershop-id="{{ barbershop.id }}"><i class="fa-{{ barbershop.validate ? 'solid fa-eye' : 'regular fa-eye-slash' }}"></i></a></p>
+                <a href="" class="barber-admin-link validate-barber" data-barbershop-id="{{ barbershop.id }}" title="Afficher/Retirer"><i class="fa-{{ barbershop.validate ? 'solid fa-eye' : 'regular fa-eye-slash' }}"></i></a>
+            | <a href="{{path ('manage_barberPrestation', {id : barbershop.id})}}" class="barber-admin-link" title="Ajouter une prestation"><i class="fa-solid fa-scissors"></i></a>
+            </p>
 
 
     
@@ -27,4 +29,43 @@
         {% endfor %}
         
     </section>
+
+    {% block javascript %}
+
+    {# AFFICHER UNE ALERTE A LA SUPPRESION D'UN BARBIER' #}
+
+    <script>
+
+        $('#delete-barbershop-link').click(function() {
+        event.preventDefault()
+        Swal.fire({
+            title: "Confirmer la suppression",
+            color: "#000000",
+            text: "Vous ne pourrez pas revenir en arrière.",
+            icon: 'warning',
+            iconColor: '#E66F64',
+            showCancelButton: true,
+            confirmButtonColor: '#F5F3F2',
+            cancelButtonColor: '#000000',
+            cancelButtonText: '<span style="color: white;">Annuler</span>',
+            confirmButtonText: '<span style="color: black;">Confirm</span>',
+          }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: 'Supprimé !',
+                    text: 'Ce barbershop à bien été supprimé.',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    
+                });
+              setTimeout(function() {
+                window.location.href = $('#delete-barbershop-link').attr('href');
+            }, 1000);
+            }
+          })
+        });
+        
+    </script>
+        
+    {% endblock javascript %}
     

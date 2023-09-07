@@ -28,15 +28,21 @@ use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")'))]
+#[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER") or is_granted("ROLE_BARBER")'))]
 class RendezVousController extends AbstractController
 {
     // Ajouter un rendez vous
-    #[Route('/barbershop/{id}/rendezvous/{barberPrestation}/add', name: 'add_rendezvous')]
+    #[Route('/barbershop/{slug}/rendezvous/{barberPrestation}/add', name: 'add_rendezvous')]
     #[Route('/barbershop/rendezvous/{id}/edit', name: 'edit_rendezvous')]
-    public function addRdv(ManagerRegistry $doctrine, BarberPrestation $barberPrestation, RendezVous $rendezvous = null, Request $request, RendezVousRepository $rvr, MailerInterface $mailer) : Response
+    public function addRdv(ManagerRegistry $doctrine, BarberPrestation $barberPrestation, RendezVous $rendezvous = null, Request $request, RendezVousRepository $rvr, MailerInterface $mailer, Barbershop $barbershop) : Response
     {   
         setlocale(LC_TIME, 'fr_FR');
+
+        // On verifie si la prestation choisie est bien proposée par le barbier
+        if(!in_array($barberPrestation, $barbershop->getBarberPrestations()->toArray())){
+
+            return $this->redirectToRoute('app_home');
+        }
 
         if(!$rendezvous){
             $rendezvous = new RendezVous();
@@ -77,6 +83,12 @@ class RendezVousController extends AbstractController
             $heureDebut = new DateTimeImmutable($debut);
 
             // Récupération de personnel ID et heure début en string pour requete checkIfRdvExist
+            $personnel = $form->get('personnel')->getData();
+
+            if(!in_array($personnel, $personnels->toArray())){
+
+                return $this->redirectToRoute('app_home');
+            }
             $personnelId = $form->get('personnel')->getData()->getId();
             $personnelName = $form->get('personnel')->getData()->getUser()->getPseudo();
             $stringDebut = $heureDebut->format('Y-m-d H:i:s');

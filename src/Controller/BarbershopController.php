@@ -96,8 +96,7 @@ class BarbershopController extends AbstractController
                 {
                     throw new AccessDeniedException("Vous n'avez pas les droits nécessaires pour effectuer cette action.");
                 }
-                
-                throw new AccessDeniedException("Vous n'avez pas les droits nécessaires pour effectuer cette action.");
+
             }
         }
         

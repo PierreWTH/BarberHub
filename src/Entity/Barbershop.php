@@ -31,6 +31,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: BarbershopRepository::class)]
 // Pour prePersist
 #[ORM\HasLifecycleCallbacks]
+
 class Barbershop
 {   
     #[Groups('read')]

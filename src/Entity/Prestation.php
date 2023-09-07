@@ -2,14 +2,17 @@
 
 namespace App\Entity;
 
-use App\Repository\PrestationRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use ORM\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\PrestationRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
 #[ORM\Entity(repositoryClass: PrestationRepository::class)]
+#[HasLifecycleCallbacks]
+
 class Prestation
 {
     #[ORM\Id]
@@ -24,9 +27,19 @@ class Prestation
     #[ORM\OneToMany(mappedBy: 'prestation', targetEntity: BarberPrestation::class)]
     private Collection $barberPrestations;
 
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
     public function __construct()
     {
         $this->barberPrestations = new ArrayCollection();
+    }
+
+    // Générer le slug à chaque ajout de prestation
+    #[ORM\PrePersist]
+    public function prePersist()
+    {
+        $this->slug = (new Slugify())->slugify($this->nom);
     }
 
     public function getId(): ?int
@@ -77,6 +90,18 @@ class Prestation
                 $barberPrestation->setPrestation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

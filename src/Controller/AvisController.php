@@ -11,8 +11,10 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AvisController extends AbstractController
@@ -20,6 +22,7 @@ class AvisController extends AbstractController
 
     // Index des avis
     #[Route('/administration/avis', name: 'admin_avis')]
+    #[IsGranted('ROLE_ADMIN')]
     public function index(ManagerRegistry $doctrine): Response
     {
         // Récuperer tous avis
@@ -34,6 +37,7 @@ class AvisController extends AbstractController
 
     #[Route('/barbershop/{id}/avis/add', name: 'add_avis')]
     #[Route('/barbershop/{barbershop}/avis/{avis}/edit', name: 'edit_avis')]
+    #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER") or is_granted("ROLE_BARBER")'))]
     public function add(ManagerRegistry $doctrine, Barbershop $barbershop = null, Avis $avis = null, Request $request) : Response
     {   
         $isEditMode = ($avis !== null); // Check if in edit mode
@@ -82,6 +86,7 @@ class AvisController extends AbstractController
 
     // Supprimer un avis en AJAX
     #[Route('/barbershop/{barbershop}/avis/{avis}/delete', name: 'delete_avis', methods:"post")]
+    #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER") or is_granted("ROLE_BARBER")'))]
     public function delete(ManagerRegistry $doctrine, Barbershop $barbershop, Avis $avis = null): Response
     {   
         if ($avis->getUser()->getId() === $this->getUser()->getId() || $security->isGranted("ROLE_ADMIN")){
@@ -92,7 +97,7 @@ class AvisController extends AbstractController
             return new JsonResponse(['success' => true], 200);
         }
         else{
-            return new JsonResponse(['error' => 'Erreur de suppression'], 400);
+            return $this->redirectToRoute('app_home');
         }
         
     }

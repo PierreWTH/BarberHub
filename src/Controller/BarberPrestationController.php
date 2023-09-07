@@ -67,12 +67,8 @@ class BarberPrestationController extends AbstractController
                 ->position('y', 'bottom')
                 ->addSuccess($notificationMessage);
 
-            if($security->isGranted('ROLE_BARBER')){
-                return $this->redirectToRoute('manage_barberPrestation', ['id' => $barbershop->getId()]);
-            }
-            else{
-                return $this->redirectToRoute('admin_barbershop');
-            }
+            return $this->redirectToRoute('manage_barberPrestation', ['id' => $barbershop->getId()]);
+            
         }
         return $this->render('barberPrestation/add.html.twig', [
             'formAddBarberPrestation' => $form->createView(),

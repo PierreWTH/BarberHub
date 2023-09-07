@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\ExpressionLanguage\Expression;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")'))]
@@ -19,8 +20,11 @@ class UserController extends AbstractController
     #[Route('/monespace', name: 'app_myspace')]
     public function index(UserRepository $ur): Response
     {
+        // Si l'utilisateur n'est pas connecté on redirige vers login 
+        if(!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
         // Récuperer les likes de l'utilisateur
-
         $user = $this->getUser();
         $userId = $this->getUser()->getId();
         $likes = $ur->getLikedBarbershops($userId);
@@ -37,9 +41,9 @@ class UserController extends AbstractController
     }
 
     #[Route('/manage', name: 'manage_barbershop')]
+    #[isGranted('ROLE_BARBER')]
     public function indexBarber(UserRepository $ur): Response
     {   
-
         $user = $this->getUser();
         $barbershop = $user->getPersonnel()->getBarbershop();
         $avis = $barbershop->getAvis();
@@ -62,6 +66,7 @@ class UserController extends AbstractController
 
 
     #[Route('/monespace/rdv', name: 'app_myrdv')]
+    #[isGranted('ROLE_BARBER')]
     public function displayRendezVous(UserRepository $ur, PersonnelRepository $pr, Request $request): Response
     {
         $user = $this->getUser();
@@ -94,6 +99,7 @@ class UserController extends AbstractController
 
     }
     #[Route('/monespace/getrdv', name: 'app_getmyrdv', methods: "POST")]
+    #[isGranted('ROLE_BARBER')]
     public function getRendezVous(UserRepository $ur, PersonnelRepository $pr, Request $request): Response
     {
         $user = $this->getUser();
