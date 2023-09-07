@@ -82,6 +82,20 @@ a{
     font-size: 30px;
 }
 
+.white-background {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: justify;
+    background-color: white;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    margin: auto;
+}
+
 /********************************************** HOME *************************************************/
 
 /*****************************************/
@@ -3121,6 +3135,7 @@ background-color: #8CD47E;
         padding: 2rem;
         border-radius: 10px;
         margin: auto;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     }
 
     .forget-password-container label {
@@ -3129,8 +3144,8 @@ background-color: #8CD47E;
         font-size: 0.75rem;
     }
 
-    #reset_password_request_form_email{
-        display: block;
+    #reset_password_request_form_email, #change_password_form_plainPassword_first, #change_password_form_plainPassword_second{
+    display: block;
     width: 100%;
     box-sizing: border-box;
     border-radius: 8px;
@@ -3142,4 +3157,10 @@ background-color: #8CD47E;
 
     #reset_password_request_form_submit{
         margin-top: 1.25rem;
+    }
+
+    .white-background label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-size: 0.75rem;
     }

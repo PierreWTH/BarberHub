@@ -3,10 +3,23 @@
 {% block title %}Mot de passe oublié {% endblock %}
 
 {% block body %}
+<div class="white-background">
     <h1> Réinitialiser votre mot de passe </h1>
 
     {{ form_start(resetForm) }}
-        {{ form_row(resetForm.plainPassword) }}
-        <button class="btn btn-primary">Réinitialiser</button>
+        {{ form_row(resetForm.plainPassword)}}
+        {{ form_row(resetForm.submit) }}
+        
     {{ form_end(resetForm) }}
+</div>
+
+
+
+{% block javascripts %}
+
+<script src="{{ asset('js/registerFunctions.js')}}"></script>
+
+{% endblock javascripts %}
+
+
 {% endblock %}
