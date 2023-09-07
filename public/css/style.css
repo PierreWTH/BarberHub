@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Smythe&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700');
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i');
 
 
 #image-preview {
@@ -104,7 +106,7 @@ a{
 .home {
     width: 100%;
     height: 100vh;
-    background-image: linear-gradient(rgba(12,3,51,0.3), rgba(12,3,51,0.3));
+    background-image: linear-gradient(rgba(12,3,51,0.3), rgba(0,0,0,0.5));
     position: relative;
     padding: 0 5%;
     display: flex;
@@ -191,7 +193,6 @@ a{
     right: 0;
     bottom: 0;
     z-index: -1;
-    ;
 }
 
 @media(min-aspect-ratio: 16/9 ){
@@ -205,6 +206,23 @@ a{
     .home-video{
         width: auto;
         height: 100%;
+    }
+}
+
+@media screen and (max-width : 768px) {
+    .header-content h1{
+        font-size: 80px;
+    }
+
+    .home-video {
+        left: 50%;
+        transform: translateX(-70%)
+    }
+}
+
+@media screen and (max-width : 468px) {
+    .header-content h1{
+        font-size: 60px;
     }
 }
 
@@ -1004,6 +1022,13 @@ footer i {
     border: 1px solid #c4c4c4;
     padding: 0.8em;
     font-size: 0.875rem;
+}
+
+@media screen and (max-width : 768px) {
+
+    #search_q, #search_sortBy, #search_city{
+        max-width: 100% !important;
+    }
 }
 
 .barbershop-cards-container {
