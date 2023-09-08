@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Mon profil {% endblock %}
+
+{% block body %}
+
+<section id="update-profile">
+
+    <div class="update-user-form-container">
+
+    <h1 class="title">Mettre a jour le profil</h1>
+
+{{ form_start(formUpdateUser) }}
+{{ form_row(formUpdateUser.pseudo) }}
+{{ form_row(formUpdateUser.nom) }}
+{{ form_row(formUpdateUser.prenom) }}
+{{ form_row(formUpdateUser.email) }}
+{{ form_row(formUpdateUser.telephone) }}
+<button id="change-password-button"> Changer mon mot de passe </button>
+<div class="change-password-container">
+    {{ form_row(formUpdateUser.old_password) }}
+    {{ form_row(formUpdateUser.new_password) }}
+    {{ form_row(formUpdateUser.new_password_confirm) }}
+</div>
+{{ form_row(formUpdateUser.submit) }}
+{{ form_end(formUpdateUser) }}
+
+
+
+    </div>
+
+</section>
+{% block javascript %}
+
+<script>
+    $('#change-password-button').click(function(e){
+        e.preventDefault()
+
+        $('.change-password-container').toggle()
+    })
+</script>
+    
+{% endblock javascript %}
+
+
+{% endblock %}
+

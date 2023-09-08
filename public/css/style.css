@@ -3189,3 +3189,54 @@ background-color: #8CD47E;
         margin-bottom: 0.5rem;
         font-size: 0.75rem;
     }
+
+    /************************** UPDATE USER ****************************/
+
+#update-profile{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+#updateUserForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+#update-profile label {
+    display: block;
+        margin-bottom: 0.5rem;
+        font-size: 0.75rem;
+}
+
+#update_user_pseudo, #update_user_nom, #update_user_prenom, #update_user_email, #update_user_telephone, #update_user_password {
+    display: block;
+    width: 100%;
+    min-width: 350px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    border: 1px solid #c4c4c4;
+    padding: 1em;
+    font-size: 0.875rem;
+    margin-bottom: 1.25rem;
+}
+
+.update-user-form-container{
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    padding: 3rem 0rem;
+}
+
+.update-user-form-container h1 {
+    margin-bottom: 2rem;
+}
+
+.change-password-container{
+    display: none;
+}
