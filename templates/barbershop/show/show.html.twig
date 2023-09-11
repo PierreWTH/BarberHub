@@ -59,19 +59,25 @@
 
     <h3> Boutique </h3>
 
+    <p> En travaux ! Bientot disponible </p>
+
     <h3> Réalisations </h3>
 
-    
-        <section class="splide" aria-label="Splide Basic HTML Example">
-            <div class="splide__track">
-                <ul class="splide__list">
-                  {% for pics in barbershop.barbershopPics %}
-                  <li class="splide__slide"><img src="{{asset('assets/uploads/barbershopPics/' ~ pics.nom)}}" alt="" class="realisation-img"></li>
-                  {% endfor %}
-              </ul>
-        </div>
-      </section>
+    {% if barbershop.barbershopPics is not empty %}
         
+    <section class="splide" aria-label="Splide Basic HTML Example">
+        <div class="splide__track">
+            <ul class="splide__list">
+                {% for pics in barbershop.barbershopPics %}
+                <li class="splide__slide"><img src="{{asset('assets/uploads/barbershopPics/' ~ pics.nom)}}" alt="" class="realisation-img"></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+    {% else %}
+
+    <p> Aucune photo de prestation pour le moment. </p>
+    {% endif %}
 
 
 </div>
