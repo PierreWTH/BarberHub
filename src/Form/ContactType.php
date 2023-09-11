@@ -5,8 +5,10 @@ namespace App\Form;
 use App\Form\FormExtension\HoneyPotType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
@@ -16,10 +18,15 @@ class ContactType extends HoneyPotType
     {   
         parent::buildForm($builder, $options);
         $builder
-            ->add('email', TextType::class, [
+            ->add('email', EmailType::class, [
                 'attr' => [
                     'placeholder' => 'Votre adresse mail...'
-                ]
+                ],
+                'constraints' => [
+                    new Email([
+                        'message' => 'L\'adresse e-mail "{{ value }}" n\'est pas valide.',
+                    ]),
+                ],
             ])
             ->add('subject', TextType::class, [
                 'label' => 'Sujet',

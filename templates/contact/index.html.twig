@@ -7,13 +7,13 @@
 
 <h1 class="title-margin"> Nous contacter </h1>
 {{ form_start(contactForm) }}
-<p> Si vous avez une demande particulière, que vous souhaitez adhérer à nos services ou que vous voulez simplement nous dire bonjour, n'hésitez pas à nous envoyer un message ! </p>
+<p class="contact-text"> Si vous avez une demande particulière, que vous souhaitez adhérer à nos services ou que vous voulez simplement nous dire bonjour, n'hésitez pas à nous envoyer un message ! </p>
 
 
 {% if not app.user %}
 
 {{ form_row(contactForm.email) }}
-
+<p id="email-message"></p>
 {% endif %}
 
 {{ form_row(contactForm.subject) }}
@@ -21,4 +21,13 @@
 {{ form_row(contactForm.submit) }}
 {{ form_end(contactForm) }}
 
+
+{% block javascript %}
+
+    <script src="{{ asset('js/contactFunctions.js')}}"></script>
+    
+{% endblock javascript %}
+
 {% endblock %}
+
+

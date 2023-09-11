@@ -3283,7 +3283,7 @@ background-color: #8CD47E;
     font-size: 0.75rem;
 }
 
-#contactForm p {
+#contactForm .contact-text {
     margin: 2rem 0rem;
     font-size: 14px;
 }
