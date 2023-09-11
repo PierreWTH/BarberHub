@@ -3201,25 +3201,32 @@ background-color: #8CD47E;
 }
 
 #updateUserForm {
+    padding: 1rem;
     display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    max-width: 700px;
+}  
+
+.update-profile-fields{
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    max-width: 800px;
-    flex-wrap: wrap;
     gap: 1rem;
 }
 
 #update-profile label {
     display: block;
-        margin-bottom: 0.5rem;
-        font-size: 0.75rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.75rem;
 }
 
-#update_user_pseudo, #update_user_nom, #update_user_prenom, #update_user_email, #update_user_telephone, #update_user_password {
+#update_user_pseudo, #update_user_nom, #update_user_prenom, #update_user_email, #update_user_telephone, #update_user_password, #update_user_old_password, #update_user_new_password, #update_user_new_password_confirm {
     display: block;
     width: 100%;
-    min-width: 350px;
+    min-width: 300px;
     box-sizing: border-box;
     border-radius: 8px;
     border: 1px solid #c4c4c4;
@@ -3239,4 +3246,23 @@ background-color: #8CD47E;
 
 .change-password-container{
     display: none;
+    padding: 0 2rem 2rem 2rem;
+}
+
+#change-password-button {
+    padding: 1em;
+    background-color: var(--light-gray);
+    color: black;
+    border-radius: 8px;
+    border: 0px;
+    cursor: pointer;
+    max-width: 300px;
+    width: 100%;
+}
+
+#update_user_submit{
+    display: none;
+    width: 100%;
+    max-width: 300px;
+    margin:  1rem auto;
 }

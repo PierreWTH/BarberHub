@@ -227,7 +227,7 @@ class UserController extends AbstractController
                 }
             }
             // Si tous les champs ne sont pas remplis
-            else{
+            if($old_pwd !== null || $new_pwd !== null || $new_pwd_confirm || null){
                 notyf()
                     ->position('x', 'right')
                     ->position('y', 'bottom')

@@ -11,12 +11,14 @@
     <h1 class="title">Mettre a jour le profil</h1>
 
 {{ form_start(formUpdateUser) }}
+<div class="update-profile-fields">
 {{ form_row(formUpdateUser.pseudo) }}
 {{ form_row(formUpdateUser.nom) }}
 {{ form_row(formUpdateUser.prenom) }}
 {{ form_row(formUpdateUser.email) }}
 {{ form_row(formUpdateUser.telephone) }}
 <button id="change-password-button"> Changer mon mot de passe </button>
+</div>
 <div class="change-password-container">
     {{ form_row(formUpdateUser.old_password) }}
     {{ form_row(formUpdateUser.new_password) }}
@@ -33,11 +35,24 @@
 {% block javascript %}
 
 <script>
+    $(document).ready(function() {
+
     $('#change-password-button').click(function(e){
         e.preventDefault()
 
         $('.change-password-container').toggle()
     })
+        // On selectionne tous les champs
+        var $inputFields = $('input[type="text"]');
+    
+        // On selectionne le bouton submit
+        var $submitButton = $('#update_user_submit');
+    
+        // Si il y a un changement sur un des champs on fait apparaitre le bouton submit
+        $inputFields.on('input', function() {
+            $submitButton.show();
+        });
+    });
 </script>
     
 {% endblock javascript %}
