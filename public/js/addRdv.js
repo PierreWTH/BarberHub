@@ -16,6 +16,15 @@
             perPage:5,
             width: "100%",
             pagination : false,
+            breakpoints: { 
+                900 : {
+                    perPage: 3
+                },
+
+                600 : {
+                    perPage : 2
+                }
+            }
         });
         splide.mount();
     }

@@ -1,7 +1,10 @@
 
 {% for date, creneaux in allCreneaux %}
 <div class="splide__slide date-creneaux-container">
-  <h3>{{ date|format_datetime(pattern="EEEE d LLL", locale='fr')|capitalize }}</h3>
+  <div class="day-hour-rdv">
+  <h3 class="add-rdv-day">{{ date|format_datetime(pattern="EEEE", locale='fr')|capitalize }} </h3>
+  <p class="add-rdv-day">{{ date|format_datetime(pattern="d LLL", locale='fr')|capitalize }}</p>
+  </div>
   <div class="creneaux-container">
   {% for creneau in creneaux %}
     {% set creneauValue = creneau.format('y-m-d H:i:s') %}

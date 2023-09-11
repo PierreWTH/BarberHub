@@ -1269,9 +1269,7 @@ footer i {
 }
 
 #map-all-barber{
-    width: 60%;
-    
-    
+    width: 60%;  
 }
 
 .map-barbershop-container{
@@ -1389,7 +1387,6 @@ footer i {
     #map-all-barber{
         min-height: 350px;
         width: 100%;
-        
     }
 
     #map-details-barber{
@@ -1505,6 +1502,8 @@ footer i {
     align-items: center;
 }
 
+
+
 .rdv-salon{
     font-size: 20px;
 }
@@ -1600,6 +1599,10 @@ footer i {
 .clicked-button {
     background-color: #000000;  
     color: white;
+}
+
+.day-hour-rdv{
+    text-align: center;
 }
 
 /************************************ CONFIRM RDV *************************************/
