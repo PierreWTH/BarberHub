@@ -2782,6 +2782,46 @@ background-color: #8CD47E;
     color: var(--dark-gray);
 }
 
+.manage-account-links{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 1rem;
+}
+
+.manage-account-links a, .manage-barber-link {
+    display: block;
+    background-color: white;
+    border: 2px solid var(--dark-gray);
+    padding: 1rem 1.5rem;
+    width: 100%;
+    max-width: 300px;
+    min-width: 300px;
+    text-align: center;
+    color: black;
+    transition: 0.2s;
+}
+
+.manage-account-links a:hover, .manage-barber-link:hover {
+    background-color: var(--black);
+    color: white;
+}
+
+@media screen and (max-width : 768px) {
+    #myspace {
+        justify-content: center;
+        align-items: center;
+    }
+
+    .rdv-container{
+        justify-content: center;
+    }
+
+    .manage-account-links {
+        justify-content: center;
+    }
+}
+
 /**** ALERT ***/
 
 .alert-danger{
@@ -3240,7 +3280,8 @@ background-color: #8CD47E;
 
 .update-user-form-container{
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    padding: 3rem 0rem;
+    margin: 3rem 0rem;
+    padding: 1rem;
 }
 
 .update-user-form-container h1 {

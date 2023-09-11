@@ -3,8 +3,8 @@
 namespace App\Security;
 
 use App\Repository\UserRepository;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
@@ -34,9 +34,9 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
         $user = $this->userRepository->findOneBy(['email' => $email]);
 
         $request->getSession()->set(Security::LAST_USERNAME, $email);
+        
         if(!$user){
             throw new CustomUserMessageAuthenticationException('Cette adresse e-mail n\'existe pas.');
-
         }
         if (!$user->isVerified()) {
             throw new CustomUserMessageAuthenticationException('Merci de vérifier votre adresse mail pour vous connecter.');
@@ -56,8 +56,7 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
-
-        // For example:
+    // For example:
         return new RedirectResponse($this->urlGenerator->generate('app_home'));
         throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
