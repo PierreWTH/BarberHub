@@ -15,18 +15,12 @@ class FactureController extends AbstractController
     #[Route('/monespace/rdv/{id}/facture', name: 'app_facture')]
     public function generateInvoice(RendezVous $rendezVous): Response
     {   
-        // On récupère la date du rdv
+       
+        // On récupère le barbershop, l'employé, les prestations, le client et la date 
         $date = $rendezVous->getDebut();
-
-        // On récupère le client 
         $client = $rendezVous->getUser();
-
-        // On récupère l'employé qui a fait la prestation
         $employe = $rendezVous->getPersonnel()->getUser();
-
         $barbershop =  $rendezVous->getPersonnel()->getBarbershop();
-
-        // On récupère les prestations effectuées
         $prestations = $rendezVous->getBarberPrestation();
 
         // On fait un tableau avec le prix de toutes les prestations 
@@ -40,7 +34,9 @@ class FactureController extends AbstractController
 
 
         $pdfOptions = new Options();
+
         $pdfOptions->set('isRemoteEnabled', true);
+        
         $dompdf = new Dompdf($pdfOptions);
 
         // POUR METTRE LOGO SUR LA FACTURE - Conversion du logo en base64 pour l'affichage 
@@ -63,7 +59,6 @@ class FactureController extends AbstractController
         
         $dompdf->loadHtml($html);
 
-        
         $dompdf->setPaper('A4', 'portrait');
         
         $dompdf->render();

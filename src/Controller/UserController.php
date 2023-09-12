@@ -108,7 +108,6 @@ class UserController extends AbstractController
         $personnel = $user->getPersonnel();
         // affichage des rendez vous a venir par défaut
         $display = $request->getContent(); 
-        dump($display);
 
         if ($display === 'upcoming') {
             $events = $pr->getUpcomingRendezVous($personnel);
