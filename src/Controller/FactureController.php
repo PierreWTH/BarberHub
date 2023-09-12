@@ -38,12 +38,12 @@ class FactureController extends AbstractController
         // Calcul du total des prix avec array_sum
         $total = array_sum($allPrice);
 
+
         $pdfOptions = new Options();
-        $pdfOptions->set('defaultFont', 'Arial');
         $pdfOptions->set('isRemoteEnabled', true);
         $dompdf = new Dompdf($pdfOptions);
 
-        // Conversion du logo en base64 pour l'affichage - pour mettre logo barberhub sur la facture
+        // POUR METTRE LOGO SUR LA FACTURE - Conversion du logo en base64 pour l'affichage 
         // $path = '/Users/pw/Desktop/Projet_Final/BarberHub/public/images/Logo_black.png';
         // $type = pathinfo($path, PATHINFO_EXTENSION);
         // $data = file_get_contents($path);
