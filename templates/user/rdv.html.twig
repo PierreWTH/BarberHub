@@ -35,7 +35,6 @@
     window.onload = () => {
 
       const data = JSON.parse('{{ data|raw }}')
-    console.log(data)
     
       let calendarEl = document.querySelector('#calendar');
       let calendar = new FullCalendar.Calendar(calendarEl, {
@@ -53,15 +52,22 @@
 			
 			const start = new Date(info.event.start).toISOString().substr(11, 5)
 			const end = new Date(info.event.end).toISOString().substr(11, 5)
+      let id = info.event.id
+      console.log(id)
+
+      // On crée la route pour la facture 
+      let invoiceUrl = "{{ path('app_facture', {id : 'id'}) }}";
+      // On remplace le placeholder par l'id
+      invoiceUrl = invoiceUrl.replace('id', id);
+
 			const alertMessage = info.event.title + '\n' +
 								'Début : ' + start + '\n' +
 								'Fin : ' + end
-
-          Swal.fire({
+            Swal.fire({
             title: info.event.title,
             text: 'Début : ' + start + '\n' + 'Fin : ' + end,
             confirmButtonColor: '#000000',
-            footer: '<a href=""> Editer une facture </a> '
+            footer: '<a href=' + invoiceUrl + '> Editer une facture </a>'
           })
         },
         
@@ -75,14 +81,12 @@
         $(this).addClass('active');
       
         var displayType = this.value
-        console.log(displayType)
         $.ajax({
             type: "POST",
             url: "/monespace/getrdv",
             contentType: 'application/json',
             data: displayType, 
             success: function(response) {
-                console.log(response)
                 calendar.removeAllEvents()
                 calendar.addEventSource(response); 
             },
