@@ -57,11 +57,13 @@ class RendezVousController extends AbstractController
 
         
         $form = $this->createForm(RendezVousType::class, $rendezvous, ['barbershopId' => $barbershopId]);
+
         if($this->getUser()->getTelephone()){
             $form->remove('nom');
             $form->remove('prenom');
             $form->remove('telephone');
         }
+        
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
@@ -89,6 +91,7 @@ class RendezVousController extends AbstractController
 
                 return $this->redirectToRoute('app_home');
             }
+
             $personnelId = $form->get('personnel')->getData()->getId();
             $personnelName = $form->get('personnel')->getData()->getUser()->getPseudo();
             $stringDebut = $heureDebut->format('Y-m-d H:i:s');
@@ -161,13 +164,15 @@ class RendezVousController extends AbstractController
             $rendezvous->setUser($user);
 
             if(!$user->getNom() && !$user->getPrenom() && !$user->getTelephone()){
-            $nom = $form->get('nom')->getData();
-            $prenom = $form->get('prenom')->getData();
-            $telephone = $form->get('telephone')->getData();
 
-            $user->setPrenom($prenom);
-            $user->setNom($nom);
-            $user->setTelephone($telephone);
+                $nom = $form->get('nom')->getData();
+                $prenom = $form->get('prenom')->getData();
+                $telephone = $form->get('telephone')->getData();
+
+                $user->setPrenom($prenom);
+                $user->setNom($nom);
+                $user->setTelephone($telephone);
+
             }
 
             $entityManager = $doctrine->getManager();
