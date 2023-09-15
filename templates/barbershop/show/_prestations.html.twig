@@ -6,7 +6,7 @@
         {{prestation.prestation.nom}}
         <p>30min &nbsp;•&nbsp;
         {{prestation.prix}}€
-        {% if app.user %}
+        {% if app.user and barbershop.personnels is not empty %}
     
       <a href="{{path ('add_rendezvous', { slug : barbershop.slug, barberPrestation : prestation.id })}}" class="book-prestation"> Reserver </a></p>
 
