@@ -3,12 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Barbershop;
 use App\Form\UpdateUserType;
+use App\Form\AddEmployeeType;
+use Symfony\Component\Mime\Email;
 use App\Repository\UserRepository;
 use App\Repository\PersonnelRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\ExpressionLanguage\Expression;
@@ -65,6 +69,53 @@ class UserController extends AbstractController
         ]);
         
     }
+
+    #[Route('/{slug}/employes', name: 'manage_employees')]
+    #[isGranted('ROLE_BARBER')]
+    public function manageEmployees(Barbershop $barbershop, Request $request, MailerInterface $mailer): Response
+    {   
+        $form = $this->createForm(AddEmployeeType::class);
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $user = $this->getUser();
+            $email = $form->get('email')->getData();
+
+            $tokenLength = 32; // La longueur du token que vous souhaitez générer
+            $token = bin2hex(random_bytes($tokenLength));
+
+            // dd($token);
+
+            $email = (new Email())
+            ->from('admin@barberhub.com')
+            ->to($email)
+            ->subject($user->getPseudo().' vous invite à rejoindre son salon.')
+
+            ->html("<a href='$token'> TEST </a>");
+
+            $mailer->send($email);
+
+            notyf()
+                ->position('x', 'right')
+                ->position('y', 'bottom')
+                ->addSuccess('Demande envoyée.');
+    
+            return $this->redirectToRoute('manage_employees',['slug' => $barbershop->getSlug()]);
+        }
+
+        $personnels = $barbershop->getPersonnels();
+
+        return $this->render('user/manageEmployees.html.twig', [
+            'personnel' => $personnels,
+            'formAddEmployee' => $form->createView(),
+
+        ]);
+        
+    }
+
+
 
 
     #[Route('/monespace/rdv', name: 'app_myrdv')]

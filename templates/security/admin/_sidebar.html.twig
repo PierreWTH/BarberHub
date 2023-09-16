@@ -115,6 +115,12 @@
                             <span class="sidebar-text"> Prestations </span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{path ('manage_employees', {slug : app.user.personnel.barbershop.slug})}}">
+                            <i class="sidebar-icon fa-solid fa-user-tie"></i>                            
+                            <span class="sidebar-text"> Employés </span>
+                        </a>
+                    </li>
                 </ul>
                 {% endif %}
             </div>

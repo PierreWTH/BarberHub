@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Gerer mes employés {% endblock %}
+
+{% block body %}
+
+<section class="admin-pannel">
+    {% include "security/admin/_sidebar.html.twig" %}
+<div class="admin-pannel-content-prestation">
+        
+<div class="add-prestation-admin-form">
+    <h1> Ajouter un employé </h1>
+
+    {{ form_start(formAddEmployee) }}
+    {{ form_row(formAddEmployee.email) }}
+    {{ form_end(formAddEmployee) }}
+</div>
+<div class="table-prestation-admin" >
+    <h2> Tous les employés </h2>
+    <table class="admin-employee-table" id="responsive-table">
+        <thead>
+            <tr>
+                <th> Pseudo </th>
+                <th> Barbershop </th>
+                <th> Statut </th>
+                <th> Action </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for personne in personnel %}
+            <tr>
+                <td data-label = 'Pseudo'>{{ personne.user}}</td>
+                <td data-label = 'Salon'>{{ personne.barbershop.nom}}</td>
+                {% if personne.isManager == 1 %}
+                    <td data-label = 'Role'> Manager </td>
+                {% else %}
+                    <td data-label = 'Role'> Employé </td>
+                {% endif %}
+                <td data-label = 'Action'><a href="{{ path('edit_personnel', {id : personne.id })}}"> Modifier </a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+</div>
+</div>
+</section>
+
+
+{% endblock %}
