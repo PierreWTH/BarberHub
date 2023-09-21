@@ -62,6 +62,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 15, nullable: true)]
     private ?string $telephone = null;
 
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?PersonnelToken $personnelToken = null;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -307,6 +310,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setTelephone(?string $telephone): self
     {
         $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    public function getPersonnelToken(): ?PersonnelToken
+    {
+        return $this->personnelToken;
+    }
+
+    public function setPersonnelToken(PersonnelToken $personnelToken): self
+    {
+        // set the owning side of the relation if necessary
+        if ($personnelToken->getUser() !== $this) {
+            $personnelToken->setUser($this);
+        }
+
+        $this->personnelToken = $personnelToken;
 
         return $this;
     }

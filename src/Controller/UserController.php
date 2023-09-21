@@ -72,7 +72,7 @@ class UserController extends AbstractController
 
     #[Route('/{slug}/employes', name: 'manage_employees')]
     #[isGranted('ROLE_BARBER')]
-    public function manageEmployees(Barbershop $barbershop, Request $request, MailerInterface $mailer): Response
+    public function manageEmployees(Barbershop $barbershop, UserRepository $userRepository, Request $request, MailerInterface $mailer): Response
     {   
         $form = $this->createForm(AddEmployeeType::class);
         $form->handleRequest($request);
@@ -82,6 +82,10 @@ class UserController extends AbstractController
 
             $user = $this->getUser();
             $email = $form->get('email')->getData();
+
+            $newEmployee = $userRepository->findOneBy(['email' => $email]);
+            
+            $newEmployee->setPersonnelToken($token);
 
             $tokenLength = 32; // La longueur du token que vous souhaitez générer
             $token = bin2hex(random_bytes($tokenLength));
@@ -93,7 +97,7 @@ class UserController extends AbstractController
             ->to($email)
             ->subject($user->getPseudo().' vous invite à rejoindre son salon.')
 
-            ->html("<a href='$token'> TEST </a>");
+            ->html("<a href='/addEmployee/confirmation/?token=$token&user=$user'> J'accepte </a>");
 
             $mailer->send($email);
 
@@ -115,11 +119,18 @@ class UserController extends AbstractController
         
     }
 
+    #[Route('/{slug}/confirmEmployee', name: 'confirm_employees')]
+    public function confirmEmployee(Barbershop $barbershop, Request $request, MailerInterface $mailer): Response
+    {
+        $token = $_GET['token'];
+        
+
+    }
+
 
 
 
     #[Route('/monespace/rdv', name: 'app_myrdv')]
-    #[isGranted('ROLE_BARBER')]
     public function displayRendezVous(UserRepository $ur, PersonnelRepository $pr, Request $request): Response
     {
         $user = $this->getUser();
