@@ -85,10 +85,12 @@ class UserController extends AbstractController
 
             $newEmployee = $userRepository->findOneBy(['email' => $email]);
             
-            $newEmployee->setPersonnelToken($token);
+            $newEmployeeId = $newEmployee->getId();
 
             $tokenLength = 32; // La longueur du token que vous souhaitez générer
             $token = bin2hex(random_bytes($tokenLength));
+
+            $newEmployee->setPersonnelToken($token);
 
             // dd($token);
 
@@ -97,7 +99,7 @@ class UserController extends AbstractController
             ->to($email)
             ->subject($user->getPseudo().' vous invite à rejoindre son salon.')
 
-            ->html("<a href='/addEmployee/confirmation/?token=$token&user=$user'> J'accepte </a>");
+            ->html("<a href='/addEmployee/confirmation/?token=$token&user=$newEmployeeId'> J'accepte </a>");
 
             $mailer->send($email);
 
@@ -120,11 +122,19 @@ class UserController extends AbstractController
     }
 
     #[Route('/{slug}/confirmEmployee', name: 'confirm_employees')]
-    public function confirmEmployee(Barbershop $barbershop, Request $request, MailerInterface $mailer): Response
+    public function confirmEmployee(Barbershop $barbershop, Request $request, UserRepository $userRepository): Response
     {
         $token = $_GET['token'];
-        
+        $userId = $_GET['user'];
 
+        dd($token, $userId);
+
+        $newEmployee = $userRepository->findOneBy(['id' => $userId]);
+
+        if($newEmployee->getToken() === $token){
+
+
+        }
     }
 
 
