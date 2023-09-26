@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Entity\Barbershop;
 use App\Form\UpdateUserType;
 use App\Form\AddEmployeeType;
+use App\Entity\PersonnelToken;
 use Symfony\Component\Mime\Email;
 use App\Repository\UserRepository;
 use App\Repository\PersonnelRepository;
@@ -90,7 +91,9 @@ class UserController extends AbstractController
             $tokenLength = 32; // La longueur du token que vous souhaitez générer
             $token = bin2hex(random_bytes($tokenLength));
 
-            $newEmployee->setPersonnelToken($token);
+            $personnelToken = new PersonnelToken();
+            $personnelToken->setToken($token);
+            $personnelToken->setUser($newEmployee);
 
             // dd($token);
 
@@ -99,7 +102,7 @@ class UserController extends AbstractController
             ->to($email)
             ->subject($user->getPseudo().' vous invite à rejoindre son salon.')
 
-            ->html("<a href='/addEmployee/confirmation/?token=$token&user=$newEmployeeId'> J'accepte </a>");
+            ->html("<a href='/confirmEmployee?token=$token&user=$newEmployeeId'> J'accepte </a>");
 
             $mailer->send($email);
 
@@ -121,7 +124,7 @@ class UserController extends AbstractController
         
     }
 
-    #[Route('/{slug}/confirmEmployee', name: 'confirm_employees')]
+    #[Route('/confirmEmployee', name: 'confirm_employees')]
     public function confirmEmployee(Barbershop $barbershop, Request $request, UserRepository $userRepository): Response
     {
         $token = $_GET['token'];
