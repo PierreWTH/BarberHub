@@ -45,7 +45,7 @@
                 data: JSON.stringify(data),
                 contentType: 'application/json',
                 success: function(response) {
-                    console.log(response);
+
                     // Ajout des créneaux au container
                     var creneauxContainer = $('.splide__list');
                     creneauxContainer.empty();

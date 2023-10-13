@@ -251,10 +251,13 @@ class RendezVousController extends AbstractController
          // On ajoute au tableau des RDV déja pris tous les créneaux avant l'heure actuelle
          $currentHour = new \DateTime('now +2hours');
 
+         // On récupère le jour actuel
          $currentDay = strtolower(strftime('%A', $currentHour->getTimestamp()));
+         // Date d'ouverture et de fermeture du jour actuel
          $startCurrentDayHour = $horaires[$currentDay]['ouverture'];
          $closeCurrentDayHour = $horaires[$currentDay]['fermeture'];
-
+        
+        // Si les heures d'ouverture et de fermeture ne sont pas fermé : on ajoute les créneaux au tableau
         if($startCurrentDayHour != 'ferme' | $closeCurrentDayHour != 'ferme'){
 
         $startHourDateTime = DateTime::createFromFormat('H:i', $startCurrentDayHour);
@@ -276,6 +279,7 @@ class RendezVousController extends AbstractController
 
         // On génère un tableau avec tous les créneaux de RDV pour le mois à venir
         $allCreneaux = [];
+        // Pour chaque jour
         while($todayDate <= $endDate){
             // On récupère le jour de la semaine
             $jourDeLaSemaine = strtolower(strftime('%A', $todayDate->getTimestamp()));
