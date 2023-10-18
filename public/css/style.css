@@ -2731,7 +2731,32 @@ background-color: #8CD47E;
     margin-bottom: 1.25rem;
 }
 
+/**************** ADD EMPLOYE ******************/
 
+#addEmployeForm {
+    width: 100%;
+    max-width: 1000px;
+    padding: 2rem;
+}
+
+#addEmployeForm label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: var(--medium);
+}
+
+#add_employee_email{
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 8px;
+    background-color: white;
+    border: 1px solid #c4c4c4;
+    padding: 1em;
+    font-size: 0.875rem;
+    margin-bottom: 1.25rem;
+}
 
 
 

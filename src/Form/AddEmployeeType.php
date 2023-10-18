@@ -13,9 +13,19 @@ class AddEmployeeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email', TextType::class)
+            ->add('email', TextType::class, [
+                'attr' => 
+                [
+                    'placeholder' => 'employe@mail.com',
+                ]])
 
-            ->add('submit', SubmitType::class)
+            ->add('submit', SubmitType::class, [
+                'label' =>'Ajouter',
+                'attr' => 
+                [
+                    'class' => 'submit-button-template',
+                ] 
+            ]);
 
         ;
     }
@@ -23,7 +33,8 @@ class AddEmployeeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            // Configure your form options here
+            'attr' => [
+                'id' => 'addEmployeForm']
         ]);
     }
 }

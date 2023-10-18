@@ -85,6 +85,14 @@ class UserController extends AbstractController
             $email = $form->get('email')->getData();
 
             $newEmployee = $userRepository->findOneBy(['email' => $email]);
+
+            if(!$newEmployee){
+                notyf()
+                ->position('x', 'right')
+                ->position('y', 'bottom')
+                ->addError('Cet employé n\'existe pas');
+                return $this->redirectToRoute('manage_employees',['slug' => $barbershop->getSlug()]);
+            }
             
             $newEmployeeId = $newEmployee->getId();
 
