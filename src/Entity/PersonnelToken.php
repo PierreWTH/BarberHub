@@ -20,6 +20,10 @@ class PersonnelToken
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    #[ORM\ManyToOne(inversedBy: 'personnelTokens')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Barbershop $barbershop = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,6 +49,18 @@ class PersonnelToken
     public function setUser(User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getBarbershop(): ?Barbershop
+    {
+        return $this->barbershop;
+    }
+
+    public function setBarbershop(?Barbershop $barbershop): self
+    {
+        $this->barbershop = $barbershop;
 
         return $this;
     }

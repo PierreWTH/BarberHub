@@ -129,6 +129,9 @@ class Barbershop
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
 
+    #[ORM\OneToMany(mappedBy: 'barbershop', targetEntity: PersonnelToken::class)]
+    private Collection $personnelTokens;
+
     public function __construct()
     {
         $this->barbershopPics = new ArrayCollection();
@@ -136,6 +139,7 @@ class Barbershop
         $this->avis = new ArrayCollection();
         $this->barberPrestations = new ArrayCollection();
         $this->personnels = new ArrayCollection();
+        $this->personnelTokens = new ArrayCollection();
     }
 
     // Générer le slug à chaque ajout de barbier
@@ -495,6 +499,36 @@ class Barbershop
     public function setPhoto(?string $photo): self
     {
         $this->photo = $photo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PersonnelToken>
+     */
+    public function getPersonnelTokens(): Collection
+    {
+        return $this->personnelTokens;
+    }
+
+    public function addPersonnelToken(PersonnelToken $personnelToken): self
+    {
+        if (!$this->personnelTokens->contains($personnelToken)) {
+            $this->personnelTokens->add($personnelToken);
+            $personnelToken->setBarbershop($this);
+        }
+
+        return $this;
+    }
+
+    public function removePersonnelToken(PersonnelToken $personnelToken): self
+    {
+        if ($this->personnelTokens->removeElement($personnelToken)) {
+            // set the owning side to null (unless already changed)
+            if ($personnelToken->getBarbershop() === $this) {
+                $personnelToken->setBarbershop(null);
+            }
+        }
 
         return $this;
     }

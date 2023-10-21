@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Personnel;
 use App\Entity\Barbershop;
 use App\Form\UpdateUserType;
 use App\Form\AddEmployeeType;
@@ -18,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -73,7 +75,7 @@ class UserController extends AbstractController
 
     #[Route('/{slug}/employes', name: 'manage_employees')]
     #[isGranted('ROLE_BARBER')]
-    public function manageEmployees(Barbershop $barbershop, UserRepository $userRepository, Request $request, MailerInterface $mailer): Response
+    public function manageEmployees(Barbershop $barbershop, UserRepository $userRepository, Request $request, MailerInterface $mailer, ManagerRegistry $doctrine): Response
     {   
         $form = $this->createForm(AddEmployeeType::class);
         $form->handleRequest($request);
@@ -93,8 +95,17 @@ class UserController extends AbstractController
                 ->addError('Cet employé n\'existe pas');
                 return $this->redirectToRoute('manage_employees',['slug' => $barbershop->getSlug()]);
             }
+
+            if($newEmployee->getPersonnel()){
+                notyf()
+                ->position('x', 'right')
+                ->position('y', 'bottom')
+                ->addError('Cet employé est déja en poste dans un salon.');
+                return $this->redirectToRoute('manage_employees',['slug' => $barbershop->getSlug()]);
+            }
             
             $newEmployeeId = $newEmployee->getId();
+            $entityManager = $doctrine->getManager();
 
             $tokenLength = 32; // La longueur du token que vous souhaitez générer
             $token = bin2hex(random_bytes($tokenLength));
@@ -102,7 +113,18 @@ class UserController extends AbstractController
             $personnelToken = new PersonnelToken();
             $personnelToken->setToken($token);
             $personnelToken->setUser($newEmployee);
-
+            $personnelToken->setBarbershop($barbershop);
+            $entityManager->persist($personnelToken);
+            $entityManager->flush();
+            
+            $confirmEmployeeLink = $this->generateUrl('confirm_employees', [
+                'token' => $token, 
+                'user' => $newEmployeeId,
+                'barbershop' => $barbershop->getId()
+            ],
+            UrlGeneratorInterface::RELATIVE_PATH
+        );
+            
             // dd($token);
 
             $email = (new Email())
@@ -110,7 +132,7 @@ class UserController extends AbstractController
             ->to($email)
             ->subject($user->getPseudo().' vous invite à rejoindre son salon.')
 
-            ->html("<a href='/confirmEmployee?token=$token&user=$newEmployeeId'> J'accepte </a>");
+            ->html("<a href='http://127.0.0.1:8000/$confirmEmployeeLink'> Accepter </a>");
 
             $mailer->send($email);
 
@@ -132,18 +154,35 @@ class UserController extends AbstractController
         
     }
 
-    #[Route('/confirmEmployee', name: 'confirm_employees')]
-    public function confirmEmployee(Barbershop $barbershop, Request $request, UserRepository $userRepository): Response
+    #[Route('/confirmEmployee/{token}/{user}/{barbershop}', name: 'confirm_employees')]
+    public function confirmEmployee(Request $request, Int $barbershop, UserRepository $userRepository, String $token, Int $user, ManagerRegistry $doctrine): Response
     {
-        $token = $_GET['token'];
-        $userId = $_GET['user'];
 
-        dd($token, $userId);
+        
+        $userObject = $userRepository->findOneBy(['id' => $user]);
+        $userToken = $userObject->getPersonnelToken();
 
-        $newEmployee = $userRepository->findOneBy(['id' => $userId]);
+        if($userObject->getId() === $userToken->getUser()->getId() && $userToken->getToken() === $token && $userToken->getBarbershop()->getId() === $barbershop){
 
-        if($newEmployee->getToken() === $token){
+            $entityManager = $doctrine->getManager();
 
+            $newEmployee = new Personnel();
+            $newEmployee->setBarbershop($userToken->getBarbershop());
+            $newEmployee->setUser($userToken->getUser());
+            $newEmployee->setManager(0);
+
+            $entityManager->persist($newEmployee);
+            $entityManager->flush();
+
+            $barbershopName = $userToken->getBarbershop()->getNom();
+
+
+            notyf()
+                ->position('x', 'right')
+                ->position('y', 'bottom')
+                ->addSuccess('Vous avez bien rejoint le salon '.$barbershopName.'.');
+
+            return $this->redirectToRoute('app_myspace');
 
         }
     }
