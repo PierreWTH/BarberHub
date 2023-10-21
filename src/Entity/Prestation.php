@@ -24,7 +24,7 @@ class Prestation
     #[Assert\NotBlank(message: "Le nom ne peux pas être vide. ")]
     private ?string $nom = null;
 
-    #[ORM\OneToMany(mappedBy: 'prestation', targetEntity: BarberPrestation::class)]
+    #[ORM\OneToMany(mappedBy: 'prestation', targetEntity: BarberPrestation::class, orphanRemoval: true, cascade:['persist', 'remove'])]
     private Collection $barberPrestations;
 
     #[ORM\Column(length: 255)]
