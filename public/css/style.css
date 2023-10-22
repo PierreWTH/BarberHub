@@ -559,6 +559,25 @@ footer i {
         display: none;
     }
 }
+
+/************* PRIVACY ***************/
+
+#privacy-section {
+    max-width: 1000px;
+    width: 100%;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: justify;
+    gap: 2rem;
+    margin: 2rem auto;
+    background-color: white;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+}
+
   /********************************************** NAV OTHERS PAGE *************************************************/
 
 #nav{

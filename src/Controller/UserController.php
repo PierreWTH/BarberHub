@@ -103,6 +103,14 @@ class UserController extends AbstractController
                 ->addError('Cet employé est déja en poste dans un salon.');
                 return $this->redirectToRoute('manage_employees',['slug' => $barbershop->getSlug()]);
             }
+
+            if($newEmployee->getPersonnelToken()){
+                notyf()
+                ->position('x', 'right')
+                ->position('y', 'bottom')
+                ->addError('Cet employé à déja reçu une demande.');
+                return $this->redirectToRoute('manage_employees',['slug' => $barbershop->getSlug()]);
+            }
             
             $newEmployeeId = $newEmployee->getId();
             $entityManager = $doctrine->getManager();
@@ -170,8 +178,11 @@ class UserController extends AbstractController
             $newEmployee->setBarbershop($userToken->getBarbershop());
             $newEmployee->setUser($userToken->getUser());
             $newEmployee->setManager(0);
-
+            
             $entityManager->persist($newEmployee);
+
+            $userObject->setRoles(["ROLE_BARBER"]);
+
             $entityManager->flush();
 
             $barbershopName = $userToken->getBarbershop()->getNom();

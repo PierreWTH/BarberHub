@@ -27,4 +27,10 @@ class HomeController extends AbstractController
             'isHomePage' => $isHomePage
         ]);
     }
+
+    #[Route('/privacy', name: 'app_privacy')]
+    public function privacy(): Response
+    {
+        return $this->render('home/privacy.html.twig');
+    }
 }
