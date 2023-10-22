@@ -65,7 +65,7 @@ class RendezVousType extends AbstractType
             ])
 
             ->add('submit', SubmitType::class, [
-                'label' => 'Reserver'])
+                'label' => 'Réserver'])
         ;
     }
 

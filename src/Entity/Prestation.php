@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use ORM\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping as ORM;
+use Cocur\Slugify\Slugify;
 use App\Repository\PrestationRepository;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 

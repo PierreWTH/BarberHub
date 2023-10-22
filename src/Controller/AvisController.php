@@ -87,7 +87,7 @@ class AvisController extends AbstractController
     // Supprimer un avis en AJAX
     #[Route('/barbershop/{barbershop}/avis/{avis}/delete', name: 'delete_avis', methods:"post")]
     #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER") or is_granted("ROLE_BARBER")'))]
-    public function delete(ManagerRegistry $doctrine, Barbershop $barbershop, Avis $avis = null): Response
+    public function delete(ManagerRegistry $doctrine,Security $security, Avis $avis = null): Response
     {   
         if ($avis->getUser()->getId() === $this->getUser()->getId() || $security->isGranted("ROLE_ADMIN")){
             $entityManager = $doctrine->getManager();

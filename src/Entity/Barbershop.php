@@ -6,12 +6,13 @@ use App\Entity\User;
 use Cocur\Slugify\Slugify;
 use ApiPlatform\Metadata\Get;
 use Doctrine\DBAL\Types\Types;
-use ApiPlatform\Metadata\ApiFilter;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use App\Repository\BarbershopRepository;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\Common\Collections\ArrayCollection;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -30,7 +31,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiFilter(SearchFilter::class, properties: ['nom' => 'partial', 'ville' => 'partial'])]
 #[ORM\Entity(repositoryClass: BarbershopRepository::class)]
 // Pour prePersist
-#[ORM\HasLifecycleCallbacks]
+#[HasLifecycleCallbacks]
 
 class Barbershop
 {   
@@ -148,7 +149,6 @@ class Barbershop
     {
         $this->slug = (new Slugify())->slugify($this->nom);
     }
-
 
     public function getId(): ?int
     {

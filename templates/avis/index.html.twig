@@ -9,9 +9,11 @@
 <div class="admin-pannel-content">
 
 <div class="admin-avis-container">
+    {% if allAvis is not empty %}
+        
+    
     {% for avis in allAvis %}
     {% set note = avis.note %}
-
     {# Affichage des étoiles #}
     <div class="barbershop-avis">  
         <p>{{avis.barbershop.nom}} - {{avis.date|date("d/m/Y")}}</p>
@@ -32,13 +34,16 @@
             <p>{{avis.texte}}</p>
         </div>
         
-        {% if avis.user == app.user %}
+        {% if avis.user == app.user or is_granted("ROLE_ADMIN")%}
         <p><a href="{{ path('edit_avis', { 'barbershop': avis.barbershop.id, 'avis': avis.id }) }}" class="edit-delete-avis">Modifier</a> | <a href="" class="edit-delete-avis delete-avis" data-barbershop-id="{{ avis.barbershop.id }}" data-avis-id="{{ avis.id }}">Supprimer</a></p>
         
         {% endif %}
     </div>
     {% endfor %}
 </div>
+{% else %}
+<p> Aucun avis pour le moment </p>
+{% endif %}
 </div>
 </section>
 

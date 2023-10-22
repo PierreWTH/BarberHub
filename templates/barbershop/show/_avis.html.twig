@@ -33,7 +33,7 @@
         <p>{{avis.texte}}</p>
     </div>
     
-    {% if avis.user == app.user %}
+    {% if avis.user == app.user or is_granted("ROLE_ADMIN") %}
     <p><a href="{{ path('edit_avis', { 'barbershop': barbershop.id, 'avis': avis.id }) }}" class="edit-delete-avis">Modifier</a> | <a href="" class="edit-delete-avis delete-avis" data-barbershop-id="{{ barbershop.id }}" data-avis-id="{{ avis.id }}">Supprimer</a></p>
     
     {% endif %}

@@ -2972,8 +2972,8 @@ background-color: #8CD47E;
     top: 0;
     right: 0;
     height: 100%;
-    max-width: 400px;
     width: 100%;
+    max-width: 600px;
     padding: 100px 40px 60px 40px;
     overflow-y: auto;
     -webkit-transform: translateX(100%);
@@ -3213,11 +3213,11 @@ background-color: #8CD47E;
         }
     }
 
-    @media screen and (max-width : 768px) {
+    /* @media screen and (min-width : 768px) {
         #responsive-nav{
-            max-width: 350px;
+            max-width: 650px;
         }
-    }
+    } */
 
     /*************** MOT DE PASSE OUBLIE ****************/
 
